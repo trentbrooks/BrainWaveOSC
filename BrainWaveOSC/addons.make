@@ -1,0 +1,4 @@
+ofxOsc
+ofxThinkgear
+ofxTouchGUI
+ofxXmlSettings
