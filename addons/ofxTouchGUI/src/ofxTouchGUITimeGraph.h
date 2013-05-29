@@ -23,7 +23,7 @@ public:
     int maxValuesToSave;
     deque<float> savedValues;
     void insertValue(float val);
-    int currentValue;
+    float currentValue;
     
     
     // gl
