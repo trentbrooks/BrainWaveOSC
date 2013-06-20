@@ -27,7 +27,7 @@ Other values (sent 30x per second as floats):
 
     "signal" : 0-200 (0 = good connection, 200 = poor connection)
     "attention" : 0-100 (higher number = more attention)
-    "meditation" : 0-100 (higher number = more attention)
+    "meditation" : 0-100 (higher number = more meditation)
 Optional raw data value (sent 512x per second as floats):
 
     "raw" : -32768-32768 or -2048-2048 (depends on device)
