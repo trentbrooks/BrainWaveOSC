@@ -25,7 +25,7 @@ The 8 EEG band frequencies (sent 30x per second as floats):
     "eegmidgamma" : 41-50Hz
 Other values (sent 30x per second as floats):
 
-    "signal" : 0-200 (0 = good connection, 200 = no connection)
+    "signal" : 0-200 (0 = good connection, 200 = poor connection)
     "attention" : 0-100 (higher number = more attention)
     "meditation" : 0-100 (higher number = more attention)
 Optional raw data value (sent 512x per second as floats):
