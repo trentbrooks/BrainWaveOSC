@@ -117,15 +117,15 @@ void testApp::setupGui() {
     int valuesToSave = graphWidth; // 1 for each pixel
     poorSignalGraph = settings.addTimeGraph("Poor Signal 0-200", valuesToSave, graphOffsetX, graphOffsetY, graphWidth, graphHeight);
     poorSignalGraph->setTextOffsets(0, -5);
-    poorSignalGraph->setOscAddress("signal");
+    poorSignalGraph->setOscAddress("/signal");
     poorSignalGraph->setCustomRange(0, 200);
     attentionGraph = settings.addTimeGraph("Attention 0-100", valuesToSave, graphOffsetX, graphOffsetY+ graphItemHeight, graphWidth, graphHeight);
     attentionGraph->setTextOffsets(0, -5);
-    attentionGraph->setOscAddress("attention");
+    attentionGraph->setOscAddress("/attention");
     attentionGraph->setCustomRange(0, 100);
     meditationGraph= settings.addTimeGraph("Meditation 0-100", valuesToSave, graphOffsetX, graphOffsetY+ graphItemHeight*2, graphWidth, graphHeight);
     meditationGraph->setTextOffsets(0, -5);
-    meditationGraph->setOscAddress("meditation");
+    meditationGraph->setOscAddress("/meditation");
     meditationGraph->setCustomRange(0, 100);    
     settings.defaultItemHeight = smallHeight;
     settings.defaultItemWidth = bigWidth;
@@ -157,7 +157,7 @@ void testApp::setupGui() {
     rawDataText = settings.addVarText("Raw data value", &rawDataValue, lastX + settings.defaultItemWidth + 20, lastY);
     settings.lastItemPosY = lastY;
     settings.lastItemPosX = lastX;
-    rawDataText->setOscAddress("raw");    
+    rawDataText->setOscAddress("/raw");    
     settings.defaultItemHeight = smallHeight;
     settings.defaultItemWidth = bigWidth;
     
@@ -198,28 +198,28 @@ void testApp::setupGui() {
     graphOffsetY = 20;
     eegDeltaGraph= settings.addCustomTimeGraph("EEG delta", valuesToSave, graphOffsetX, graphOffsetY, graphWidth, graphHeight);
     eegDeltaGraph->setTextOffsets(0, -5);
-    eegDeltaGraph->setOscAddress("eegdelta");
+    eegDeltaGraph->setOscAddress("/eegdelta");
     eegThetaGraph= settings.addCustomTimeGraph("EEG theta", valuesToSave, graphOffsetX, graphOffsetY + graphItemHeight, graphWidth, graphHeight);
     eegThetaGraph->setTextOffsets(0, -5);
-    eegThetaGraph->setOscAddress("eegtheta");
+    eegThetaGraph->setOscAddress("/eegtheta");
     eegLowAlphaGraph= settings.addCustomTimeGraph("EEG low alpha", valuesToSave, graphOffsetX, graphOffsetY + graphItemHeight * 2, graphWidth, graphHeight);
     eegLowAlphaGraph->setTextOffsets(0, -5);
-    eegLowAlphaGraph->setOscAddress("eeglowalpha");
+    eegLowAlphaGraph->setOscAddress("/eeglowalpha");
     eegHighAlphaGraph= settings.addCustomTimeGraph("EEG high alpha", valuesToSave, graphOffsetX, graphOffsetY + graphItemHeight * 3, graphWidth, graphHeight);
     eegHighAlphaGraph->setTextOffsets(0, -5);
-    eegHighAlphaGraph->setOscAddress("eeghighalpha");
+    eegHighAlphaGraph->setOscAddress("/eeghighalpha");
     eegLowBetaGraph= settings.addCustomTimeGraph("EEG low beta", valuesToSave, graphOffsetX, graphOffsetY + graphItemHeight * 4, graphWidth, graphHeight);
     eegLowBetaGraph->setTextOffsets(0, -5);
-    eegLowBetaGraph->setOscAddress("eeglowbeta");
+    eegLowBetaGraph->setOscAddress("/eeglowbeta");
     eegHighBetaGraph= settings.addCustomTimeGraph("EEG high beta", valuesToSave, graphOffsetX, graphOffsetY + graphItemHeight * 5, graphWidth, graphHeight);
     eegHighBetaGraph->setTextOffsets(0, -5);
-    eegHighBetaGraph->setOscAddress("eeghighbeta");
+    eegHighBetaGraph->setOscAddress("/eeghighbeta");
     eegLowGammaGraph= settings.addCustomTimeGraph("EEG low gamma", valuesToSave, graphOffsetX, graphOffsetY + graphItemHeight * 6, graphWidth, graphHeight);
     eegLowGammaGraph->setTextOffsets(0, -5);
-    eegLowGammaGraph->setOscAddress("eeglowgamma");
+    eegLowGammaGraph->setOscAddress("/eeglowgamma");
     eegMidGammaGraph= settings.addCustomTimeGraph("EEG mid gamma", valuesToSave, graphOffsetX, graphOffsetY + graphItemHeight * 7, graphWidth, graphHeight);
     eegMidGammaGraph->setTextOffsets(0, -5);
-    eegMidGammaGraph->setOscAddress("eegmidgamma");
+    eegMidGammaGraph->setOscAddress("/eegmidgamma");
     
     // save the 8 eeg bands
     eegSet.push_back(eegDeltaGraph);
@@ -391,7 +391,7 @@ void testApp::update(){
             eegLowAlphaGraph->sendOSC(allData.eegLowAlpha);
             eegHighAlphaGraph->sendOSC(allData.eegHighAlpha);
             eegLowBetaGraph->sendOSC(allData.eegLowBeta);
-            eegHighAlphaGraph->sendOSC(allData.eegHighAlpha);
+            eegHighBetaGraph->sendOSC(allData.eegHighBeta);
             eegLowGammaGraph->sendOSC(allData.eegLowGamma);
             eegMidGammaGraph->sendOSC(allData.eegMidGamma);
             //eegDeltaText->sendOSC(eegDelta.value);
@@ -433,7 +433,7 @@ void testApp::update(){
                 eegLowAlphaGraph->sendOSC(dataEntries[playhead].eegLowAlpha);
                 eegHighAlphaGraph->sendOSC(dataEntries[playhead].eegHighAlpha);
                 eegLowBetaGraph->sendOSC(dataEntries[playhead].eegLowBeta);
-                eegHighAlphaGraph->sendOSC(dataEntries[playhead].eegHighAlpha);
+                eegHighBetaGraph->sendOSC(dataEntries[playhead].eegHighBeta);
                 eegLowGammaGraph->sendOSC(dataEntries[playhead].eegLowGamma);
                 eegMidGammaGraph->sendOSC(dataEntries[playhead].eegMidGamma);
             }
