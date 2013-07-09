@@ -1,0 +1,56 @@
+#N canvas 0 22 1117 424 10;
+#X declare -lib mrpeach;
+#X obj 45 -77 unpackOSC;
+#X obj 45 -50 pipelist;
+#X obj 45 -107 udpreceive 4444;
+#X obj 45 -24 routeOSC /eegdelta /eegtheta /eeglowalpha /eeghighalpha
+/eeglowbeta /eeghighbeta /eeglowgamma /eegmidgamma /signal;
+#X floatatom 45 21 8 0 0 0 - - -;
+#X floatatom 118 22 8 0 0 0 - - -;
+#X floatatom 208 21 8 0 0 0 - - -;
+#X floatatom 297 21 8 0 0 0 - - -;
+#X floatatom 394 24 8 0 0 0 - - -;
+#X floatatom 478 24 8 0 0 0 - - -;
+#X floatatom 573 25 8 0 0 0 - - -;
+#X floatatom 665 25 8 0 0 0 - - -;
+#X obj 283 -104 import mrpeach;
+#X obj 118 54 send eegtheta;
+#X obj 208 54 s eeglowalpha;
+#X obj 297 54 s eeghighalpha;
+#X obj 394 53 s eeglowbeta;
+#X obj 45 54 s eegdelta;
+#X obj 478 53 s eeghighbeta;
+#X obj 573 53 s eeglowgamma;
+#X obj 665 51 s eegmidgamma;
+#X floatatom 757 24 8 0 0 0 - - -;
+#X obj 757 52 s signal;
+#X text 42 -298 Receive EEG data from Neurosky ThinkGear bluetooth
+sensor via opensoundcontrol using BrainOSC application (OSX and Windows).
+These values represent the current magnitude of 8 commonly recognized
+types of EEG (brainwaves). These values have no units and therefore
+are only meaningful compared to each other and to themselves \, to
+consider relative quantity and temporal fluctuations. By default \,
+output of this Data Value is enabled \, and is typically output once
+a second;
+#X connect 0 0 1 0;
+#X connect 0 1 1 1;
+#X connect 1 0 3 0;
+#X connect 2 0 0 0;
+#X connect 3 0 4 0;
+#X connect 3 1 5 0;
+#X connect 3 2 6 0;
+#X connect 3 3 7 0;
+#X connect 3 4 8 0;
+#X connect 3 5 9 0;
+#X connect 3 6 10 0;
+#X connect 3 8 11 0;
+#X connect 3 9 21 0;
+#X connect 4 0 17 0;
+#X connect 5 0 13 0;
+#X connect 6 0 14 0;
+#X connect 7 0 15 0;
+#X connect 8 0 16 0;
+#X connect 9 0 18 0;
+#X connect 10 0 19 0;
+#X connect 11 0 20 0;
+#X connect 21 0 22 0;
