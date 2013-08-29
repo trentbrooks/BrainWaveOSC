@@ -1,11 +1,28 @@
 #include "EegTimeGraph.h"
 
+// statics
 float EegTimeGraph::dynamicEegMax = 1.0f;
+bool EegTimeGraph::useGlobalRanges = true;
+deque<float> EegTimeGraph::dynamicEegMaxValues;
+int EegTimeGraph::maxDynamicEegValues = 1;
 //float EegTimeGraph::dynamicEegMin = 0.0f;
+
+void EegTimeGraph::updateDynamicEegMaxValues(float val) {
+    
+    while(dynamicEegMaxValues.size() > maxDynamicEegValues) dynamicEegMaxValues.pop_front();
+    dynamicEegMaxValues.push_back(val);
+}
+
+
+
 
 EegTimeGraph::EegTimeGraph(){
     
-    
+    bgClrTL = ofColor(255,90); //rgba
+    bgClrTR = ofColor(255,90);//180,180,180,255); //rgba
+    bgClrBL = ofColor(255,90); //rgba
+    bgClrBR = ofColor(255,90);//(180,180,180,255); //rgba*/
+    eegMax = 1;
 }
 
 EegTimeGraph::~EegTimeGraph(){
@@ -21,8 +38,13 @@ void EegTimeGraph::insertValue(float val) {
     // dynamic min/max
     if(isCustomRangeSet) return;
     
-    if(currentValue > dynamicEegMax)
-        dynamicEegMax = currentValue;
+    // global
+    //if(currentValue > dynamicEegMax)
+        //dynamicEegMax = currentValue;
+    
+    // local
+    if(currentValue > eegMax)
+        eegMax = currentValue;
     //else if(currentValue < dynamicEegMin)
       //  dynamicEegMin = currentValue;
 }
@@ -47,7 +69,16 @@ void EegTimeGraph::draw(){
             float destX = ofMap(i, 0, maxValuesToSave-1, 0, width);
             int glCursorIndex = i * 4;
             shapeVertices[glCursorIndex] = destX;
-            shapeVertices[++glCursorIndex] = ofMap(savedValues[i], 0, dynamicEegMax, height, 0);
+            if(useGlobalRanges) {
+                
+                // divide by 0 sucks
+                if(dynamicEegMaxValues[i] > 0)
+                    shapeVertices[++glCursorIndex] = ofMap(savedValues[i], 0, dynamicEegMaxValues[i], height, 0);
+                else
+                    shapeVertices[++glCursorIndex] = 0;
+            } else {
+                shapeVertices[++glCursorIndex] = ofMap(savedValues[i], 0, eegMax, height, 0);
+            }
             shapeVertices[++glCursorIndex] = destX;
             shapeVertices[++glCursorIndex] = height;
         }
@@ -59,7 +90,21 @@ void EegTimeGraph::draw(){
         glDisableClientState(GL_VERTEX_ARRAY);
         
         // draw text
-        drawText(label + " : " + ofToString(currentValue), textOffsetX, textOffsetY);
+        ofSetColor(textColourDark);
+        float mainMax = (useGlobalRanges) ? dynamicEegMaxValues[maxValuesToSave-1] : eegMax;//eegMax;
+        drawText(label + " : " + ofToString(currentValue) + " / " + ofToString(mainMax), textOffsetX, textOffsetY);
+        //drawText(label + " : " + ofToString(currentValue) + " / " + ofToString(max), textOffsetX, textOffsetY);
+        
+        ofSetColor(textColourLight);
+        /*if(useGlobalRanges) {
+            // float
+            drawLargeText(ofToString((currentValue / mainMax) * 100,2) + "%", width - 70, height/2-textOffsetY + 5);
+        } else {
+            // int
+           drawLargeText(ofToString( int( (currentValue / mainMax) * 100) ) + "%", width - 70, height/2-textOffsetY + 5);
+        }*/
+        // int
+        drawLargeText(ofToString( int( (currentValue / mainMax) * 100) ) + "%", width - 60, height/2-textOffsetY + 5);
         ofPopStyle();
           
         ofPopMatrix();   

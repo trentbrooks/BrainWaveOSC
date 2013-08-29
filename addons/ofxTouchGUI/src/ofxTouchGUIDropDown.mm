@@ -136,7 +136,7 @@ void ofxTouchGUIDropDown::draw(){
                 }            
                 
                 // draw text
-                ofSetColor(textColourLight);
+                ofSetColor(textColour);
                 drawText(listValues[i], textOffsetX, listY + int(textOffsetY + height * 0.5));
                 
                 // draw line dividers
@@ -201,7 +201,7 @@ void ofxTouchGUIDropDown::onUp(float x, float y){
             
             // when clicked in list
             if(hitTest(x, y, width, height + listHeight)) {
-                *selectId = ( (y - posY) / listHeight) * numListItems - 1; 
+                *selectId = ( (y - posY) / listHeight) * numListItems - 1;
                 ofNotifyEvent(onChangedEvent,label,this);
                 sendOSC(*selectId);
             } 

@@ -9,22 +9,28 @@
  - Modified by Trent Brooks: deleted a bunch of stuff and added some reconnection fixes. 
  */
 
+// comments: sample value / maximum
 class ofxThinkgearEventArgs : public ofEventArgs {
 public:
     short raw;
     unsigned char battery;
     unsigned char poorSignal;
     unsigned char blinkStrength;
-    unsigned char attention; //50
+    unsigned char attention; // 50
     unsigned char meditation; // 30
-    unsigned int eegDelta; //100000
-    unsigned int eegTheta; //300000
-    unsigned int eegLowAlpha; //2500
-    unsigned int eegHighAlpha; //2500
-    unsigned int eegLowBeta; //1500
-    unsigned int eegHighBeta; //2500
-    unsigned int eegLowGamma; //5000
-    unsigned int eegMidGamma; //5000
+    
+    // "ASIC_EEG_POWER" units - dumb
+    unsigned int eegDelta; // 100000 / 1500000 . 0.5-2.75hz
+    unsigned int eegTheta; // 300000 / 600000 . 3.5-6.75hz
+    unsigned int eegLowAlpha; // 2500 / 75000 . 7.5-9.25hz
+    unsigned int eegHighAlpha; // 2500 / 150000 . 10-11.75hz
+    unsigned int eegLowBeta; // 1500 / 60000 . 13-16.75hz
+    unsigned int eegHighBeta; // 2500 / 60000 . 18-29.75hz
+    unsigned int eegLowGamma; // 5000 / 300000 . 31-39.75hz
+    unsigned int eegMidGamma; // 5000 / 300000 . 41-49.75hz
+    
+    // added
+    unsigned int deviceId; // each device needs it's own id
 };
 
 
@@ -32,8 +38,9 @@ class ofxThinkgear {
 public:
     
     string deviceName;
+    int deviceId;
     int baudRate;
-    void setup(string deviceName, int baudRate);
+    void setup(string deviceName, int baudRate, int deviceId);
     
     bool allowRawDataEvents;
     int attempts;

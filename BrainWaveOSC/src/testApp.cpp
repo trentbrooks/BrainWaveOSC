@@ -39,6 +39,8 @@ float goertzel_mag(int numSamples,int TARGET_FREQUENCY,int SAMPLING_RATE, float*
 //--------------------------------------------------------------
 void testApp::setup(){
     
+
+    
     ofSetFrameRate(30);
     ofEnableAlphaBlending();
     
@@ -52,6 +54,7 @@ void testApp::setup(){
     rawDataBuffer = "";
     playbackMode = false;
     isRecording = false;
+    isPaused = false;
     
     allData.attention = 0;
 	allData.meditation = 0;
@@ -66,9 +69,11 @@ void testApp::setup(){
 	allData.eegTheta = 0;
 	allData.elapsed = 0;
     
+    normaliseMaxToCurrentSet = false;
+    
     
     // default device settings
-    deviceName = "/dev/tty.BrainBand-DevB";
+    deviceName = "/dev/tty.BrainBand-DevB-LW1";//BrainBand-DevB";
     deviceBaudRate = 57600;
     
     // osc settings
@@ -77,7 +82,7 @@ void testApp::setup(){
     
     setupGui();
     
-    tg.setup(deviceName, deviceBaudRate);
+    tg.setup(deviceName, deviceBaudRate, 1);
     tg.addEventListener(this);
     
 }
@@ -103,35 +108,60 @@ void testApp::setupGui() {
     // add items
     settings.defaultItemWidth = bigWidth;
     settings.defaultItemHeight = bigHeight;
-    settings.addTitleText("BRAINWAVE OSC", 18, 40);
+    settings.addTitleText("BRAINWAVE OSC 0.9", 18, 18);
     settings.addText("Device - " + deviceName + ". BaudRate - " + ofToString(deviceBaudRate), 20, 55);
     settings.addText("OSC - " + host + ":" + ofToString(port), 20, 70);
     settings.addText("----------------------------------------------------------------------------------------------", 20, 85);
     
     // poor signal, attention, meditation
     int graphWidth = 470;
-    int graphHeight = 70;
+    int graphHeight = 60;
     int graphItemHeight = graphHeight + 25;
     int graphOffsetX = 20;
-    int graphOffsetY = 120;
+    int graphOffsetY = 100;//120;
     int valuesToSave = graphWidth; // 1 for each pixel
-    poorSignalGraph = settings.addTimeGraph("Poor Signal 0-200", valuesToSave, graphOffsetX, graphOffsetY, graphWidth, graphHeight);
+    EegTimeGraph::maxDynamicEegValues = valuesToSave;
+    for(int i = 0;i < valuesToSave; i++) {
+        EegTimeGraph::updateDynamicEegMaxValues(1);
+    }
+    
+    settings.addVarText("Poor Signal 0-200", &allData.signal, graphOffsetX-7, graphOffsetY);
+    /*poorSignalGraph = settings.addTimeGraph("Poor Signal 0-200", valuesToSave, graphOffsetX, graphOffsetY, graphWidth, graphHeight);
+    poorSignalGraph->setBackgroundClrs(ofColor(255,90));
     poorSignalGraph->setTextOffsets(0, -5);
     poorSignalGraph->setOscAddress("/signal");
-    poorSignalGraph->setCustomRange(0, 200);
-    attentionGraph = settings.addTimeGraph("Attention 0-100", valuesToSave, graphOffsetX, graphOffsetY+ graphItemHeight, graphWidth, graphHeight);
+    poorSignalGraph->setCustomRange(0, 200);*/
+    attentionGraph = settings.addTimeGraph("Attention 0-100", valuesToSave, graphOffsetX, graphOffsetY+ 50, graphWidth, graphHeight);
+    attentionGraph->setBackgroundClrs(ofColor(255,90));
     attentionGraph->setTextOffsets(0, -5);
     attentionGraph->setOscAddress("/attention");
     attentionGraph->setCustomRange(0, 100);
-    meditationGraph= settings.addTimeGraph("Meditation 0-100", valuesToSave, graphOffsetX, graphOffsetY+ graphItemHeight*2, graphWidth, graphHeight);
+    meditationGraph= settings.addTimeGraph("Meditation 0-100", valuesToSave, graphOffsetX, graphOffsetY+ graphItemHeight + 50, graphWidth, graphHeight);
+    meditationGraph->setBackgroundClrs(ofColor(255,90));
     meditationGraph->setTextOffsets(0, -5);
     meditationGraph->setOscAddress("/meditation");
-    meditationGraph->setCustomRange(0, 100);    
+    meditationGraph->setCustomRange(0, 100);
+    
+    int numSeconds = ceil(valuesToSave / ofGetFrameRate());// 5;
+    int rawDataFreq = 512 * numSeconds;
+    rawDataGraph= settings.addTimeGraph("Raw data -2048-2048", rawDataFreq, graphOffsetX, graphOffsetY+ (graphItemHeight*2) + 50, graphWidth, graphHeight);
+    rawDataGraph->setTextOffsets(0, -5);
+    rawDataGraph->setBackgroundClrs(ofColor(255,90));
+    rawDataGraph->setTextOffsets(0, -5);
+    rawDataGraph->setOscAddress("/raw");  
+    rawDataGraph->setCustomRange(-2048, 2048);
+    
+    settings.defaultItemHeight = bigHeight;
+    settings.defaultItemWidth = smallWidth;
+    int lastX = settings.lastItemPosX;
+    int lastY = settings.lastItemPosY;
+    settings.addToggleButton("SEND RAW DATA WITH OSC", &tg.allowRawDataEvents, lastX, lastY + graphHeight + 10);
+    
     settings.defaultItemHeight = smallHeight;
     settings.defaultItemWidth = bigWidth;
     
     // moving the settings position cursor
-    settings.lastItemPosY = 310;//eegDeltaText->posY; // move the settings to start from here
+    settings.lastItemPosY = 390;//eegDeltaText->posY; // move the settings to start from here
     
     // reset graph max
     settings.addText("----------------------------------------------------------------------------------------------");    
@@ -139,27 +169,28 @@ void testApp::setupGui() {
     settings.defaultItemHeight = bigHeight;    
     ofxTouchGUIButton* resetMaxBtn = settings.addButton("RESET EEG GRAPH'S TO MAX VALUE");
     ofAddListener(resetMaxBtn->onChangedEvent, this, &testApp::onGuiChanged);
-    int lastX = settings.lastItemPosX;
-    int lastY = settings.lastItemPosY;
-    settings.addVarText("Max eeg graph value", &EegTimeGraph::dynamicEegMax, lastX + settings.defaultItemWidth + 20, lastY);
+    lastX = settings.lastItemPosX;
+    lastY = settings.lastItemPosY;
+    //settings.addVarText("Max eeg graph value", &EegTimeGraph::dynamicEegMax, lastX + settings.defaultItemWidth + 20, lastY);
+    settings.addToggleButton("USE GLOBAL EEG RANGES", &EegTimeGraph::useGlobalRanges, lastX + settings.defaultItemWidth + 20, lastY);
     settings.lastItemPosY = lastY;
     settings.lastItemPosX = lastX;
     settings.defaultItemHeight = smallHeight;
     settings.defaultItemWidth = bigWidth;
     
     // raw data osc
-    settings.addText("----------------------------------------------------------------------------------------------");    
-    settings.defaultItemHeight = bigHeight;
-    settings.defaultItemWidth = smallWidth;    
-    settings.addToggleButton("SEND RAW DATA WITH OSC", &tg.allowRawDataEvents);
-    lastX = settings.lastItemPosX;
-    lastY = settings.lastItemPosY;
-    rawDataText = settings.addVarText("Raw data value", &rawDataValue, lastX + settings.defaultItemWidth + 20, lastY);
-    settings.lastItemPosY = lastY;
-    settings.lastItemPosX = lastX;
-    rawDataText->setOscAddress("/raw");    
-    settings.defaultItemHeight = smallHeight;
-    settings.defaultItemWidth = bigWidth;
+//    settings.addText("----------------------------------------------------------------------------------------------");    
+//    settings.defaultItemHeight = bigHeight;
+//    settings.defaultItemWidth = smallWidth;    
+//    settings.addToggleButton("SEND RAW DATA WITH OSC", &tg.allowRawDataEvents);
+//    lastX = settings.lastItemPosX;
+//    lastY = settings.lastItemPosY;
+//    /*rawDataText = settings.addVarText("Raw data value", &rawDataValue, lastX + settings.defaultItemWidth + 20, lastY);
+//    settings.lastItemPosY = lastY;
+//    settings.lastItemPosX = lastX;
+//    rawDataText->setOscAddress("/raw");  */
+//    settings.defaultItemHeight = smallHeight;
+//    settings.defaultItemWidth = bigWidth;
     
     // playback mode
     settings.addText("----------------------------------------------------------------------------------------------");
@@ -170,9 +201,12 @@ void testApp::setupGui() {
     ofAddListener(playbackBn->onChangedEvent, this, &testApp::onGuiChanged);
     lastX = settings.lastItemPosX;
     lastY = settings.lastItemPosY;
-    settings.addVarText("Playback frame", &playhead, lastX + settings.defaultItemWidth + 20, lastY);
+    //settings.addVarText("Playback frame", &playhead, lastX + settings.defaultItemWidth + 20, lastY);
+    settings.addToggleButton("PAUSE PLAYBACK", &isPaused, lastX + settings.defaultItemWidth + 20, lastY);
     settings.lastItemPosY = lastY;
-    settings.lastItemPosX = lastX;    
+    settings.lastItemPosX = lastX;
+    settings.defaultItemWidth = bigWidth;
+    timeline = settings.addSlider("PLAYBACK TIMELINE", &playhead, 0, 1);
     settings.defaultItemHeight = smallHeight;
     settings.defaultItemWidth = bigWidth;
     
@@ -194,32 +228,56 @@ void testApp::setupGui() {
     settings.addText("Press 'spacebar' to minimise window (performance mode).");//, lastX + settings.defaultItemWidth + 20, lastY);
     
     // 8 bands
-    graphOffsetX = ofGetWidth()/2 + 20;
+    graphWidth = bigWidth = 725;
+    graphHeight = 60;
+    graphItemHeight = graphHeight + 25;
+    graphOffsetX = 512 + 20;
     graphOffsetY = 20;
     eegDeltaGraph= settings.addCustomTimeGraph("EEG delta", valuesToSave, graphOffsetX, graphOffsetY, graphWidth, graphHeight);
     eegDeltaGraph->setTextOffsets(0, -5);
     eegDeltaGraph->setOscAddress("/eegdelta");
+    //eegDeltaGraph->setCustomRange(0, 1500000);
     eegThetaGraph= settings.addCustomTimeGraph("EEG theta", valuesToSave, graphOffsetX, graphOffsetY + graphItemHeight, graphWidth, graphHeight);
     eegThetaGraph->setTextOffsets(0, -5);
     eegThetaGraph->setOscAddress("/eegtheta");
+    //eegThetaGraph->setCustomRange(0, 600000);
     eegLowAlphaGraph= settings.addCustomTimeGraph("EEG low alpha", valuesToSave, graphOffsetX, graphOffsetY + graphItemHeight * 2, graphWidth, graphHeight);
     eegLowAlphaGraph->setTextOffsets(0, -5);
     eegLowAlphaGraph->setOscAddress("/eeglowalpha");
+    //eegLowAlphaGraph->setCustomRange(0, 75000);
     eegHighAlphaGraph= settings.addCustomTimeGraph("EEG high alpha", valuesToSave, graphOffsetX, graphOffsetY + graphItemHeight * 3, graphWidth, graphHeight);
     eegHighAlphaGraph->setTextOffsets(0, -5);
     eegHighAlphaGraph->setOscAddress("/eeghighalpha");
+    //eegHighAlphaGraph->setCustomRange(0, 150000);
     eegLowBetaGraph= settings.addCustomTimeGraph("EEG low beta", valuesToSave, graphOffsetX, graphOffsetY + graphItemHeight * 4, graphWidth, graphHeight);
     eegLowBetaGraph->setTextOffsets(0, -5);
     eegLowBetaGraph->setOscAddress("/eeglowbeta");
+    //eegLowBetaGraph->setCustomRange(0, 60000);
     eegHighBetaGraph= settings.addCustomTimeGraph("EEG high beta", valuesToSave, graphOffsetX, graphOffsetY + graphItemHeight * 5, graphWidth, graphHeight);
     eegHighBetaGraph->setTextOffsets(0, -5);
     eegHighBetaGraph->setOscAddress("/eeghighbeta");
+    //eegHighBetaGraph->setCustomRange(0, 60000);
     eegLowGammaGraph= settings.addCustomTimeGraph("EEG low gamma", valuesToSave, graphOffsetX, graphOffsetY + graphItemHeight * 6, graphWidth, graphHeight);
     eegLowGammaGraph->setTextOffsets(0, -5);
     eegLowGammaGraph->setOscAddress("/eeglowgamma");
+    //eegLowGammaGraph->setCustomRange(0, 300000);
     eegMidGammaGraph= settings.addCustomTimeGraph("EEG mid gamma", valuesToSave, graphOffsetX, graphOffsetY + graphItemHeight * 7, graphWidth, graphHeight);
     eegMidGammaGraph->setTextOffsets(0, -5);
     eegMidGammaGraph->setOscAddress("/eegmidgamma");
+    //eegMidGammaGraph->setCustomRange(0, 300000);
+    
+    
+    
+    int freqValues = 9;
+    graphHeight = 230;
+    //graphItemHeight = graphHeight + 25;
+    frequencyGraph= settings.addCustomTimeFrequencyGraph("EEG frequencies (normalised)", freqValues, graphOffsetX, graphOffsetY + graphItemHeight * 8, graphWidth, graphHeight);
+    frequencyGraph->setBackgroundClrs(ofColor(255,90));
+    frequencyGraph->setTextOffsets(0, -5);
+    //frequencyGraph->setBackgroundClrs(ofColor(40,40,40,255));
+    //frequencyGraph->graphFillClr = ofColor(180,180,180,255);
+    //frequencyGraph->setTextClr(frequencyGraph->textColourLight);
+    frequencyGraph->setCustomRange(0, 1.0);//200000);
     
     // save the 8 eeg bands
     eegSet.push_back(eegDeltaGraph);
@@ -249,18 +307,36 @@ void testApp::onGuiChanged(const void* sender, string &buttonLabel) {
 
         EegTimeGraph::dynamicEegMax = 1;
         for(int i = 0; i < eegSet.size(); i++) {
-            for(int j = 0; j < eegSet[i]->savedValues.size(); j++) {
+            eegSet[i]->eegMax = 1;
+        }
+        
+        if(normaliseMaxToCurrentSet) {
+            
+            for(int i = 0; i < eegSet.size(); i++) {
+                int j = eegSet[i]->savedValues.size() - 1; // last value
+                //for(int j = 0; j < eegSet[i]->savedValues.size(); j++) {
                 float value = eegSet[i]->savedValues[j];
-                if(value > EegTimeGraph::dynamicEegMax) EegTimeGraph::dynamicEegMax = value;
+                if(value > EegTimeGraph::dynamicEegMax) EegTimeGraph::dynamicEegMax = value; //global
+                if(value > eegSet[i]->eegMax) eegSet[i]->eegMax = value; // local
+                //}
+            }
+        } else {
+            for(int i = 0; i < eegSet.size(); i++) {
+                for(int j = 0; j < eegSet[i]->savedValues.size(); j++) {
+                    float value = eegSet[i]->savedValues[j];
+                    if(value > EegTimeGraph::dynamicEegMax) EegTimeGraph::dynamicEegMax = value; //global
+                    if(value > eegSet[i]->eegMax) eegSet[i]->eegMax = value; // local
+                }
             }
         }
+        
     }
     else if(buttonLabel == "PLAYBACK MODE (test.csv)") {
         startTime = timeElapsed;
         rawDataBuffer = "";
         if(playbackMode) {
             EegTimeGraph::dynamicEegMax = 1;
-            poorSignalGraph->reset();
+            //poorSignalGraph->reset();
             attentionGraph->reset();
             meditationGraph->reset();
             
@@ -280,7 +356,7 @@ void testApp::onGuiChanged(const void* sender, string &buttonLabel) {
             
             // reset all the graphs
             EegTimeGraph::dynamicEegMax = 1;
-            poorSignalGraph->reset();
+            //poorSignalGraph->reset();
             attentionGraph->reset();
             meditationGraph->reset();
             
@@ -345,13 +421,15 @@ void testApp::loadPlaybackFile(string path) {
         
         
     }
+    
+    timeline->setRange(0, dataEntries.size()-1);
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
     //
     //+ "fps: " + ofToString(ofGetFrameRate())
-    ofSetWindowTitle(ofToString((tg.isReady) ? "Connected" : (playbackMode) ? "Playback mode" : "Connecting... (" + ofToString(tg.attempts) + " attempts)") );
+    ofSetWindowTitle(ofToString((tg.isReady) ? "Connected" : (playbackMode) ? "Playback mode" : "Connecting... (" + ofToString(tg.attempts) + " attempts)"));
     timeElapsed = ofGetElapsedTimef();
     
     // find global max
@@ -363,26 +441,47 @@ void testApp::update(){
     if(!playbackMode) {
         tg.update();
         
-        poorSignalGraph->insertValue(allData.signal);
-        attentionGraph->insertValue(allData.attention);
-        meditationGraph->insertValue(allData.meditation);
+        float totalActivity = allData.getTotalActivity();
         
-        eegDeltaGraph->insertValue(allData.eegDelta);
-        eegThetaGraph->insertValue(allData.eegTheta);
-        eegLowAlphaGraph->insertValue(allData.eegLowAlpha);
-        eegHighAlphaGraph->insertValue(allData.eegHighAlpha);
-        eegLowBetaGraph->insertValue(allData.eegLowBeta);
-        eegHighBetaGraph->insertValue(allData.eegHighBeta);
-        eegLowGammaGraph->insertValue(allData.eegLowGamma);
-        eegMidGammaGraph->insertValue(allData.eegMidGamma);
+        if(!isPaused) {
+            //poorSignalGraph->insertValue(allData.signal);
+            attentionGraph->insertValue(allData.attention);
+            meditationGraph->insertValue(allData.meditation);
+            
+            eegDeltaGraph->insertValue(allData.eegDelta);
+            eegThetaGraph->insertValue(allData.eegTheta);
+            eegLowAlphaGraph->insertValue(allData.eegLowAlpha);
+            eegHighAlphaGraph->insertValue(allData.eegHighAlpha);
+            eegLowBetaGraph->insertValue(allData.eegLowBeta);
+            eegHighBetaGraph->insertValue(allData.eegHighBeta);
+            eegLowGammaGraph->insertValue(allData.eegLowGamma);
+            eegMidGammaGraph->insertValue(allData.eegMidGamma);
+            
+            // global max
+            // this is gonna look weird over time...
+            // need to store it every frame
+            //EegTimeGraph::dynamicEegMax = totalActivity;
+            EegTimeGraph::updateDynamicEegMaxValues(totalActivity);
+            
+            // freq graph            
+            frequencyGraph->insertValue(allData.eegDelta/totalActivity);
+            frequencyGraph->insertValue(allData.eegTheta/totalActivity);
+            frequencyGraph->insertValue(allData.eegLowAlpha/totalActivity);
+            frequencyGraph->insertValue(allData.eegHighAlpha/totalActivity);
+            frequencyGraph->insertValue(allData.eegLowBeta/totalActivity);
+            frequencyGraph->insertValue(allData.eegHighBeta/totalActivity);
+            frequencyGraph->insertValue(allData.eegLowGamma/totalActivity);
+            frequencyGraph->insertValue(allData.eegMidGamma/totalActivity);
+            frequencyGraph->insertValue(0);
+        }
         
-        // note- not displaying the raw data at all in playback mode
-        
+                
         // all values except raw are sent at 30fps
-        // raw data is sent around 512x a second (not sent in plyback mode)
+        // raw data is sent around 512x a second (not sent in plyback mode, see event listener)
         if(sendOscEveryFrame) {
             
-            poorSignalGraph->sendOSC(allData.signal);// poorsignal.value);
+            //poorSignalGraph->sendOSC(allData.signal);// poorsignal.value);
+            settings.sendOSC("/signal", allData.signal);
             attentionGraph->sendOSC(allData.attention);// attention.value);
             meditationGraph->sendOSC(allData.meditation);// meditation.value);
             
@@ -394,6 +493,7 @@ void testApp::update(){
             eegHighBetaGraph->sendOSC(allData.eegHighBeta);
             eegLowGammaGraph->sendOSC(allData.eegLowGamma);
             eegMidGammaGraph->sendOSC(allData.eegMidGamma);
+            settings.sendOSC("/activity", totalActivity);
             //eegDeltaText->sendOSC(eegDelta.value);
             /*eegThetaText->sendOSC(eegTheta.value);
              eegLowAlphaText->sendOSC(eegLowAlpha.value);
@@ -407,9 +507,12 @@ void testApp::update(){
     } else {
         //tg.idle();
         // manually playback data from file
-        if(dataEntries.size()) {
+        if(dataEntries.size() && !isPaused) {
             
-            poorSignalGraph->insertValue(dataEntries[playhead].signal);
+            float totalActivity = dataEntries[playhead].eegDelta + dataEntries[playhead].eegTheta + dataEntries[playhead].eegLowAlpha + dataEntries[playhead].eegHighAlpha + dataEntries[playhead].eegLowBeta + dataEntries[playhead].eegHighBeta + dataEntries[playhead].eegLowGamma + dataEntries[playhead].eegMidGamma;
+            
+            //poorSignalGraph->insertValue(dataEntries[playhead].signal);
+            allData.signal = dataEntries[playhead].signal;
             attentionGraph->insertValue(dataEntries[playhead].attention);
             meditationGraph->insertValue(dataEntries[playhead].meditation);
             
@@ -422,9 +525,27 @@ void testApp::update(){
             eegLowGammaGraph->insertValue(dataEntries[playhead].eegLowGamma);
             eegMidGammaGraph->insertValue(dataEntries[playhead].eegMidGamma);
             
+            // freq graph
+            frequencyGraph->insertValue(dataEntries[playhead].eegDelta/totalActivity);
+            frequencyGraph->insertValue(dataEntries[playhead].eegTheta/totalActivity);
+            frequencyGraph->insertValue(dataEntries[playhead].eegLowAlpha/totalActivity);
+            frequencyGraph->insertValue(dataEntries[playhead].eegHighAlpha/totalActivity);
+            frequencyGraph->insertValue(dataEntries[playhead].eegLowBeta/totalActivity);
+            frequencyGraph->insertValue(dataEntries[playhead].eegHighBeta/totalActivity);
+            frequencyGraph->insertValue(dataEntries[playhead].eegLowGamma/totalActivity);
+            frequencyGraph->insertValue(dataEntries[playhead].eegMidGamma/totalActivity);
+            frequencyGraph->insertValue(0);
+            
+            // global max
+            // this is gonna look weird over time...
+            // need to store it every frame
+            EegTimeGraph::dynamicEegMax = totalActivity;
+            EegTimeGraph::updateDynamicEegMaxValues(totalActivity);
+            
             
             if(sendOscEveryFrame) {
-                poorSignalGraph->sendOSC(dataEntries[playhead].signal);// poorsignal.value);
+                //poorSignalGraph->sendOSC(dataEntries[playhead].signal);// poorsignal.value);
+                settings.sendOSC("/signal", dataEntries[playhead].signal);
                 attentionGraph->sendOSC(dataEntries[playhead].attention);// attention.value);
                 meditationGraph->sendOSC(dataEntries[playhead].meditation);// meditation.value);
                 
@@ -436,6 +557,7 @@ void testApp::update(){
                 eegHighBetaGraph->sendOSC(dataEntries[playhead].eegHighBeta);
                 eegLowGammaGraph->sendOSC(dataEntries[playhead].eegLowGamma);
                 eegMidGammaGraph->sendOSC(dataEntries[playhead].eegMidGamma);
+                settings.sendOSC("/activity", totalActivity);
             }
             
             //poorsignal.set(dataEntries[playhead].signal, timeElapsed);
@@ -451,11 +573,9 @@ void testApp::update(){
             //eegDelta.set(dataEntries[playhead].eegDelta, timeElapsed);
             
             // in playback mode - need to send the raw data osc seperately
-            if(tg.allowRawDataEvents) {
-                for(int i = 0; i < dataEntries[playhead].rawDataBufferValues.size(); i++) {
-                    rawDataText->sendOSC(dataEntries[playhead].rawDataBufferValues[i]);
-                }
-                
+            for(int i = 0; i < dataEntries[playhead].rawDataBufferValues.size(); i++) {
+                rawDataGraph->insertValue(dataEntries[playhead].rawDataBufferValues[i]);
+                if(tg.allowRawDataEvents) rawDataGraph->sendOSC(dataEntries[playhead].rawDataBufferValues[i]);
             }
             
             playhead++;
@@ -481,7 +601,7 @@ void testApp::update(){
     if(isRecording) {
         
         // save shit
-        output << (timeElapsed-startTime) << "," << poorSignalGraph->currentValue << "," << attentionGraph->currentValue << "," << meditationGraph->currentValue << "," << eegDeltaGraph->currentValue << "," << eegThetaGraph->currentValue << "," << eegLowAlphaGraph->currentValue << "," << eegHighAlphaGraph->currentValue << "," << eegLowBetaGraph->currentValue << "," << eegHighBetaGraph->currentValue << "," << eegLowGammaGraph->currentValue << "," << eegMidGammaGraph->currentValue << "," << rawDataBuffer << "\n";
+        output << (timeElapsed-startTime) << "," << allData.signal << "," << attentionGraph->currentValue << "," << meditationGraph->currentValue << "," << eegDeltaGraph->currentValue << "," << eegThetaGraph->currentValue << "," << eegLowAlphaGraph->currentValue << "," << eegHighAlphaGraph->currentValue << "," << eegLowBetaGraph->currentValue << "," << eegHighBetaGraph->currentValue << "," << eegLowGammaGraph->currentValue << "," << eegMidGammaGraph->currentValue << "," << rawDataBuffer << "\n";
         
         // clear rawDataBuffer every frame
         rawDataBuffer = "";
@@ -490,6 +610,7 @@ void testApp::update(){
     //ofLog() << globalMax;
 }
 
+float attSmooth = 0;
 //--------------------------------------------------------------
 void testApp::draw(){
     
@@ -504,40 +625,18 @@ void testApp::draw(){
     ofRect(0, 0, 512, ofGetHeight());
     
     
-    /*if(drawCharts) {
-        
-        int leftX = 20;
-        int rightX = ofGetWidth()/2 + 20;
-        int ySpace  = 24;
-        int leftY = 110;
-        int rightY = ySpace;//ofGetHeight()/2 - (eegTheta.chartHeight/2);
-        */
-        // left column
-        /*poorsignal.drawChart(leftX, leftY);
-        leftY += poorsignal.chartHeight + ySpace;
-        attention.drawChart(leftX, leftY);
-        leftY += poorsignal.chartHeight + ySpace;
-        meditation.drawChart(leftX, leftY);
-        leftY += poorsignal.chartHeight + ySpace;*/
-        
-        // right column
-        //eegDelta.drawChart(rightX,rightY);
-        //rightY += eegDelta.chartHeight + ySpace;
-        /*eegTheta.drawChart(rightX,rightY);
-        rightY += eegTheta.chartHeight + ySpace;
-        eegLowAlpha.drawChart(rightX,rightY);
-        rightY += eegTheta.chartHeight + ySpace;
-        eegHighAlpha.drawChart(rightX,rightY);
-        rightY += eegTheta.chartHeight + ySpace;
-        eegLowBeta.drawChart(rightX, rightY);
-        rightY += eegTheta.chartHeight + ySpace;
-        eegHighBeta.drawChart(rightX, rightY);
-        rightY += eegTheta.chartHeight + ySpace;
-        eegLowGamma.drawChart(rightX, rightY);
-        rightY += eegTheta.chartHeight + ySpace;
-        eegMidGamma.drawChart(rightX, rightY);
-        rightY += eegTheta.chartHeight + ySpace;*/
-    //}
+    // a circle that responds to attention
+    // draw a circle on screen which visualises a vertical attention spand
+    /*ofPushMatrix();
+    ofPushStyle();
+    attSmooth += (allData.attention - attSmooth) * .1;
+    ofTranslate(512, ofMap(attSmooth, 0, 100, ofGetHeight(), 0));
+    ofSetColor(255);
+    ofCircle(0,0, 15);
+    ofPopStyle();
+    ofPopMatrix();*/
+    
+    
     
     // draw a red circle at the bottom when recording
     if(isRecording) {
@@ -547,6 +646,8 @@ void testApp::draw(){
     
     settings.draw();
 }
+
+
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
@@ -567,10 +668,12 @@ void testApp::keyPressed(int key){
         }
         drawCharts = !drawCharts;
         if(drawCharts) {
-            ofSetWindowShape(1024, 768);
+            ofSetWindowShape(1280, 960);
         } else {
             ofSetWindowShape(250, 75);
         }
+    } else if(key == 'p') {
+        isPaused = !isPaused;
     } else if(key == 'P') {
         
         for(int i = 0; i < meditationGraph->savedValues.size() * 4; i++) {
@@ -582,7 +685,11 @@ void testApp::keyPressed(int key){
             ofLog() << meditationGraph->savedValues[i];
         }
         
-    } else if(key == 'X') {
+    } else if(key == 'n') {
+        normaliseMaxToCurrentSet = !normaliseMaxToCurrentSet;
+    }
+    
+    else if(key == 'X') {
         tg.close();
     }
 }
@@ -628,13 +735,13 @@ void testApp::onThinkgearError(ofMessage& err){
     ofLog() << "*** THINKGEAR onError..." << err.message;
 }
 
-// raw data does not send at frame rate - it sends faster!
+// raw data does not send at frame rate - it sends faster! 512 samples a second
 void testApp::onThinkgearRaw(ofxThinkgearEventArgs& args){
     
     //ofLog() << "raw: " << args.raw;
     rawDataValue = args.raw;
     if(tg.allowRawDataEvents) {        
-        rawDataText->sendOSC(rawDataValue );
+        rawDataGraph->sendOSC(rawDataValue );
     }
     
     if(isRecording) {
@@ -645,6 +752,10 @@ void testApp::onThinkgearRaw(ofxThinkgearEventArgs& args){
         }
         
     }
+    
+    rawDataGraph->insertValue(rawDataValue);
+    
+   
 }
 
 void testApp::onThinkgearBattery(ofxThinkgearEventArgs& args){

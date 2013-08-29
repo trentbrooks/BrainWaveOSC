@@ -73,7 +73,7 @@ public:
     ofImage background;
     // color background
     bool hasBackgroundColor;
-    void setBackgroundColor(ofColor bg,int bgX, int bgY, int bgWidth, int bgHeight);
+    void setBackgroundColor(ofColor bg,int bgX=-1, int bgY=-1, int bgWidth=-1, int bgHeight=-1);
     ofColor bg;
     int bgX,bgY,bgWidth,bgHeight;
     bool hasFont;
@@ -88,6 +88,7 @@ public:
     int defaultPosX;
     int defaultPosY;
     int defaultColumn;
+    int defaultColumnSpacer;
     int defaultItemWidth;
     int defaultItemHeight;
     int defaultSpacer;
@@ -96,9 +97,16 @@ public:
     int lastItemPosY;
     int lastItemWidth;
     int lastItemHeight;
+    void moveTo(int posX, int posY); // all subsequently added items will be added from this position
+    void setSize(int width, int height); // all subsequently added items will have this width/height
+    void setWidth(int width);
+    void setHeight(int height);
+    void setItemSpacer(int space);
+    void setColumnSpacer(int space);
     
     // when auto positioning you can call this to change columns before adding another item
     void nextColumn();
+    //void previousColumn();
     
     // drawing
     void draw();
@@ -179,7 +187,10 @@ public:
     void disableSendOSC();
     ofxOscSender* oscSender;
     bool oscEnabled;
-
+    
+    ofxOscMessage msg;
+    void sendOSC(string address, float val); // send any generic message- must pass address + value
+    void sendOSC(string address, int val);
 };
 
 

@@ -57,7 +57,7 @@ void ofxTouchGUIButton::draw(){
             
             // draw text
             ofPushStyle();
-            ofSetColor(textColourLight);
+            ofSetColor(textColour);
             drawText(label, 1);
             ofPopStyle();
         }

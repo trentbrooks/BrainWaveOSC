@@ -29,7 +29,7 @@ public:
     //ofEvent<string> onButtonPressedEvent;
     
     //void aUpdate(ofEventArgs &e);
-    ofColor fontColor;
+    //ofColor fontColor;
     int fontSize;
     
     void setInput(string *placeHolderText);

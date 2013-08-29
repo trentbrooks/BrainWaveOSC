@@ -5,6 +5,7 @@
 ofxTouchGUIText::ofxTouchGUIText(){
     
     isTextTitle = false;
+    drawTextBg = false;
     floatVal = 0;
     intVal = 0;
     stringVal = 0;
@@ -63,6 +64,11 @@ void ofxTouchGUIText::setValue(string *val) {
     textType = TEXT_STRING;
     textOffsetX = 0;
 }
+
+//--------------------------------------------------------------
+void ofxTouchGUIText::setBackgroundVisible(bool vis) {
+    drawTextBg = vis;
+}
     
 //--------------------------------------------------------------
 void ofxTouchGUIText::draw(){
@@ -70,12 +76,13 @@ void ofxTouchGUIText::draw(){
     if(!isHidden) {
         ofPushMatrix();
         ofTranslate(int(posX), int(posY));
-        //drawGLRect(vertexArrActive, colorsArrActive);
+        if(drawTextBg) drawGLRect(vertexArrActive, colorsArrActive);
         
         // draw text
         ofPushStyle();
-        //ofSetColor(textColourDark); 
-        ofSetColor(textColourLight); 
+        //ofSetColor(textColourDark);
+        //ofSetColor(textColourLight);
+        ofSetColor(textColour);
         
         /*if(isTextTitle) {
             drawLargeText(label, 0, textOffsetY);//textOffsetY * 2);//textOffsetY); 
@@ -130,19 +137,22 @@ void ofxTouchGUIText::formatText(bool isTextTitle) {
     if(isTextTitle) {
         // automatically offset the text based on the font size
         textOffsetX = fontSizeLarge;
-        textOffsetY = int(textOffsetX / 2);
+        textOffsetY = guiFontLarge->getLineHeight();//int(textOffsetX);// / 2);
         //textOffsetY = guiFont->getLineHeight();
         // reset height
         height = guiFontLarge->stringHeight(label) + textOffsetY;
+        ofLog() << "large " << height;
+        
     } else {
         
         textOffsetY = guiFont->getLineHeight();
         //textOffsetY = -guiFont->stringHeight(label) * .5 + 10;
         height = guiFont->stringHeight(label) + textOffsetY; 
         //cout << ">>>>>" << height << endl;
+        ofLog() << "small " << height;
     }
     
-    //initGLArrays();
+    updateGLArrays();
 }
 
 string ofxTouchGUIText::wrapString(string text, int maxWidth) {

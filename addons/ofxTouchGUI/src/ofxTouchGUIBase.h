@@ -47,6 +47,7 @@ public:
     void setTextOffsets(int textOffsetX, int textOffsetY);
     
     
+    
     // touch events
     void enable(bool useMouse=false); // defaults to false = touch events instead of mouse events
     void disable();
@@ -87,7 +88,7 @@ public:
     
     
     // OPENGL COLOURS/VERTEX
-    virtual void initGLArrays();
+    virtual void updateGLArrays();
     float *colorsArr; // background colors array
     float *colorsArrActive; // foreground colours array
     float *vertexArr; // vertex positions array main    
@@ -105,10 +106,12 @@ public:
     ofColor activeClrBL;// = 0
     ofColor activeClrBR;// = 0
     
+    ofColor textColour;
     ofColor textColourDark; // 0
     ofColor textColourLight; // 255
     
     //customise colors
+    void setTextClr(ofColor clr);
     void setBackgroundClrs(ofColor singleClr);
     void setBackgroundClrs(ofColor tl, ofColor tr, ofColor bl, ofColor br);
     void setActiveClrs(ofColor singleClr);

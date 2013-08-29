@@ -65,7 +65,7 @@ void ofxTouchGUIToggleButton::draw(){
         
         // draw text
         ofPushStyle();
-        ofSetColor(textColourLight);
+        ofSetColor(textColour);
         drawText(label, 0);
         ofPopStyle();
           

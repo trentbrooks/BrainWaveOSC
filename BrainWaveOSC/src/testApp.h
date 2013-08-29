@@ -4,7 +4,6 @@
 #include "ofxThinkgear.h"
 #include "BrainWaveGUI.h"
 
-
 struct EegData {
     float signal; // 0 = good
     float attention, meditation; //80-100 = high, 40-60 = baseline
@@ -12,6 +11,10 @@ struct EegData {
 
     vector<float> rawDataBufferValues; // -2048 - 2048
     float elapsed; // seconds
+    
+    float getTotalActivity() {
+        return eegDelta + eegTheta + eegLowAlpha + eegHighAlpha + eegLowBeta + eegHighBeta + eegLowGamma + eegMidGamma;
+    }
 };
 
 class testApp : public ofBaseApp {
@@ -59,10 +62,16 @@ public:
     EegTimeGraph* eegHighBetaGraph;
     EegTimeGraph* eegLowGammaGraph;
     EegTimeGraph* eegMidGammaGraph;
-    vector<EegTimeGraph*> eegSet; 
+    ofxTouchGUITimeGraph* rawDataGraph;
+    EegFrequencyGraph* frequencyGraph;
+    ofxTouchGUISlider* timeline;
+    vector<EegTimeGraph*> eegSet;
+    
+    bool normaliseMaxToCurrentSet;
 
     float startTime;
     float timeElapsed;
+
     
     // file saving
     ofFile output;
@@ -91,6 +100,7 @@ public:
     void loadPlaybackFile(string path);
     bool loadFromFile;
     bool playbackMode;
+    bool isPaused;
     int playhead;
     vector<EegData> dataEntries;
 };

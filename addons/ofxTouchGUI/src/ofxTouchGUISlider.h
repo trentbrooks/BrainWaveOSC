@@ -16,6 +16,7 @@ public:
     // slider values
     float min;
     float max;
+    void setRange(float min, float max);
     float *val;
     int *intVal;
     int defaultIntVal; 

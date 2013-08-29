@@ -15,12 +15,18 @@ public:
 	~EegTimeGraph();
     
     //static float dynamicEegMin;
+    static bool useGlobalRanges;
     static float dynamicEegMax;
+    static deque<float> dynamicEegMaxValues;
+    static void updateDynamicEegMaxValues(float val);
+    static int maxDynamicEegValues;
+    float eegMax;
    
     void insertValue(float val);
     int currentValue;
     
     // display
     virtual void draw();
+
 };
 

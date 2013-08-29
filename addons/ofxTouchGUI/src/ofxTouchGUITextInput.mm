@@ -8,7 +8,8 @@ ofxTouchGUITextInput::ofxTouchGUITextInput(){
     wasKeyboardOpen = false;
     //input = "";
     //placeHolderInput = "";
-    fontColor = ofColor(40,40,40,255);
+    //fontColor = ofColor(40,40,40,255);
+    textColour = textColourDark;
     fontSize = 16;
     defaultInput = "";
 }
@@ -42,7 +43,7 @@ void ofxTouchGUITextInput::setInput(string *placeHolderText) {
             keyboard->setVisible(true);
             //keyboard->setMaxChars(100);
             keyboard->setBgColor(255, 255, 255, 255); // retina weirdness if(retina) 
-            keyboard->setFontColor(fontColor.r,fontColor.g,fontColor.b,fontColor.a);
+            keyboard->setFontColor(textColour.r,textColour.g,textColour.b,textColour.a);
             keyboard->setFontSize(fontSize);
             //keyboard->disableAutoCorrection(); // disable auto type corrections, custom method added to ofxIphoneKeyboard.
             keyboard->updateOrientation();

@@ -7,6 +7,7 @@ ofxTouchGUI::ofxTouchGUI(){
     numGuiItems = 0;
     hasFont = false;
     hasBackground = false;
+    hasBackgroundColor = false;
     useMouse = false;
     settingsLoaded = false;
     isAutoDrawing = false;
@@ -17,6 +18,7 @@ ofxTouchGUI::ofxTouchGUI(){
     defaultPosX = 20;
     defaultPosY = 20;
     defaultColumn = 1;
+    defaultColumnSpacer = 25;
     defaultItemWidth = 200;
     defaultItemHeight = 25;
     lastItemPosX = defaultPosX;
@@ -25,6 +27,9 @@ ofxTouchGUI::ofxTouchGUI(){
     lastItemHeight = defaultItemHeight;
     defaultSpacer = 5;
     defaultSaveToFile = "tg_settings.xml";
+    
+    moveTo(defaultPosX, defaultPosY);
+    setSize(defaultItemWidth, defaultItemHeight);
 }
 
 ofxTouchGUI::~ofxTouchGUI(){
@@ -49,7 +54,6 @@ void ofxTouchGUI::loadSettings(string saveToFile, bool loadDefaultFont, bool use
     #ifdef TARGET_OF_IPHONE
         this->saveToFile = ofxiPhoneGetDocumentsDirectory() + saveToFile;
     #endif
-    
     // load xml from public itunes directory
     if( XML.loadFile(this->saveToFile) ){
         settingsLoaded = true;
@@ -57,9 +61,9 @@ void ofxTouchGUI::loadSettings(string saveToFile, bool loadDefaultFont, bool use
         settingsLoaded = true;
         //this->saveToFile = defaultSaveToFile;
     } else {
-        printf("\nNO XML file to load");
+        ofLog() << "TouchGUI: NO XML file to load. Settings will be saved on the first draw."; //, creating empty " << saveToFile << "
         //this->saveToFile = defaultSaveToFile;
-        saveSettings();
+        //saveSettings();
     }
     
     // load the default font
@@ -83,10 +87,10 @@ void ofxTouchGUI::setBackgroundColor(ofColor bg, int bgX, int bgY, int bgWidth, 
     
     hasBackgroundColor = true;
     this->bg = bg;
-    this->bgX = bgX;
-    this->bgY = bgY;
-    this->bgWidth = bgWidth;
-    this->bgHeight = bgHeight;
+    this->bgX = (bgX == -1) ? 0 : bgX;
+    this->bgY = (bgY == -1) ? 0 : bgY;
+    this->bgWidth = bgWidth;//(bgWidth == -1) ? 0 : bgWidth;
+    this->bgHeight = bgHeight;//(bgHeight == -1) ? 0 : bgHeight;
     
 }
 
@@ -109,7 +113,7 @@ void ofxTouchGUI::loadFonts(string fontPathSmall, string fontPathLarge, int font
     guiFont.loadFont(fontPathSmall,fontSizeSmall,antialiasedSmall,true);
     guiFont.setLineHeight(int(fontSizeSmall * 2)); // not sure about this?
     guiFontLarge.loadFont(fontPathLarge,fontSizeLarge,antialisedLarge,true);
-    guiFontLarge.setLineHeight(int(fontSizeLarge * 2 * .8));
+    guiFontLarge.setLineHeight(int(fontSizeLarge * 2 * .8)); // weird.
     
     this->fontSize = fontSizeSmall; // used to determine text offsetX for gui elements
     this->fontSizeLarge = fontSizeLarge; // used to determine text offsetX
@@ -118,14 +122,16 @@ void ofxTouchGUI::loadFonts(string fontPathSmall, string fontPathLarge, int font
 // DEFAULT SIZE/POSITIONING
 void ofxTouchGUI::checkPosSize(int& posX, int& posY, int& width, int& height) {
     if(posX == -1) {
-        ///posX = defaultColumn * defaultPosX; 
+        // move to same position as last item
         posX = (numGuiItems == 0) ? defaultPosX : lastItemPosX;
     }
     if(posY == -1) {
-        //posY = (numGuiItems == 0) ? defaultPosY : (defaultPosY + defaultSpacer) * numGuiItems;
+        // move to last items position + last items height
         posY = (numGuiItems == 0) ? defaultPosY : lastItemPosY + lastItemHeight + defaultSpacer;  
         if(posY > ofGetHeight() - defaultItemHeight - defaultSpacer) {
-            posY = defaultPosY;//(numGuiItems == 0) ? defaultPosY : guiItems[0]->posY; // align with top item
+            
+            // if no more room- move to next column
+            posY = defaultPosY; // align with top item
             posX = (numGuiItems == 0) ? defaultPosX : lastItemPosX + lastItemWidth + defaultPosX;
         }
     }
@@ -143,21 +149,97 @@ void ofxTouchGUI::checkPosSize(int& posX, int& posY, int& width, int& height) {
     lastItemHeight = height;
 }
 
+// all subsequently added items will be added from this position
+void ofxTouchGUI::moveTo(int posX, int posY) {
+    lastItemPosX = posX;
+    int offsetY = -lastItemHeight - defaultSpacer;
+    lastItemPosY = posY + offsetY;
+    if(numGuiItems == 0) {
+        
+        // if no items have been added and we moveTo, defaultPosX and defaultPosY need to be changed
+        defaultPosX = lastItemPosX;
+        defaultPosY = lastItemPosY-offsetY;
+        lastItemPosY = defaultPosY;
+    }
+}
+
+// auto gap between items
+void ofxTouchGUI::setItemSpacer(int space) {
+    defaultSpacer = space;
+}
+
+// auto gap between columns
+void ofxTouchGUI::setColumnSpacer(int space) {
+    defaultColumnSpacer = space;
+}
+
+// all subsequently added items will have this width/height
+void ofxTouchGUI::setSize(int width, int height) {
+    //lastItemWidth = defaultItemWidth = width;
+    //lastItemHeight = defaultItemHeight = height;
+    defaultItemWidth = width;
+    defaultItemHeight = height;
+}
+
+// all subsequently added items will have this width
+void ofxTouchGUI::setWidth(int width) {
+    //lastItemWidth = defaultItemWidth = width;
+    defaultItemWidth = width;
+}
+
+// all subsequently added items will have this /height
+void ofxTouchGUI::setHeight(int height) {
+    //lastItemHeight = defaultItemHeight = height;
+    defaultItemHeight = height;
+}
+
+// shifts the cursor (moveto) position over
+// use the defaultItemWidth + defaultItemHeight instead of lastItemWidth + lastItemHeight
 void ofxTouchGUI::nextColumn() {
     
-    lastItemPosX = lastItemPosX + lastItemWidth + defaultPosX;
-    lastItemPosY = defaultPosY - lastItemHeight - defaultSpacer;//guiItems[0]->posY;
+    lastItemPosX = lastItemPosX + defaultItemWidth + defaultColumnSpacer;
+    lastItemPosY = defaultPosY - defaultItemHeight - defaultSpacer;//guiItems[0]->posY;
 }
+
+// doesn't work
+/*void ofxTouchGUI::previousColumn() {
+    
+    lastItemPosX = lastItemPosX + lastItemWidth + defaultColumnSpacer;
+    lastItemPosY = defaultPosY - lastItemHeight - defaultSpacer;//guiItems[0]->posY;
+}*/
 
 // DRAW
 //--------------------------------------------------------------
 void ofxTouchGUI::draw(){
-    
-    
+
+    // All items should have been added before first draw.
+    // If this is the first time load, need to save all to the settings.xml.
+    if(!settingsLoaded) {
+        ofLog() << "TouchGUI: first time saving settings!";
+        saveSettings(); // save the settings once only, when file exists no need to save.
+        settingsLoaded = true;
+
+    }
     
     if(!isHidden) {
         
         if(hasBackgroundColor) {
+            
+            // if we have a background colour with auto width/height (-1,-1)
+            if(bgWidth == -1 && bgHeight == -1) {
+                int lowestItemY = 0;
+                int furthestItemX = 0;
+                for(int i = 0; i < numGuiItems; i++) {
+                    float itemY = guiItems[i]->posY + guiItems[i]->height;
+                    float itemX = guiItems[i]->posX + guiItems[i]->width;
+                    if(itemY > lowestItemY) lowestItemY = itemY + defaultColumnSpacer;
+                    if(itemX > furthestItemX) furthestItemX = itemX + defaultColumnSpacer;
+                }
+                
+                bgWidth = furthestItemX;
+                bgHeight = lowestItemY;
+            }
+            
             ofSetColor(bg);
             ofRect(bgX, bgY, bgWidth, bgHeight);
         }
@@ -165,6 +247,7 @@ void ofxTouchGUI::draw(){
         if(hasBackground) background.draw(0, 0);
         
         // loop over list and draw (unless it's a dropdown)
+        // need to revisit this
         ofxTouchGUIBase* topItem = 0; // one item can be on top (for dropdown menu)
         for(int i = 0; i < numGuiItems; i++) {
 
@@ -279,12 +362,15 @@ ofxTouchGUIText* ofxTouchGUI::addTitleText(string textLabel, int posX, int posY,
     if(hasFont) tgt->assignFonts(&guiFont,fontSize, &guiFontLarge,fontSizeLarge);    
     tgt->formatText(true); // true = use title text
     
+    // text height is different from passed in height- may be larger, so need to update lastItemHeight
+    if(tgt->height > height) lastItemHeight = tgt->height;
+
     guiItems.push_back(tgt);
     numGuiItems = guiItems.size();
     
     // currently this does not save to xml because it's not interactive, just displayed. may update in the future, but will cause problems with text formatting/auto wrapping so leaving out for now.
     // also this does not connect to OSC - same as above.
-    if(oscEnabled) tgt->enableSendOSC(oscSender);
+    //if(oscEnabled) tgt->enableSendOSC(oscSender);
     
     return tgt; // return object to add listeners, etc.
 }
@@ -299,15 +385,17 @@ ofxTouchGUIText* ofxTouchGUI::addText(string textLabel, int posX, int posY, int 
     tgt->enable(useMouse);
     if(hasFont) tgt->assignFonts(&guiFont,fontSize, &guiFontLarge,fontSizeLarge);    
     tgt->formatText(false); // true = use title text
-    //checkPosSize(posX, posY, width, height);
-    lastItemHeight = tgt->height;
     
+    
+    // text height is different from passed in height- may be larger, so need to update lastItemHeight
+    if(tgt->height > height) lastItemHeight = tgt->height;
+
     guiItems.push_back(tgt);
     numGuiItems = guiItems.size();
     
     // currently this does not save to xml because it's not interactive, just displayed. may update in the future, but will cause problems with text formatting/auto wrapping so leaving out for now.
     // also this does not connect to OSC - same as above.
-    if(oscEnabled) tgt->enableSendOSC(oscSender);
+    //if(oscEnabled) tgt->enableSendOSC(oscSender);
     
     return tgt; // return object to add listeners, etc.
 }
@@ -319,17 +407,21 @@ ofxTouchGUIText* ofxTouchGUI::addVarText(string textLabel, string *val, int posX
     //tgt->itemId = TEXT_TYPE + ofToString(numGuiItems);
     checkPosSize(posX, posY, width, height);
     tgt->setDisplay(textLabel, posX, posY, width, height);
-    tgt->setValue(val);
+    
     tgt->enable(useMouse);
-    if(hasFont) tgt->assignFonts(&guiFont,fontSize, &guiFontLarge,fontSizeLarge);    
+    if(hasFont) tgt->assignFonts(&guiFont,fontSize, &guiFontLarge,fontSizeLarge);
+    tgt->setValue(val); // add value after fonts are set to avoid text offsets
     //tgt->formatText(false); // true = use title text
     
     guiItems.push_back(tgt);
     numGuiItems = guiItems.size();
     
-    // currently this does not save to xml because it's not interactive, just displayed. may update in the future, but will cause problems with text formatting/auto wrapping so leaving out for now.
-    // also this does not connect to OSC - same as above.
-    if(oscEnabled) tgt->enableSendOSC(oscSender);
+    // this does not connect to OSC.
+    //if(oscEnabled) tgt->enableSendOSC(oscSender);
+    
+    // save controller if doesn't already exist, if it does overwrite the passed in value with the saved xml value
+    //saveControl(TOGGLE_TYPE, toggleLabel, toggleVal);
+    setVariable(textLabel, val); // using the 'setVariable' function to save value
     
     return tgt; // return object to add listeners, etc.
 }
@@ -349,9 +441,12 @@ ofxTouchGUIText* ofxTouchGUI::addVarText(string textLabel, float *val, int posX,
     guiItems.push_back(tgt);
     numGuiItems = guiItems.size();
     
-    // currently this does not save to xml because it's not interactive, just displayed. may update in the future, but will cause problems with text formatting/auto wrapping so leaving out for now.
-    // also this does not connect to OSC - same as above.
-    if(oscEnabled) tgt->enableSendOSC(oscSender);
+    // this does not connect to OSC.
+    //if(oscEnabled) tgt->enableSendOSC(oscSender);
+    
+    // save controller if doesn't already exist, if it does overwrite the passed in value with the saved xml value
+    //saveControl(TOGGLE_TYPE, toggleLabel, toggleVal);
+    setVariable(textLabel, val); // using the 'setVariable' function to save value
     
     return tgt; // return object to add listeners, etc.
 }
@@ -371,9 +466,12 @@ ofxTouchGUIText* ofxTouchGUI::addVarText(string textLabel, int *val, int posX, i
     guiItems.push_back(tgt);
     numGuiItems = guiItems.size();
     
-    // currently this does not save to xml because it's not interactive, just displayed. may update in the future, but will cause problems with text formatting/auto wrapping so leaving out for now.
-    // also this does not connect to OSC - same as above.
-    if(oscEnabled) tgt->enableSendOSC(oscSender);
+    // this does not connect to OSC.
+    //if(oscEnabled) tgt->enableSendOSC(oscSender);
+    
+    // save controller if doesn't already exist, if it does overwrite the passed in value with the saved xml value
+    //saveControl(TOGGLE_TYPE, toggleLabel, toggleVal);
+    setVariable(textLabel, val); // using the 'setVariable' function to save value
     
     return tgt; // return object to add listeners, etc.
 }
@@ -393,9 +491,12 @@ ofxTouchGUIText* ofxTouchGUI::addVarText(string textLabel, bool *val, int posX, 
     guiItems.push_back(tgt);
     numGuiItems = guiItems.size();
     
-    // currently this does not save to xml because it's not interactive, just displayed. may update in the future, but will cause problems with text formatting/auto wrapping so leaving out for now.
-    // also this does not connect to OSC - same as above.
-    if(oscEnabled) tgt->enableSendOSC(oscSender);
+    // this does not connect to OSC.
+    //if(oscEnabled) tgt->enableSendOSC(oscSender);
+    
+    // save controller if doesn't already exist, if it does overwrite the passed in value with the saved xml value
+    //saveControl(TOGGLE_TYPE, toggleLabel, toggleVal);
+    setVariable(textLabel, val); // using the 'setVariable' function to save value
     
     return tgt; // return object to add listeners, etc.
 }
@@ -545,7 +646,7 @@ ofxTouchGUITimeGraph* ofxTouchGUI::addTimeGraph(string graphLabel, int maxValues
 }
 
 // CONSTS 
-// read only (can only be changed in xml) - good for config options
+// read only (can only be changed in xml) - good for config options. No osc.
 template <typename T>
 void ofxTouchGUI::setConstant(string constName, T *fixedConst){
     
@@ -562,7 +663,7 @@ void ofxTouchGUI::setConstant(string constName, T fixedConst){
 
 
 // VARS 
-// regular vars
+// regular vars. No osc.
 template <typename T>
 void ofxTouchGUI::setVariable(string varName, T *regVar){
     
@@ -687,7 +788,7 @@ void ofxTouchGUI::saveSettings() {
         XML.popTag();
     }
 
-    cout << "Saving file: " << saveToFile << endl;
+    ofLog() << "TouchGUI: file saved " << saveToFile;
     XML.saveFile( saveToFile );
      
 }
@@ -780,6 +881,27 @@ void ofxTouchGUI::disableSendOSC() {
 }
 
 
+// generic osc message sending
+void ofxTouchGUI::sendOSC(string address, float val) {
+    
+    if(oscEnabled) {
+        msg.clear();
+        msg.setAddress(address);//oscAddress + "/" + type + "/" + label); // eg. "/tg/slider/mythingy"
+        msg.addFloatArg(val);
+        oscSender->sendMessage( msg );
+    }    
+}
+
+void ofxTouchGUI::sendOSC(string address, int val) {
+    
+    if(oscEnabled) {
+        msg.clear();
+        msg.setAddress(address);//oscAddress + "/" + type + "/" + label); // eg. "/tg/slider/mythingy"
+        msg.addIntArg(val);
+        oscSender->sendMessage( msg );
+    }
+}
+
 
 
 // TEMPLATES
@@ -806,4 +928,5 @@ template void ofxTouchGUI::setVariable<float>(string varName, float*);
 template void ofxTouchGUI::setVariable<string>(string varName, string*);
 
 // displaying var
+
 

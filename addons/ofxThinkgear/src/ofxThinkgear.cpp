@@ -45,8 +45,16 @@ void tgHandleDataValueFunc( unsigned char extendedCodeLevel, unsigned char code,
                 break;
             case PARSER_CODE_ASIC_EEG_POWER_INT:
                 {
+                    //
                     //131?
                     //eegPower[j] = ((unsigned long)packetData[++i] << 16) | ((unsigned long)packetData[++i] << 8) | (unsigned long)packetData[++i];
+                    
+                    /*int v = 0;
+                    for (int i = 0; i < 24; i+=3) {
+                        v = (value[i] * 255 * 255) + (value[i + 1] * 255) + (value[i + 2]);
+                        ofLog() << "a: " << v;
+                    }*/
+                    
                     int pos = 0;
                     tg.values.eegDelta = (value[pos] << 16) | (value[pos+1] << 8) | (value[pos+2]); pos += 3;
                     tg.values.eegTheta = (value[pos] << 16) | (value[pos+1] << 8) | (value[pos+2]); pos += 3;
@@ -56,6 +64,16 @@ void tgHandleDataValueFunc( unsigned char extendedCodeLevel, unsigned char code,
                     tg.values.eegHighBeta = (value[pos] << 16) | (value[pos+1] << 8) | (value[pos+2]); pos += 3;
                     tg.values.eegLowGamma = (value[pos] << 16) | (value[pos+1] << 8) | (value[pos+2]); pos += 3;
                     tg.values.eegMidGamma = (value[pos] << 16) | (value[pos+1] << 8) | (value[pos+2]); pos += 3;
+                    
+                    /*ofLog() << "b: " << tg.values.eegDelta;
+                    ofLog() << "b: " << tg.values.eegTheta;
+                    ofLog() << "b: " << tg.values.eegLowAlpha;
+                    ofLog() << "b: " << tg.values.eegHighAlpha;
+                    ofLog() << "b: " << tg.values.eegLowBeta;
+                    ofLog() << "b: " << tg.values.eegHighBeta;
+                    ofLog() << "b: " << tg.values.eegLowGamma;
+                    ofLog() << "b: " << tg.values.eegMidGamma;
+                    ofLog() << "\n";*/
                     ofNotifyEvent(tg.onEeg, tg.values);
                     break;
                 }
@@ -88,9 +106,10 @@ ofxThinkgear::~ofxThinkgear(){
     close();
 }
 
-void ofxThinkgear::setup(string deviceName, int baudRate) {
+void ofxThinkgear::setup(string deviceName, int baudRate, int deviceId) {
     this->deviceName = deviceName;
     this->baudRate = baudRate;
+    this->deviceId = values.deviceId = deviceId;
 }
 
 void ofxThinkgear::close(){

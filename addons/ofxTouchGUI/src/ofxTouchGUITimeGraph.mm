@@ -6,10 +6,14 @@ ofxTouchGUITimeGraph::ofxTouchGUITimeGraph(){
     
     // DEFAULT TOGGLE BUTTON BACKGROUND CLRS: GRADIENT GRAY 75%
     // creates a fade from right to left instead of left to right
-    bgClrTL = ofColor(255,90); //rgba
+    /*bgClrTL = ofColor(255,90); //rgba
     bgClrTR = ofColor(255,90);//180,180,180,255); //rgba
     bgClrBL = ofColor(255,90); //rgba
-    bgClrBR = ofColor(255,90);//(180,180,180,255); //rgba
+    bgClrBR = ofColor(255,90);//(180,180,180,255); //rgba*/
+    bgClrTL = ofColor(120,120,120,255); //rgba
+    bgClrTR = ofColor(180,180,180,255); //rgba
+    bgClrBL = ofColor(120,120,120,255); //rgba
+    bgClrBR = ofColor(180,180,180,255); //rgba
 
     currentValue = 0;
     isCustomRangeSet = false;
@@ -18,7 +22,7 @@ ofxTouchGUITimeGraph::ofxTouchGUITimeGraph(){
     
     graphFillClr = activeClrTL;
     min = 0.0f;
-    max = 1.0f;
+    max = 0.01f;
     setMaximumValues(50);
 }
 
@@ -42,6 +46,9 @@ void ofxTouchGUITimeGraph::setCustomRange(float min, float max) {
     isCustomRangeSet = true;
     this->min = min;
     this->max = max;
+    for(int i= 0;i < savedValues.size(); i++) {
+        savedValues[i] = min; // reset all to base
+    }
 }
 void ofxTouchGUITimeGraph::setMaximumValues(int count) {
     
@@ -49,7 +56,7 @@ void ofxTouchGUITimeGraph::setMaximumValues(int count) {
     savedValues.clear();
     savedValues.resize(maxValuesToSave);
     for(int i= 0;i < savedValues.size(); i++) {
-        savedValues[i] = 0.0f;
+        savedValues[i] = min;
     }
     
     int glArraySize = maxValuesToSave * 4;
@@ -66,7 +73,7 @@ void ofxTouchGUITimeGraph::setMaximumValues(int count) {
 void ofxTouchGUITimeGraph::insertValue(float val) {
     
     currentValue = val;
-    while(savedValues.size() > maxValuesToSave) savedValues.pop_front();
+    while(savedValues.size() >= maxValuesToSave) savedValues.pop_front();
     savedValues.push_back(currentValue);
 
     // dynamic min/max
@@ -110,7 +117,8 @@ void ofxTouchGUITimeGraph::draw(){
         glDisableClientState(GL_VERTEX_ARRAY);
         
         // draw text
-        drawText(label + " : " + ofToString(currentValue), textOffsetX, textOffsetY);
+        ofSetColor(textColour);
+        drawText(label + " : " + ofToString(currentValue) + " / " + ofToString(max), textOffsetX, textOffsetY);
         ofPopStyle();
           
         ofPopMatrix();   

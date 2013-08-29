@@ -27,6 +27,12 @@ void ofxTouchGUISlider::resetDefaultValue(){
 
 
 //--------------------------------------------------------------
+void ofxTouchGUISlider::setRange(float min, float max) {
+    this->min = min;
+    this->max = max;
+}
+
+//--------------------------------------------------------------
 void ofxTouchGUISlider::setValues(float *val, float min, float max) {	
 
 	this->val = val;
@@ -35,7 +41,6 @@ void ofxTouchGUISlider::setValues(float *val, float min, float max) {
     defaultVal = *val; // default value copied for resetting
 }
 
-//--------------------------------------------------------------
 void ofxTouchGUISlider::setValues(int *val, int min, int max) {	
     
 	this->intVal = val;
@@ -71,7 +76,7 @@ void ofxTouchGUISlider::draw(){
         
         // draw text
         ofPushStyle();
-        ofSetColor(textColourLight);
+        ofSetColor(textColour);
         drawText(label, 2);
         drawText(ofToString(formattedValue), 0);
         ofPopStyle();
