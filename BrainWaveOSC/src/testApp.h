@@ -4,6 +4,12 @@
 #include "ofxThinkgear.h"
 #include "BrainWaveGUI.h"
 
+// osascript -e 'tell application "System Events"' -e 'shut down' -e 'end tell'
+// sudo halt
+// osascript -e 'tell application "System Events" to restart'
+// osascript -e 'tell application "System Events" to shut down'
+// osascript -e 'tell application "System Events" to sleep'
+
 struct EegData {
     float signal; // 0 = good
     float attention, meditation; //80-100 = high, 40-60 = baseline

@@ -58,7 +58,7 @@ void testApp::setup(){
     
     allData.attention = 0;
 	allData.meditation = 0;
-	allData.signal = 0;
+	allData.signal = 200;
 	allData.eegDelta = 0;
 	allData.eegHighAlpha = 0;
 	allData.eegHighBeta = 0;
@@ -125,7 +125,7 @@ void testApp::setupGui() {
         EegTimeGraph::updateDynamicEegMaxValues(1);
     }
     
-    settings.addVarText("Poor Signal 0-200", &allData.signal, graphOffsetX-7, graphOffsetY);
+    settings.addVarText("Poor Signal 0-200", &allData.signal, graphOffsetX, graphOffsetY);
     /*poorSignalGraph = settings.addTimeGraph("Poor Signal 0-200", valuesToSave, graphOffsetX, graphOffsetY, graphWidth, graphHeight);
     poorSignalGraph->setBackgroundClrs(ofColor(255,90));
     poorSignalGraph->setTextOffsets(0, -5);
@@ -214,7 +214,7 @@ void testApp::setupGui() {
     settings.addText("----------------------------------------------------------------------------------------------");
     settings.defaultItemHeight = bigHeight;
     settings.defaultItemWidth = bigWidth;
-    settings.addText("Recording info:\nToggle ON to start recording data, toggle OFF to save .csv file to 'data/exports' folder. Filename will be the current date & time. Rename to test.csv to view in playback mode.");//, lastX + settings.defaultItemWidth + 20, lastY);
+    settings.addText("Recording info:\nToggle ON to start recording data, toggle OFF to save .csv file to 'data/exports' folder. Filename will be the current date & time. Drag/drop on app or rename to test.csv to view in playback mode.");//, lastX + settings.defaultItemWidth + 20, lastY);
     settings.defaultItemWidth = smallWidth;
     ofxTouchGUIToggleButton* recordBn = settings.addToggleButton("RECORD TO CSV", &isRecording);
     ofAddListener(recordBn->onChangedEvent, this, &testApp::onGuiChanged);
@@ -266,6 +266,16 @@ void testApp::setupGui() {
     eegMidGammaGraph->setOscAddress("/eegmidgamma");
     //eegMidGammaGraph->setCustomRange(0, 300000);
     
+    // number of high values to then average and use as the local maximum
+    int samples = 500;
+    /*eegDeltaGraph->enableMaxAveraging(samples);
+    eegThetaGraph->enableMaxAveraging(samples);
+    eegLowAlphaGraph->enableMaxAveraging(samples);
+    eegHighAlphaGraph->enableMaxAveraging(samples);
+    eegLowBetaGraph->enableMaxAveraging(samples);
+    eegHighBetaGraph->enableMaxAveraging(samples);
+    eegLowGammaGraph->enableMaxAveraging(samples);
+    eegMidGammaGraph->enableMaxAveraging(samples);*/
     
     
     int freqValues = 9;
@@ -443,7 +453,9 @@ void testApp::update(){
         
         float totalActivity = allData.getTotalActivity();
         
-        if(!isPaused) {
+        if(!isPaused && tg.isReady) {
+            
+            // live data feed
             //poorSignalGraph->insertValue(allData.signal);
             attentionGraph->insertValue(allData.attention);
             meditationGraph->insertValue(allData.meditation);
@@ -478,13 +490,14 @@ void testApp::update(){
                 
         // all values except raw are sent at 30fps
         // raw data is sent around 512x a second (not sent in plyback mode, see event listener)
+        // sending whether tg is ready or not
         if(sendOscEveryFrame) {
             
             //poorSignalGraph->sendOSC(allData.signal);// poorsignal.value);
             settings.sendOSC("/signal", allData.signal);
+            settings.sendOSC("/activity", totalActivity);
             attentionGraph->sendOSC(allData.attention);// attention.value);
-            meditationGraph->sendOSC(allData.meditation);// meditation.value);
-            
+            meditationGraph->sendOSC(allData.meditation);// meditation.value);            
             eegDeltaGraph->sendOSC(allData.eegDelta);
             eegThetaGraph->sendOSC(allData.eegTheta);
             eegLowAlphaGraph->sendOSC(allData.eegLowAlpha);
@@ -492,8 +505,7 @@ void testApp::update(){
             eegLowBetaGraph->sendOSC(allData.eegLowBeta);
             eegHighBetaGraph->sendOSC(allData.eegHighBeta);
             eegLowGammaGraph->sendOSC(allData.eegLowGamma);
-            eegMidGammaGraph->sendOSC(allData.eegMidGamma);
-            settings.sendOSC("/activity", totalActivity);
+            eegMidGammaGraph->sendOSC(allData.eegMidGamma);            
             //eegDeltaText->sendOSC(eegDelta.value);
             /*eegThetaText->sendOSC(eegTheta.value);
              eegLowAlphaText->sendOSC(eegLowAlpha.value);
@@ -507,7 +519,7 @@ void testApp::update(){
     } else {
         //tg.idle();
         // manually playback data from file
-        if(dataEntries.size() && !isPaused) {
+        if(dataEntries.size() && (!isPaused || timeline->isPressed)) {
             
             float totalActivity = dataEntries[playhead].eegDelta + dataEntries[playhead].eegTheta + dataEntries[playhead].eegLowAlpha + dataEntries[playhead].eegHighAlpha + dataEntries[playhead].eegLowBeta + dataEntries[playhead].eegHighBeta + dataEntries[playhead].eegLowGamma + dataEntries[playhead].eegMidGamma;
             
@@ -546,9 +558,9 @@ void testApp::update(){
             if(sendOscEveryFrame) {
                 //poorSignalGraph->sendOSC(dataEntries[playhead].signal);// poorsignal.value);
                 settings.sendOSC("/signal", dataEntries[playhead].signal);
+                settings.sendOSC("/activity", totalActivity);
                 attentionGraph->sendOSC(dataEntries[playhead].attention);// attention.value);
-                meditationGraph->sendOSC(dataEntries[playhead].meditation);// meditation.value);
-                
+                meditationGraph->sendOSC(dataEntries[playhead].meditation);// meditation.value);                
                 eegDeltaGraph->sendOSC(dataEntries[playhead].eegDelta);
                 eegThetaGraph->sendOSC(dataEntries[playhead].eegTheta);
                 eegLowAlphaGraph->sendOSC(dataEntries[playhead].eegLowAlpha);
@@ -557,7 +569,7 @@ void testApp::update(){
                 eegHighBetaGraph->sendOSC(dataEntries[playhead].eegHighBeta);
                 eegLowGammaGraph->sendOSC(dataEntries[playhead].eegLowGamma);
                 eegMidGammaGraph->sendOSC(dataEntries[playhead].eegMidGamma);
-                settings.sendOSC("/activity", totalActivity);
+                
             }
             
             //poorsignal.set(dataEntries[playhead].signal, timeElapsed);
@@ -636,6 +648,16 @@ void testApp::draw(){
     ofPopStyle();
     ofPopMatrix();*/
     
+    // draw a red/green box behind signal to indicate a clean connection
+    if(allData.signal == 0) {
+        //ofSetColor(115, 180, 122);
+        ofSetColor(97, 178, 106);
+        ofRect(20, 109, 115, 15);
+        
+    } else {
+        ofSetColor(153, 46, 31);
+        ofRect(20, 109, 125, 15);
+    }
     
     
     // draw a red circle at the bottom when recording
@@ -725,6 +747,28 @@ void testApp::gotMessage(ofMessage msg){
 
 //--------------------------------------------------------------
 void testApp::dragEvent(ofDragInfo dragInfo){
+    
+    string filename = dragInfo.files.front();
+	if(ofFilePath::getFileExt(filename) == "csv") {
+        playbackMode = true;
+        
+        EegTimeGraph::dynamicEegMax = 1;
+        //poorSignalGraph->reset();
+        attentionGraph->reset();
+        meditationGraph->reset();
+        
+        for(int i = 0; i < eegSet.size(); i++) {
+            eegSet[i]->reset();
+        }
+        
+        // close device
+        tg.close();
+        tg.removeEventListener(this);
+        tg.isReady = false;
+        
+        loadPlaybackFile("export/test.csv");
+    }
+    
 }
 
 void testApp::onThinkgearReady(ofxThinkgearEventArgs& args){

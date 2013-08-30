@@ -21,9 +21,18 @@ public:
     static void updateDynamicEegMaxValues(float val);
     static int maxDynamicEegValues;
     float eegMax;
+    
+    // average max
+    bool eegAveragingEnabled;
+    void enableMaxAveraging(int samples);
+    int eegSampleCount;
+    int eegMaxAverage; // from n samples
+    deque<float> eegSamples;
    
     void insertValue(float val);
     int currentValue;
+    
+    
     
     // display
     virtual void draw();

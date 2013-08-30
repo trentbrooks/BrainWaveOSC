@@ -23,6 +23,8 @@ EegTimeGraph::EegTimeGraph(){
     bgClrBL = ofColor(255,90); //rgba
     bgClrBR = ofColor(255,90);//(180,180,180,255); //rgba*/
     eegMax = 1;
+    eegMaxAverage = 0;
+    eegAveragingEnabled = false;
 }
 
 EegTimeGraph::~EegTimeGraph(){
@@ -42,11 +44,40 @@ void EegTimeGraph::insertValue(float val) {
     //if(currentValue > dynamicEegMax)
         //dynamicEegMax = currentValue;
     
-    // local
+    // local (spikes mess this up)
     if(currentValue > eegMax)
         eegMax = currentValue;
     //else if(currentValue < dynamicEegMin)
       //  dynamicEegMin = currentValue;
+    
+    // local average max (avoids problems with single spikes)
+    if(!eegAveragingEnabled) return;
+    if(eegSamples.size() < eegSampleCount) {
+        eegSamples.push_back(currentValue);
+    } else {
+        
+        // get average maximum
+        float sum = 0;
+        for(int i = 0; i < eegSamples.size(); i++) {
+            sum += eegSamples[i];
+        }
+        eegMaxAverage = sum / eegSamples.size();
+        
+        // add to end of list if higher than average
+        // add to list if close to average?
+        float p = 1;
+        if(eegMaxAverage > 0) p = currentValue / eegMaxAverage;
+        if(p > 0.75) {
+            eegSamples.push_back(currentValue);
+            while(eegSamples.size() > eegSampleCount) eegSamples.pop_front();
+        }
+    }
+}
+
+
+void EegTimeGraph::enableMaxAveraging(int samples) {
+    eegSampleCount = samples;
+    eegAveragingEnabled = true;
 }
 
 //--------------------------------------------------------------
@@ -77,12 +108,28 @@ void EegTimeGraph::draw(){
                 else
                     shapeVertices[++glCursorIndex] = 0;
             } else {
-                shapeVertices[++glCursorIndex] = ofMap(savedValues[i], 0, eegMax, height, 0);
+                
+                if(eegAveragingEnabled)
+                    shapeVertices[++glCursorIndex] = ofMap(savedValues[i], 0, eegMaxAverage, height, 0);
+                else
+                    shapeVertices[++glCursorIndex] = ofMap(savedValues[i], 0, eegMax, height, 0);
             }
             shapeVertices[++glCursorIndex] = destX;
             shapeVertices[++glCursorIndex] = height;
         }
-
+        
+        float mainMax = eegMax;
+        if(useGlobalRanges)
+            mainMax = dynamicEegMaxValues[maxValuesToSave-1];
+        else if(eegAveragingEnabled)
+            mainMax = eegMaxAverage;
+        
+        float perc = 0;
+        if(mainMax > 0) perc = currentValue / mainMax;
+        /*if(perc > 0.9)
+            ofSetColor(ofColor(0,255,0));
+        else*/
+        
         ofSetColor(graphFillClr);
         glVertexPointer(2, GL_FLOAT, 0, &shapeVertices[0]); //GLint size, GLenum type, GLsizei stride, const GLvoid *pointer
         glEnableClientState(GL_VERTEX_ARRAY);
@@ -91,7 +138,7 @@ void EegTimeGraph::draw(){
         
         // draw text
         ofSetColor(textColourDark);
-        float mainMax = (useGlobalRanges) ? dynamicEegMaxValues[maxValuesToSave-1] : eegMax;//eegMax;
+        
         drawText(label + " : " + ofToString(currentValue) + " / " + ofToString(mainMax), textOffsetX, textOffsetY);
         //drawText(label + " : " + ofToString(currentValue) + " / " + ofToString(max), textOffsetX, textOffsetY);
         
@@ -104,7 +151,7 @@ void EegTimeGraph::draw(){
            drawLargeText(ofToString( int( (currentValue / mainMax) * 100) ) + "%", width - 70, height/2-textOffsetY + 5);
         }*/
         // int
-        drawLargeText(ofToString( int( (currentValue / mainMax) * 100) ) + "%", width - 60, height/2-textOffsetY + 5);
+        drawLargeText(ofToString( int( perc * 100) ) + "%", width - 60, height/2-textOffsetY + 5);
         ofPopStyle();
           
         ofPopMatrix();   
