@@ -11,7 +11,7 @@
 <control>
     <type>constant</type>
     <label>device</label>
-    <value>/dev/tty.BrainBand-LW1-DevB</value>
+    <value>/dev/tty.BrainBand-DevB</value>
 </control>
 <control>
     <type>constant</type>

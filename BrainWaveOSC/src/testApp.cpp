@@ -39,15 +39,14 @@ float goertzel_mag(int numSamples,int TARGET_FREQUENCY,int SAMPLING_RATE, float*
 //--------------------------------------------------------------
 void testApp::setup(){
     
-
-    
     ofSetFrameRate(30);
     ofEnableAlphaBlending();
+    ofSetLogLevel(OF_LOG_VERBOSE);
     
     // defaults
     timeElapsed = startTime = 0;
     playhead = 0;
-    drawCharts = true;
+    smallWindow = false;
     sendOscEveryFrame = true;
     EegTimeGraph::dynamicEegMax = 1;
     rawDataValue = 0;
@@ -73,7 +72,7 @@ void testApp::setup(){
     
     
     // default device settings
-    deviceName = "/dev/tty.BrainBand-DevB-LW1";//BrainBand-DevB";
+    deviceName = "/dev/tty.BrainBand-DevB";
     deviceBaudRate = 57600;
     
     // osc settings
@@ -82,9 +81,13 @@ void testApp::setup(){
     
     setupGui();
     
-    tg.setup(deviceName, deviceBaudRate, 1);
+    // setup thinkgear hardware using serial streamer or comms driver (osx only tested).
+    tg.setup(deviceName, deviceBaudRate, TG_COMMS_DRIVER, 1);
     tg.addEventListener(this);
     
+    if(smallWindow) {
+        settings.hide();
+    }
 }
 
 void testApp::setupGui() {
@@ -96,6 +99,7 @@ void testApp::setupGui() {
     settings.setConstant("baud", &deviceBaudRate);
     settings.setConstant("host", &host);
     settings.setConstant("port", &port);
+    settings.setConstant("smallwindow", &smallWindow);
     settings.setupSendOSC(host, port);
     
     
@@ -125,7 +129,7 @@ void testApp::setupGui() {
         EegTimeGraph::updateDynamicEegMaxValues(1);
     }
     
-    settings.addVarText("Poor Signal 0-200", &allData.signal, graphOffsetX, graphOffsetY);
+    poorSignalText = settings.addVarText("Poor Signal 0-200", &allData.signal, graphOffsetX, graphOffsetY);
     /*poorSignalGraph = settings.addTimeGraph("Poor Signal 0-200", valuesToSave, graphOffsetX, graphOffsetY, graphWidth, graphHeight);
     poorSignalGraph->setBackgroundClrs(ofColor(255,90));
     poorSignalGraph->setTextOffsets(0, -5);
@@ -343,16 +347,22 @@ void testApp::onGuiChanged(const void* sender, string &buttonLabel) {
     }
     else if(buttonLabel == "PLAYBACK MODE (test.csv)") {
         startTime = timeElapsed;
-        rawDataBuffer = "";
+        rawDataBuffer = "";        
+        allData.attention = 0;
+        allData.meditation = 0;
+        allData.signal = 200;
+        allData.eegDelta = 0;
+        allData.eegHighAlpha = 0;
+        allData.eegHighBeta = 0;
+        allData.eegLowAlpha = 0;
+        allData.eegLowBeta = 0;
+        allData.eegLowGamma = 0;
+        allData.eegMidGamma = 0;
+        allData.eegTheta = 0;
+        allData.elapsed = 0;
+        //EegTimeGraph::dynamicEegMaxValues.clear();
+        
         if(playbackMode) {
-            EegTimeGraph::dynamicEegMax = 1;
-            //poorSignalGraph->reset();
-            attentionGraph->reset();
-            meditationGraph->reset();
-            
-            for(int i = 0; i < eegSet.size(); i++) {
-                eegSet[i]->reset();
-            }
             
             // close device            
             tg.close();
@@ -362,18 +372,35 @@ void testApp::onGuiChanged(const void* sender, string &buttonLabel) {
             loadPlaybackFile("export/test.csv");
         } else {
             tg.addEventListener(this);
-            tg.flush();//close();
+            tg.flush();//close();            
             
-            // reset all the graphs
-            EegTimeGraph::dynamicEegMax = 1;
-            //poorSignalGraph->reset();
-            attentionGraph->reset();
-            meditationGraph->reset();
-            
-            for(int i = 0; i < eegSet.size(); i++) {
-                eegSet[i]->reset();
-            }
         }
+        
+        // reset all the graphs
+        EegTimeGraph::dynamicEegMax = 1;
+        //poorSignalGraph->reset();
+        poorSignalText->setValue(&allData.signal);
+        attentionGraph->reset();
+        meditationGraph->reset();
+        rawDataGraph->reset();
+        frequencyGraph->reset();
+        
+        for(int i = 0; i < eegSet.size(); i++) {
+            eegSet[i]->reset();
+        }
+        
+        // set last values to 0
+        attentionGraph->insertValue(0);
+        meditationGraph->insertValue(0);
+        
+        eegDeltaGraph->insertValue(0);
+        eegThetaGraph->insertValue(0);
+        eegLowAlphaGraph->insertValue(0);
+        eegHighAlphaGraph->insertValue(0);
+        eegLowBetaGraph->insertValue(0);
+        eegHighBetaGraph->insertValue(0);
+        eegLowGammaGraph->insertValue(0);
+        eegMidGammaGraph->insertValue(0);
     }
     else if(buttonLabel == "RECORD TO CSV") {
         
@@ -622,11 +649,12 @@ void testApp::update(){
     //ofLog() << globalMax;
 }
 
-float attSmooth = 0;
+//float attSmooth = 0;
 //--------------------------------------------------------------
 void testApp::draw(){
     
-    ofBackgroundGradient(ofColor(190),ofColor(130));
+    //ofBackgroundGradient(ofColor(190),ofColor(130));
+    ofBackground(130);
     
     if(playbackMode)
         ofSetColor(214, 209, 62);
@@ -667,6 +695,26 @@ void testApp::draw(){
     }
     
     settings.draw();
+    if(smallWindow) {
+        
+        // draw a red/green box behind signal to indicate a clean connection
+        if(allData.signal == 0) {
+            //ofSetColor(115, 180, 122);
+            ofSetColor(97, 178, 106);
+            ofRect(15, 33, 60, 15);
+            
+        } else {
+            ofSetColor(153, 46, 31);
+            ofRect(15, 33, 70, 15);
+        }
+        stringstream text;
+        text << "Device - " << deviceName << ":" << deviceBaudRate << "\n"
+        << "OSC - " << host << ":" << port << "\n"
+        << "Signal - " << allData.signal << "\n"
+        << "Attention - " << allData.attention;
+        ofSetColor(255);
+        settings.guiFont.drawString(text.str(), 20, 20);
+    }
 }
 
 
@@ -675,21 +723,8 @@ void testApp::draw(){
 void testApp::keyPressed(int key){
     if(key == ' ') {
         settings.toggleDisplay();
-        if(!settings.isHidden) {
-            //poorSignalSlider->hide();
-            //attentionSlider->hide();
-            //meditationSlider->hide();
-            //eegDeltaText->hide();
-            /*eegThetaText->hide();
-            eegLowAlphaText->hide();
-            eegHighAlphaText->hide();
-            eegLowBetaText->hide();
-            eegHighBetaText->hide();
-            eegLowGammaText->hide();
-            eegMidGammaText->hide();*/
-        }
-        drawCharts = !drawCharts;
-        if(drawCharts) {
+        smallWindow = !smallWindow;
+        if(!smallWindow) {
             ofSetWindowShape(1280, 960);
         } else {
             ofSetWindowShape(250, 75);

@@ -25,6 +25,7 @@ EegTimeGraph::EegTimeGraph(){
     eegMax = 1;
     eegMaxAverage = 0;
     eegAveragingEnabled = false;
+    currentValue = 0;
 }
 
 EegTimeGraph::~EegTimeGraph(){

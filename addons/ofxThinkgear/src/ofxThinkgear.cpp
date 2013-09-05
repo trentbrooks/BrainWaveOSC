@@ -1,8 +1,9 @@
 #include "ofxThinkgear.h"
 
 
+// stream parser callback
 // check code definitions in ThinkGearStreamParser.h
-void tgHandleDataValueFunc( unsigned char extendedCodeLevel, unsigned char code, unsigned char valueLength, const unsigned char *value, void *customData){
+void tgHandleStreamDataValueFunc( unsigned char extendedCodeLevel, unsigned char code, unsigned char valueLength, const unsigned char *value, void *customData){
     ofxThinkgear& tg = *reinterpret_cast<ofxThinkgear*>(customData);
     if (extendedCodeLevel == 0){
         switch (code) {
@@ -89,6 +90,63 @@ void tgHandleDataValueFunc( unsigned char extendedCodeLevel, unsigned char code,
 }
 
 
+// similar to stream callback
+void ofxThinkgear::tgHandleCommsDriverDataValueFunc(int code, float value) {
+
+    switch (code) {
+        case TG_DATA_BATTERY:
+            values.battery = value;
+            ofNotifyEvent(onBattery, values);
+            break;
+        case TG_DATA_POOR_SIGNAL:
+            values.poorSignal = value;
+            ofNotifyEvent(onPoorSignal, values);
+            break;
+        case TG_DATA_ATTENTION:
+            values.attention = value;
+            ofNotifyEvent(onAttention, values);
+            break;
+        case TG_DATA_MEDITATION:
+            values.meditation = value;
+            ofNotifyEvent(onMeditation, values);
+            break;
+        case TG_DATA_RAW:
+            values.raw = value;
+            ofNotifyEvent(onRaw, values);
+            break;
+        case TG_DATA_DELTA:
+            values.eegDelta = value;
+            break;
+        case TG_DATA_THETA:
+            values.eegTheta = value;
+            break;
+        case TG_DATA_ALPHA1:
+            values.eegLowAlpha = value;
+            break;
+        case TG_DATA_ALPHA2:
+            values.eegHighAlpha = value;
+            break;
+        case TG_DATA_BETA1:
+            values.eegLowBeta = value;
+            break;
+        case TG_DATA_BETA2:
+            values.eegHighBeta = value;
+            break;
+        case TG_DATA_GAMMA1:
+            values.eegLowGamma = value;
+            break;
+        case TG_DATA_GAMMA2:
+            values.eegMidGamma = value;
+            
+            // after 8th band is received notify
+            ofNotifyEvent(onEeg, values);
+            break;
+            
+        default:
+            break;
+    }
+}
+
 ofxThinkgear::ofxThinkgear() : isReady(false) {
     
     device = new ofSerial();
@@ -100,89 +158,123 @@ ofxThinkgear::ofxThinkgear() : isReady(false) {
     unavailableCount = 0;
     noConnectionRestartCount = 250;
     noDataRestartCount = 500;
+    connectionType = TG_STREAM_PARSER;
 }
 
 ofxThinkgear::~ofxThinkgear(){
     close();
 }
 
-void ofxThinkgear::setup(string deviceName, int baudRate, int deviceId) {
+void ofxThinkgear::setup(string deviceName, int baudRate, ThinkGearImplementation connectionType, int deviceId) {
     this->deviceName = deviceName;
     this->baudRate = baudRate;
+    this->connectionType = connectionType;
     this->deviceId = values.deviceId = deviceId;
+    
+    if(connectionType == TG_COMMS_DRIVER) {
+        driver.setup(deviceName, baudRate,this,&ofxThinkgear::tgHandleCommsDriverDataValueFunc);
+        if(driver.isReady) isReady = true;
+    }
 }
 
 void ofxThinkgear::close(){
-    if (isReady){
-        device->writeByte(0xC1);
-        device->flush();
-        //device.drain();
-        device->close();
-        isReady = false;
-    }
+    
+    if(connectionType == TG_STREAM_PARSER) {
+        if (isReady){
+            //device->writeByte(0xC1);
+            device->flush();
+            //device.drain();
+            device->close();
+            isReady = false;
+        }
+    }    
+    
+    delete device;
+    device = NULL;
 }
 
 //int unavailableCount = 0;
 
 void ofxThinkgear::idle() {
-    if (isReady) {
-        int n = device->available();
-        if (n > 0){
-            //unavailableCount = 0;
-            n = device->readBytes(buffer, min(n,512));
+    
+    if(connectionType == TG_STREAM_PARSER) {
+        if (isReady) {
+            int n = device->available();
+            if (n > 0){
+                //unavailableCount = 0;
+                n = device->readBytes(buffer, min(n,512));
+            }
         }
     }
+    
 }
 
 void ofxThinkgear::update(){
-    if (!isReady && ofGetFrameNum() % noConnectionRestartCount == 0){
-        ofLog() << "connecting to device...";
-        attempts++;
-        if (device->setup(deviceName, baudRate)){
-            device->flush();
-            //if(!parserSetup) {
-                int parserInited = THINKGEAR_initParser(&parser, PARSER_TYPE_PACKETS, tgHandleDataValueFunc, this);
-                //parserSetup = true;
-                ofLog() << "parser setup: " << parserInited;;
-            //}
-            isReady = true;
-            ofLog() << "ThinkGear device setup";
-            attempts = 0;
+    
+    if(connectionType == TG_COMMS_DRIVER) {
+        
+        driver.update();
+        isReady = driver.isReady;
+        if(!isReady && ofGetFrameNum() % noConnectionRestartCount == 0) {
+            ofLog() << "connecting to device...";
+            attempts++;
+            if(driver.connect()) {
+                ofLogVerbose() << "ThinkGear device setup";
+                attempts = 0;
+            }
         }
         
-    }
-    if (!isReady)
-        return;
-    int n = device->available();
-    if (n > 0){
-        unavailableCount = 0;
-        n = device->readBytes(buffer, min(n,512));
-        for (int i=0; i<n; ++i){
-            THINKGEAR_parseByte(&parser, buffer[i]);
-        }
-    } else {
+    } else if(connectionType == TG_STREAM_PARSER) {
         
-        // reconnection problems fix (connected but no data). made device a pointer that gets deleted and reassigned
-        // test by switching device off/on
-        //ofLog() << "no data...";
-        unavailableCount++;
-        if(unavailableCount >  noDataRestartCount) {
-            ofLog() << "*** no data available - attempt to reconnect";
-            isReady = false;
-            attempts = 0;
-            unavailableCount = 0;
-            device->close();
-            delete device;
-            device = NULL;
+        if (!isReady && ofGetFrameNum() % noConnectionRestartCount == 0){
+            ofLog() << "connecting to device...";
+            attempts++;
+            if (device->setup(deviceName, baudRate)){
+                device->flush();
+                int parserInited = THINKGEAR_initParser(&parser, PARSER_TYPE_PACKETS, tgHandleStreamDataValueFunc, this);
+                ofLogVerbose() << "parser setup: " << parserInited;;
+                isReady = true;
+                ofLogVerbose() << "ThinkGear device setup";
+                attempts = 0;
+            }
             
-            ofSerial* retryDevice = new ofSerial();
-            device = retryDevice;
         }
+        if (!isReady)
+            return;
+        int n = device->available();
+        if (n > 0){
+            unavailableCount = 0;
+            n = device->readBytes(buffer, min(n,512));
+            for (int i=0; i<n; ++i){
+                THINKGEAR_parseByte(&parser, buffer[i]);
+            }
+        } else {
+            
+            // reconnection problems fix (connected but no data). made device a pointer that gets deleted and reassigned
+            // test by switching device off/on
+            unavailableCount++;
+            if(unavailableCount >  noDataRestartCount) {
+                ofLogVerbose() << "*** no data available - attempt to reconnect";
+                isReady = false;
+                attempts = 0;
+                unavailableCount = 0;
+                device->close();
+                delete device;
+                device = NULL;
+                
+                ofSerial* retryDevice = new ofSerial();
+                device = retryDevice;
+            }
+        }
+        
     }
+    
+    
 }
 
 void ofxThinkgear::flush(){
-    if (isReady)
-        device->flush();
+    if(connectionType == TG_STREAM_PARSER) {
+        if (isReady) device->flush();            
+    }
 }
 

@@ -10,6 +10,7 @@
 // osascript -e 'tell application "System Events" to shut down'
 // osascript -e 'tell application "System Events" to sleep'
 
+
 struct EegData {
     float signal; // 0 = good
     float attention, meditation; //80-100 = high, 40-60 = baseline
@@ -56,9 +57,12 @@ public:
     void setupGui();
     BrainWaveGUI settings;
     void onGuiChanged(const void* sender, string &buttonLabel);
+    bool smallWindow;
+    
     
     // gui items
-    ofxTouchGUITimeGraph *poorSignalGraph, *attentionGraph, *meditationGraph;
+    ofxTouchGUITimeGraph *attentionGraph, *meditationGraph; //*poorSignalGraph, 
+    ofxTouchGUIText* poorSignalText;
     ofxTouchGUIText* rawDataText;
     EegTimeGraph* eegDeltaGraph;
     EegTimeGraph* eegThetaGraph;
@@ -99,8 +103,6 @@ public:
     
     // custom eeg data struct to capture all the data from thinkgear events
     EegData allData;
-
-    bool drawCharts;
     
     // playback
     void loadPlaybackFile(string path);
