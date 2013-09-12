@@ -14,13 +14,15 @@
 struct EegData {
     float signal; // 0 = good
     float attention, meditation; //80-100 = high, 40-60 = baseline
-    float eegDelta, eegTheta, eegLowAlpha, eegHighAlpha, eegLowBeta, eegHighBeta, eegLowGamma, eegMidGamma; // random, only useful when comparing against each other
+    float blinkStrength; // only works with comms driver
+    
+    float eegDelta, eegTheta, eegLowAlpha, eegHighAlpha, eegLowBeta, eegHighBeta, eegLowGamma, eegHighGamma; // random, only useful when comparing against each other
 
     vector<float> rawDataBufferValues; // -2048 - 2048
     float elapsed; // seconds
     
     float getTotalActivity() {
-        return eegDelta + eegTheta + eegLowAlpha + eegHighAlpha + eegLowBeta + eegHighBeta + eegLowGamma + eegMidGamma;
+        return eegDelta + eegTheta + eegLowAlpha + eegHighAlpha + eegLowBeta + eegHighBeta + eegLowGamma + eegHighGamma;
     }
 };
 
@@ -71,7 +73,7 @@ public:
     EegTimeGraph* eegLowBetaGraph;
     EegTimeGraph* eegHighBetaGraph;
     EegTimeGraph* eegLowGammaGraph;
-    EegTimeGraph* eegMidGammaGraph;
+    EegTimeGraph* eegHighGammaGraph;
     ofxTouchGUITimeGraph* rawDataGraph;
     EegFrequencyGraph* frequencyGraph;
     ofxTouchGUISlider* timeline;

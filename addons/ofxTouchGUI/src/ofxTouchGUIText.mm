@@ -95,13 +95,13 @@ void ofxTouchGUIText::draw(){
         // draw text
         //drawText(label, 0);
         if(textType == TEXT_STRING)
-            drawText(label + " : " + ofToString(*stringVal), 0);
+            drawText(label + " : " + ofToString(*stringVal), 0, textOffsetY + (height * 0.5));
         else if(textType == TEXT_FLOAT)
-            drawText(label + " : " + ofToString(*floatVal), 0);
+            drawText(label + " : " + ofToString(*floatVal), 0, textOffsetY+ (height * 0.5));
         else if(textType == TEXT_INT)
-            drawText(label + " : " + ofToString(*intVal), 0);
+            drawText(label + " : " + ofToString(*intVal), 0, textOffsetY+ (height * 0.5));
         else if(textType == TEXT_BOOL)
-            drawText(label + " : " + ofToString(*boolVal), 0);
+            drawText(label + " : " + ofToString(*boolVal), 0, textOffsetY+ (height * 0.5));
         else if(textType == TEXT_STRING_VAL) {
             if(isTextTitle)
                 drawLargeText(label, 0, textOffsetY);//textOffsetY * 2);//textOffsetY); 

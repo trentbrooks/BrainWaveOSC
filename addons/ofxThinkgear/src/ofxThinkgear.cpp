@@ -64,7 +64,7 @@ void tgHandleStreamDataValueFunc( unsigned char extendedCodeLevel, unsigned char
                     tg.values.eegLowBeta = (value[pos] << 16) | (value[pos+1] << 8) | (value[pos+2]); pos += 3;
                     tg.values.eegHighBeta = (value[pos] << 16) | (value[pos+1] << 8) | (value[pos+2]); pos += 3;
                     tg.values.eegLowGamma = (value[pos] << 16) | (value[pos+1] << 8) | (value[pos+2]); pos += 3;
-                    tg.values.eegMidGamma = (value[pos] << 16) | (value[pos+1] << 8) | (value[pos+2]); pos += 3;
+                    tg.values.eegHighGamma = (value[pos] << 16) | (value[pos+1] << 8) | (value[pos+2]); pos += 3;
                     
                     /*ofLog() << "b: " << tg.values.eegDelta;
                     ofLog() << "b: " << tg.values.eegTheta;
@@ -136,7 +136,7 @@ void ofxThinkgear::tgHandleCommsDriverDataValueFunc(int code, float value) {
             values.eegLowGamma = value;
             break;
         case TG_DATA_GAMMA2:
-            values.eegMidGamma = value;
+            values.eegHighGamma = value;
             
             // after 8th band is received notify
             ofNotifyEvent(onEeg, values);

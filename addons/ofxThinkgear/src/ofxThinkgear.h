@@ -35,7 +35,7 @@ public:
     unsigned int eegLowBeta; // 1500 / 60000 . 13-16.75hz
     unsigned int eegHighBeta; // 2500 / 60000 . 18-29.75hz
     unsigned int eegLowGamma; // 5000 / 300000 . 31-39.75hz
-    unsigned int eegMidGamma; // 5000 / 300000 . 41-49.75hz
+    unsigned int eegHighGamma; // 5000 / 300000 . 41-49.75hz
     
     // added
     int deviceId; // each device needs it's own id

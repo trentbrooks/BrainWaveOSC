@@ -1,5 +1,15 @@
 <control>
     <type>constant</type>
+    <label>device</label>
+    <value>/dev/tty.BrainBand-DevB</value>
+</control>
+<control>
+    <type>constant</type>
+    <label>baud</label>
+    <value>57600</value>
+</control>
+<control>
+    <type>constant</type>
     <label>host</label>
     <value>127.0.0.1</value>
 </control>
@@ -10,11 +20,22 @@
 </control>
 <control>
     <type>constant</type>
-    <label>device</label>
-    <value>/dev/tty.BrainBand-DevB</value>
+    <label>launch with small window</label>
+    <value>0</value>
 </control>
 <control>
-    <type>constant</type>
-    <label>baud</label>
-    <value>57600</value>
+    <type>toggle</type>
+    <label>SEND RAW DATA WITH OSC</label>
+    <value>0</value>
 </control>
+<control>
+    <type>toggle</type>
+    <label>SEND OSC EVERY FRAME</label>
+    <value>1</value>
+</control>
+<control>
+    <type>toggle</type>
+    <label>USE GLOBAL EEG RANGES</label>
+    <value>1</value>
+</control>
+
