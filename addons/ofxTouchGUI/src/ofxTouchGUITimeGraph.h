@@ -30,6 +30,8 @@ public:
     //float *shapeVertexArr; // vertex positions array main
     vector<float> shapeVertices;
     ofColor graphFillClr;
+    bool isFilled; // line based or triangle based
+    void setFilled(bool fill);
     
     
     

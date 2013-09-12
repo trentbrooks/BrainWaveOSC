@@ -165,11 +165,10 @@ ofxThinkgear::~ofxThinkgear(){
     close();
 }
 
-void ofxThinkgear::setup(string deviceName, int baudRate, ThinkGearImplementation connectionType, int deviceId) {
+void ofxThinkgear::setup(string deviceName, int baudRate, ThinkGearImplementation connectionType) {
     this->deviceName = deviceName;
     this->baudRate = baudRate;
     this->connectionType = connectionType;
-    this->deviceId = values.deviceId = deviceId;
     
     if(connectionType == TG_COMMS_DRIVER) {
         driver.setup(deviceName, baudRate,this,&ofxThinkgear::tgHandleCommsDriverDataValueFunc);

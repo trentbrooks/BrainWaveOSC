@@ -68,8 +68,7 @@ void testApp::setup(){
 	allData.eegTheta = 0;
 	allData.elapsed = 0;
     
-    normaliseMaxToCurrentSet = false;
-    
+    normaliseMaxToCurrentSet = false;    
     
     // default device settings
     deviceName = "/dev/tty.BrainBand-DevB";
@@ -82,10 +81,13 @@ void testApp::setup(){
     setupGui();
     
     // setup thinkgear hardware using serial streamer or comms driver (osx only tested).
-    tg.setup(deviceName, deviceBaudRate, TG_COMMS_DRIVER, 1);
+    // TG_STREAM_PARSER is default
+    tg.setup(deviceName, deviceBaudRate, TG_COMMS_DRIVER);
     tg.addEventListener(this);
     
+    // change in settings.xml to launch minimised window
     if(smallWindow) {
+        ofSetLogLevel(OF_LOG_SILENT);
         ofSetWindowShape(250, 75);
         settings.hide();
     }
@@ -124,7 +126,7 @@ void testApp::setupGui() {
     int graphItemHeight = graphHeight + 25;
     int graphOffsetX = 20;
     int graphOffsetY = 100;//120;
-    int valuesToSave = graphWidth; // 1 for each pixel
+    int valuesToSave = 512;//graphWidth; // 1 for each pixel
     EegTimeGraph::maxDynamicEegValues = valuesToSave;
     for(int i = 0;i < valuesToSave; i++) {
         EegTimeGraph::updateDynamicEegMaxValues(1);
@@ -153,6 +155,7 @@ void testApp::setupGui() {
     rawDataGraph->setTextOffsets(0, -5);
     rawDataGraph->setBackgroundClrs(ofColor(255,90));
     rawDataGraph->setTextOffsets(0, -5);
+    rawDataGraph->setFilled(false);
     rawDataGraph->setOscAddress("/raw");  
     rawDataGraph->setCustomRange(-2048, 2048);
     
@@ -472,7 +475,7 @@ void testApp::loadPlaybackFile(string path) {
 void testApp::update(){
     //
     //+ "fps: " + ofToString(ofGetFrameRate())
-    ofSetWindowTitle(ofToString((tg.isReady) ? "Connected" : (playbackMode) ? "Playback mode" : "Connecting... (" + ofToString(tg.attempts) + " attempts)"));
+    ofSetWindowTitle(ofToString((tg.isReady) ? "Connected" : (playbackMode) ? "Playback mode" : "Connecting... (" + ofToString(tg.attempts) + " attempts)") );
     timeElapsed = ofGetElapsedTimef();
     
     // find global max
@@ -827,6 +830,7 @@ void testApp::onThinkgearError(ofMessage& err){
 void testApp::onThinkgearRaw(ofxThinkgearEventArgs& args){
     
     //ofLog() << "raw: " << args.raw;
+    if(isPaused) return;
     rawDataValue = args.raw;
     if(tg.allowRawDataEvents) {        
         rawDataGraph->sendOSC(rawDataValue ); // each message sent individually
@@ -846,6 +850,7 @@ void testApp::onThinkgearRaw(ofxThinkgearEventArgs& args){
    
 }
 
+// never fires?
 void testApp::onThinkgearBattery(ofxThinkgearEventArgs& args){
     ofLog() << "*** THINKGEAR battery: " << args.battery;
 }
@@ -860,6 +865,7 @@ void testApp::onThinkgearPoorSignal(ofxThinkgearEventArgs& args){
 // removing this from the update
 void testApp::onThinkgearBlinkStrength(ofxThinkgearEventArgs& args){
     // only works when using the comms driver (TG_COMMS_DRIVER)
+    if(isPaused) return;
     allData.blinkStrength = args.blinkStrength;
     settings.sendOSC("/blink", allData.blinkStrength);
     
@@ -867,17 +873,20 @@ void testApp::onThinkgearBlinkStrength(ofxThinkgearEventArgs& args){
 }
 
 void testApp::onThinkgearAttention(ofxThinkgearEventArgs& args){
+    if(isPaused) return;
     allData.attention = args.attention;
     attentionGraph->sendOSC(allData.attention);// attention.value);
 }
 
 void testApp::onThinkgearMeditation(ofxThinkgearEventArgs& args){
+    if(isPaused) return;
     allData.meditation = args.meditation;
     meditationGraph->sendOSC(allData.meditation);// meditation.value);
 }
 
 void testApp::onThinkgearEeg(ofxThinkgearEventArgs& args){
 
+    if(isPaused) return;
     // about the 8 eeg bands (Comparison table of EEG rhythmic activity frequency bands): http://en.wikipedia.org/wiki/Electroencephalography
     allData.eegDelta = args.eegDelta;
     allData.eegTheta = args.eegTheta;

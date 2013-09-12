@@ -33,9 +33,3 @@
     <label>SEND OSC EVERY FRAME</label>
     <value>1</value>
 </control>
-<control>
-    <type>toggle</type>
-    <label>USE GLOBAL EEG RANGES</label>
-    <value>1</value>
-</control>
-

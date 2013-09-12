@@ -21,6 +21,7 @@ ofxTouchGUITimeGraph::ofxTouchGUITimeGraph(){
     //shapeVertexArr[0] = 0;
     
     graphFillClr = activeClrTL;
+    isFilled = true;
     min = 0.0f;
     max = 0.01f;
     setMaximumValues(50);
@@ -40,6 +41,10 @@ void ofxTouchGUITimeGraph::reset() {
     for(int j = 0; j < glArraySize; j++) {
         shapeVertices[j] = 0.0f;
     }
+}
+
+void ofxTouchGUITimeGraph::setFilled(bool fill) {
+    isFilled = fill;
 }
 
 void ofxTouchGUITimeGraph::setCustomRange(float min, float max) {
@@ -103,17 +108,29 @@ void ofxTouchGUITimeGraph::draw(){
         for(int i = 0; i < maxValuesToSave; i++) {
             
             float destX = ofMap(i, 0, maxValuesToSave-1, 0, width);
-            int glCursorIndex = i * 4;
-            shapeVertices[glCursorIndex] = destX;
-            shapeVertices[++glCursorIndex] = ofMap(savedValues[i], min, max, height, 0);
-            shapeVertices[++glCursorIndex] = destX;
-            shapeVertices[++glCursorIndex] = height;
+            
+            // triangle strip or line strip
+            if(isFilled) {
+                int glCursorIndex = i * 4;
+                shapeVertices[glCursorIndex] = destX;
+                shapeVertices[++glCursorIndex] = ofMap(savedValues[i], min, max, height, 0);
+                shapeVertices[++glCursorIndex] = destX;
+                shapeVertices[++glCursorIndex] = height;
+            } else {
+                int glCursorIndex = i * 2;
+                shapeVertices[glCursorIndex] = destX;
+                shapeVertices[++glCursorIndex] = ofMap(savedValues[i], min, max, height, 0);
+            }
+            
         }
 
         ofSetColor(graphFillClr);
         glVertexPointer(2, GL_FLOAT, 0, &shapeVertices[0]); //GLint size, GLenum type, GLsizei stride, const GLvoid *pointer
         glEnableClientState(GL_VERTEX_ARRAY);
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, maxValuesToSave * 2); // number of vertexs/colours
+        if(isFilled)
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, maxValuesToSave * 2); // number of vertexs/colours
+        else
+            glDrawArrays(GL_LINE_STRIP, 0, maxValuesToSave);
         glDisableClientState(GL_VERTEX_ARRAY);
         
         // draw text
