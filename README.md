@@ -26,7 +26,7 @@ The 8 EEG band frequencies (sent 30x per second as floats):
     "/eeglowbeta" : 13-17Hz
     "/eeghighbeta" : 18-30Hz
     "/eeglowgamma" : 31-40Hz
-    "/eegmidgamma" : 41-50Hz
+    "/eeghighgamma" : 41-50Hz
 Other values (sent 30x per second as floats):
 
     "/signal" : 0-200 (0 = good connection, 200 = poor connection)
@@ -34,7 +34,7 @@ Other values (sent 30x per second as floats):
     "/meditation" : 0-100 (higher number = more meditation)
 Optional raw data value (sent 512x per second as floats):
 
-    "/raw" : -32768-32768 or -2048-2048 (depends on device)
+    "/raw" : -2048-2048 (depends on device)
 
 ## Other ##
 Windows users: If there is an error message about a missing "MSVCP100.dll", you need to download the 'Microsoft Visual C++ 2010 Redistributable Package' from here: [http://www.microsoft.com/en-au/download/details.aspx?id=5555](http://www.microsoft.com/en-au/download/details.aspx?id=5555)
