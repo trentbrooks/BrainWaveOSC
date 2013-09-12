@@ -1,4 +1,4 @@
-![https://raw.github.com/trentbrooks/BrainWaveOSC/master/screenshot.png](https://raw.github.com/trentbrooks/BrainWaveOSC/master/screenshot.png)
+![https://raw.github.com/trentbrooks/BrainWaveOSC/develop/screenshot.png](https://raw.github.com/trentbrooks/BrainWaveOSC/develop/screenshot.png)
 
 ## About ##
 
