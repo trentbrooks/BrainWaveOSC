@@ -84,7 +84,7 @@ void EegTimeGraph::enableMaxAveraging(int samples) {
 //--------------------------------------------------------------
 void EegTimeGraph::draw(){
     
-    if(!isHidden) {
+    if(!isHidden()) {
         ofPushMatrix();
         ofTranslate(int(posX), int(posY));
         

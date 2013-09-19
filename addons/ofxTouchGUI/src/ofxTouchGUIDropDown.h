@@ -15,30 +15,38 @@ public:
     
     // display
     virtual void draw();
-    ofColor arrowClr;
-    int arrowOffset;
+    void drawOverlay();
+    void setArrowClr(ofColor clr);    
     
     // touch events
-    virtual void onUp(float x, float y);
-    virtual void onDown(float x, float y);
-    
-    // toggle display
-    bool toggleShowList; // on or off for list disply
+    virtual bool onUp(float x, float y);
+    virtual bool onDown(float x, float y);
+    void doSelectAction(int select, bool doOSC = true);
     
     // list + selection
     int* selectId;
-    int initialSelectId;
-    int defaultSelectId;
     void setValues(int numValues, string* listValues, int *selectedId);
     void setValues(int numValues, string* listValues);
     void setValues(int numValues, vector<string> listValues, int *selectedId);
     void setValues(int numValues, vector<string> listValues);
+        
+    int getValue();
+    
+protected:
+    
+    // toggle display
+    bool toggleShowList; // on or off for list disply
+    
     string* listValues;
     //string listValues[];
     int numListItems;
     int listHeight;
     
+    int initialSelectId;
+    int defaultSelectId;
     
-    int getValue();
+    ofColor arrowClr;
+    int arrowOffset;
+    
 };
 

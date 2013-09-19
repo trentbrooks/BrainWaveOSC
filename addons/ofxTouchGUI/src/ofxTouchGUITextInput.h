@@ -5,7 +5,7 @@
 #include "ofxTouchGUIBase.h"
 
 #ifdef TARGET_OF_IPHONE
-    #include "ofxiPhoneKeyboard.h"
+    #include "ofxiOSKeyboard.h"
 #endif
 
 
@@ -15,35 +15,35 @@ public:
     
     ofxTouchGUITextInput();
 	~ofxTouchGUITextInput();
+    
     virtual void resetDefaultValue();
     
     // display
-    //void updateKeyboard(ofEventArgs &e);
     virtual void draw();
-    
-    // touch events
-    //virtual void onUp(float x, float y);
     
     virtual void hide();
     virtual void show(bool activateSingleItem);
-    //ofEvent<string> onButtonPressedEvent;
     
-    //void aUpdate(ofEventArgs &e);
-    //ofColor fontColor;
-    int fontSize;
+    //int fontSize;
     
     void setInput(string *placeHolderText);
     string getInput();
+    string *input;
+    string defaultInput;
+    
+    
+    
+protected:
+    
+#ifdef TARGET_OF_IPHONE
+    ofxiOSKeyboard* keyboard;
+#endif
+    
+    //string placeHolderInput;
+    
     bool keyboardSet;
     bool wasKeyboardOpen;
     void updateKeyboard();
     void onKeyboardInput();
-    
-    #ifdef TARGET_OF_IPHONE
-        ofxiPhoneKeyboard* keyboard;
-    #endif
-    string *input;
-    string defaultInput;
-    //string placeHolderInput;
 };
 

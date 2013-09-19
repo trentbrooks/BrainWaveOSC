@@ -16,7 +16,7 @@
 <control>
     <type>constant</type>
     <label>port</label>
-    <value>4444</value>
+    <value>7771</value>
 </control>
 <control>
     <type>constant</type>
@@ -33,3 +33,9 @@
     <label>SEND OSC EVERY FRAME</label>
     <value>1</value>
 </control>
+<control>
+    <type>toggle</type>
+    <label>USE GLOBAL EEG RANGES</label>
+    <value>1</value>
+</control>
+

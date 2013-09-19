@@ -13,14 +13,10 @@ public:
     
     ofxTouchGUIBase();
 	~ofxTouchGUIBase();
+    
     string type;
     string itemId;
     virtual void resetDefaultValue(); // some values can be reset to their original setting (sliders, toggle, etc)
-
-    
-    // GLOBAL STATIC PROPERTY!
-    static bool ignoreExternalEvents; // only 1 touch at a time to avoid overlapping button presses.
-    static string oscAddress;
     
     // DISPLAY
     virtual void draw();
@@ -29,39 +25,31 @@ public:
     virtual void drawLargeText(const string &text, int alignment=-1); //0=left align, 1=center align,2=right align
     virtual void drawLargeText(const string &text, int destX, int destY);
     virtual void drawGLRect(float *&vtxArray, float *&clrArray); // take a reference to the pointers
-    string label;
-    int posX;
-    int posY;
-    int width;
-    int height;
+    
     void setDisplay(string label, int posX, int posY, int width);
     void setDisplay(string label, int posX, int posY, int width, int height);
-    bool hasFont;
-    void assignFonts(ofTrueTypeFont *guiFont, int fontSize, ofTrueTypeFont *guiFontLarge, int fontSizeLarge);
-    ofTrueTypeFont *guiFont;
-    ofTrueTypeFont *guiFontLarge;
-    int fontSize;
-    int fontSizeLarge;
-    int textOffsetX;
-    int textOffsetY;
-    void setTextOffsets(int textOffsetX, int textOffsetY);
+    int getItemPosX();
+    int getItemPosY();
+    int getItemWidth();
+    int getItemHeight();
+    string getLabel();
     
+    void assignFonts(ofTrueTypeFont *guiFont, int fontSize, ofTrueTypeFont *guiFontLarge, int fontSizeLarge);
+    void setTextOffsets(int textOffsetX, int textOffsetY);
     
     
     // touch events
     void enable(bool useMouse=false); // defaults to false = touch events instead of mouse events
     void disable();
-    bool isTouchEnabled;
     void enableTouch();
     void disableTouch();
-	void touchDown(ofTouchEventArgs &touch);
+    void touchDown(ofTouchEventArgs &touch);
 	void touchMoved(ofTouchEventArgs &touch);
 	void touchUp(ofTouchEventArgs &touch);
 	void touchDoubleTap(ofTouchEventArgs &touch);
 	void touchCancelled(ofTouchEventArgs &touch);
     
-    // mouse events
-    bool isMouseEnabled;
+    // mouse events    
     void enableMouse();
     void disableMouse();
     void mouseMoved(ofMouseEventArgs& args );
@@ -70,33 +58,87 @@ public:
     void mouseReleased(ofMouseEventArgs& args);
     
     // touch/mouse binded
-    virtual void onMoved(float x, float y);
-    virtual void onDown(float x, float y);
-    virtual void onUp(float x, float y);
-    bool isPressed;
+    virtual bool onMoved(float x, float y);
+    virtual bool onDown(float x, float y);
+    virtual bool onUp(float x, float y);
+    bool getIsPressed();
     
-    // dispatched events
+    // events / listeners - using addEventListener requires onGuiChanged(const void* sender, string &buttonLabel) method
     ofEvent<string> onChangedEvent;
+    template <class ListenerClass>
+	void addEventListener(ListenerClass * listener){
+        //void testApp::onGuiChanged(const void* sender, string &buttonLabel) {};
+        ofAddListener(onChangedEvent,listener,&ListenerClass::onGuiChanged);        
+    };
+    template <class ListenerClass>
+    void removeEventListener(ListenerClass * listener){
+        ofRemoveListener(onChangedEvent,listener,&ListenerClass::onGuiChanged);
+    };
     
-    // interaction
-    bool itemActive;  
+    // interaction    
     virtual void show(bool activateSingleItem = false);
     virtual void hide();
-    bool isHidden;
+    bool isHidden();
     virtual bool hitTest(float x, float y);
     virtual bool hitTest(float x, float y, float w, float h);
     
+    bool itemActive;
+    
+    //customise colors
+    void setTextClr(ofColor clr);
+    void setBackgroundClrs(ofColor singleClr);
+    void setBackgroundClrs(ofColor tl, ofColor tr, ofColor bl, ofColor br);
+    void setActiveClrs(ofColor singleClr);
+    void setActiveClrs(ofColor tl, ofColor tr, ofColor bl, ofColor br);
+        
+    
+    // OSC
+    void enableSendOSC(ofxOscSender * oscSender);
+    void disableSendOSC();
+    void setOSCAddress(string address);
+    void sendOSC(int val);
+    void sendOSC(float val);
+    void sendOSC(string val);
+    string fullOscAddress;
+
+protected:
+    
+    // GLOBAL STATIC PROPERTY!
+    static string oscAddress;
+    
+    // display
+    string label;
+    int posX;
+    int posY;
+    int width;
+    int height;
+    bool hasFont;
+    ofTrueTypeFont *guiFont;
+    ofTrueTypeFont *guiFontLarge;
+    int fontSize;
+    int fontSizeLarge;
+    int textOffsetX;
+    int textOffsetY;
+    
+    // touch/mouse
+    bool isTouchEnabled;
+    bool isMouseEnabled;    
+    bool isPressed;
+    bool isInteractive;
+    
+    //interaction
+    bool hidden;
     
     // OPENGL COLOURS/VERTEX
     virtual void updateGLArrays();
     float *colorsArr; // background colors array
     float *colorsArrActive; // foreground colours array
-    float *vertexArr; // vertex positions array main    
+    float *vertexArr; // vertex positions array main
     float *vertexArrActive; // vertex positions 2nd active rectangle
     
     // BACKGROUND CLRS: GRADIENT GRAY 75%
     ofColor bgClrTL;// = 183
-    ofColor bgClrTR;// = 137 
+    ofColor bgClrTR;// = 137
     ofColor bgClrBL;// = 183
     ofColor bgClrBR;// = 137
     
@@ -110,31 +152,11 @@ public:
     ofColor textColourDark; // 0
     ofColor textColourLight; // 255
     
-    //customise colors
-    void setTextClr(ofColor clr);
-    void setBackgroundClrs(ofColor singleClr);
-    void setBackgroundClrs(ofColor tl, ofColor tr, ofColor bl, ofColor br);
-    void setActiveClrs(ofColor singleClr);
-    void setActiveClrs(ofColor tl, ofColor tr, ofColor bl, ofColor br);
-    
-    //virtual int getValue();
-    
-    
-    // OSC
-    void enableSendOSC(ofxOscSender * oscSender);
-    void disableSendOSC();
+    // osc
     ofxOscSender * oscSenderRef;
     ofxOscMessage msg;
     bool oscEnabled;
-    void sendOSC(int val);
-    void sendOSC(float val);
-    void sendOSC(string val);
-    
-    // osc address validation
-    void setOscAddress(string address);
-    string fullOscAddress;
     bool isCharacter(const char Character);
     bool isNumber(const char Character);
-    
 };
 

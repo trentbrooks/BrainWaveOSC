@@ -20,31 +20,37 @@ public:
     
     // display
     virtual void draw();
-    bool isTextTitle;
+    
     
     void formatText(bool isTextTitle);
-    string wrapString(string text, int maxWidth);
-     
-    bool drawTextBg;
-    void setBackgroundVisible(bool vis);
+    string wrapString(string text, int maxWidth);     
     
-    // for var text only!!!
-    // int, float, bool, string text, string title
-    int textType;
+    void setBackgroundVisible(bool vis);    
     
     void resetDefaultValue();
     void setValue(float *val);
     void setValue(int *val);
     void setValue(bool *val);
     void setValue(string *val);
+
+    
+protected:
+    
+    bool isTextTitle;
+    bool drawTextBg;
+    
+    // for var text only!!!
+    // int, float, bool, string text, string title
+    int textType;
     
     float *floatVal;
     int *intVal;
     bool *boolVal;
     string *stringVal;
-    int defaultIntVal; 
+    int defaultIntVal;
     float defaultFloatVal;
     bool defaultBoolVal;
     string defaultStringVal;
+    
 };
 

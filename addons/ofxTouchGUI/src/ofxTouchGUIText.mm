@@ -73,7 +73,7 @@ void ofxTouchGUIText::setBackgroundVisible(bool vis) {
 //--------------------------------------------------------------
 void ofxTouchGUIText::draw(){
     
-    if(!isHidden) {
+    if(!hidden) {
         ofPushMatrix();
         ofTranslate(int(posX), int(posY));
         if(drawTextBg) drawGLRect(vertexArrActive, colorsArrActive);
@@ -132,24 +132,21 @@ void ofxTouchGUIText::formatText(bool isTextTitle) {
     this->isTextTitle = isTextTitle;
     
     label = wrapString(label, width);
-   
     
     if(isTextTitle) {
         // automatically offset the text based on the font size
-        textOffsetX = fontSizeLarge;
-        textOffsetY = guiFontLarge->getLineHeight();//int(textOffsetX);// / 2);
-        //textOffsetY = guiFont->getLineHeight();
-        // reset height
-        height = guiFontLarge->stringHeight(label) + textOffsetY;
-        ofLog() << "large " << height;
+        if(hasFont) {
+            textOffsetX = fontSizeLarge;
+            textOffsetY = guiFontLarge->getLineHeight();
+            height = guiFontLarge->stringHeight(label) + textOffsetY;
+        }        
         
     } else {
-        
-        textOffsetY = guiFont->getLineHeight();
-        //textOffsetY = -guiFont->stringHeight(label) * .5 + 10;
-        height = guiFont->stringHeight(label) + textOffsetY; 
-        //cout << ">>>>>" << height << endl;
-        ofLog() << "small " << height;
+        //guiFont->isLoaded())
+        if(hasFont) {
+            textOffsetY = guiFont->getLineHeight();
+            height = guiFont->stringHeight(label) + textOffsetY;            
+        }
     }
     
     updateGLArrays();

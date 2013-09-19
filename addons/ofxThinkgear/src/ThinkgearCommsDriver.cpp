@@ -174,7 +174,6 @@ void ThinkgearCommsDriver::update() {
         if(TG_GetValueStatus(connectionID, TG_DATA_BLINK_STRENGTH) != 0) {
             float blinkStrength = TG_GetValue(connectionID, TG_DATA_BLINK_STRENGTH);
             callback(TG_DATA_BLINK_STRENGTH,blinkStrength);
-            //ofLog() << "BLINKED! " << blinkStrength;
         }
 
         

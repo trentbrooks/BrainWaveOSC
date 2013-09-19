@@ -14,8 +14,10 @@ ofxTouchGUIToggleButton::ofxTouchGUIToggleButton(){
     bgClrBL = ofColor(120,120,120,255); //rgba
     bgClrBR = ofColor(180,180,180,255); //rgba   
     
-    crossX = ofColor(255,255,255,150); //rgba
+    crossX = ofColor(255,255,255,180); //rgba
     crossOffset = 5;
+    
+    isInteractive = true;
 }
 
 ofxTouchGUIToggleButton::~ofxTouchGUIToggleButton(){
@@ -38,7 +40,7 @@ void ofxTouchGUIToggleButton::setValues(bool *toggleVal) {
 //--------------------------------------------------------------
 void ofxTouchGUIToggleButton::draw(){
     
-    if(!isHidden) {
+    if(!hidden) {
         ofPushMatrix();
         ofTranslate(int(posX), int(posY));
         
@@ -75,23 +77,28 @@ void ofxTouchGUIToggleButton::draw(){
 
 
 
-void ofxTouchGUIToggleButton::onUp(float x, float y){
-        
+bool ofxTouchGUIToggleButton::onUp(float x, float y){
+    
+    if(!isInteractive || hidden) return false;
+    
     // when this or another item itemActive (eg. dropdown), ignore all touch/mouse events
     //if(ignoreExternalEvents && !itemActive) return;
     
     if(isPressed) {
+        
+        // reset press same as normal button
+        isPressed = false;
         
         if(hitTest(x,y)) {
             // switch the toggle value
             *toggleVal = !*toggleVal;
             sendOSC(*toggleVal);
             ofNotifyEvent(onChangedEvent,label,this);
+            return true;
         }
-        
-        // reset press same as normal button
-        isPressed = false;
     }
+    
+    return false;
  
 }
 

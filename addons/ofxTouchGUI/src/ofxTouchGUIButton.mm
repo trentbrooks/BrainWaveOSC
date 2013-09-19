@@ -11,6 +11,7 @@ ofxTouchGUIButton::ofxTouchGUIButton(){
     bgClrBL = ofColor(80,80,80,255); //rgba
     bgClrBR = ofColor(80,80,80,255); //rgba
     hasImages = false;
+    isInteractive = true;
 }
 
 ofxTouchGUIButton::~ofxTouchGUIButton(){
@@ -33,7 +34,7 @@ void ofxTouchGUIButton::loadImageStates(string upImagePath, string downImagePath
 //--------------------------------------------------------------
 void ofxTouchGUIButton::draw(){
     
-    if(!isHidden) {
+    if(!hidden) {
         ofPushMatrix();
         ofTranslate(int(posX), int(posY));
         
@@ -70,22 +71,35 @@ void ofxTouchGUIButton::draw(){
 
 
 
-void ofxTouchGUIButton::onUp(float x, float y){
+bool ofxTouchGUIButton::onUp(float x, float y){
+    
+    if(!isInteractive || hidden) return false;
     
     // when this or another item itemActive (eg. dropdown), ignore all touch/mouse events
     //if(ignoreExternalEvents && !itemActive) return;
     
     if(isPressed) {
         
-        if(hitTest(x,y)) {
-            ofNotifyEvent(onChangedEvent,label,this);
-            sendOSC(1);
-        }
-        
         // reset press same as normal button
         isPressed = false;
+        
+        if(hitTest(x,y)) {
+            doButtonAction();
+            //ofNotifyEvent(onChangedEvent,label,this);
+            //sendOSC(1);
+            return true;
+        }
     }
     
+    return false;
+    
+}
+
+// doOSC must = false when called from the osc receiver, otherwise it gets stuck in an infinite loop
+void ofxTouchGUIButton::doButtonAction(bool doOSC) {
+    
+    ofNotifyEvent(onChangedEvent,label,this);
+    if(doOSC) sendOSC(1);
 }
 
 bool ofxTouchGUIButton::getValue() {

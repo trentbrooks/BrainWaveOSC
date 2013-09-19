@@ -10,7 +10,7 @@ ofxTouchGUISlider::ofxTouchGUISlider(){
     min = 0;
     max = 1;
     useInteger = false;
- 
+    isInteractive = true;
 }
 
 ofxTouchGUISlider::~ofxTouchGUISlider(){
@@ -55,7 +55,7 @@ void ofxTouchGUISlider::setValues(int *val, int min, int max) {
 //--------------------------------------------------------------
 void ofxTouchGUISlider::draw(){
     
-    if(!isHidden) {
+    if(!hidden) {
         ofPushMatrix();
         ofTranslate(int(posX), int(posY));
         
@@ -89,16 +89,20 @@ void ofxTouchGUISlider::draw(){
 
 // TOUCH
 //--------------------------------------------------------------
-void ofxTouchGUISlider::onUp(float x, float y){
+bool ofxTouchGUISlider::onUp(float x, float y){
+    
+    if(!isInteractive || hidden) return false;
     
     // want to trigger value changes on touch up as well as move
     onMoved(x,y);
     
-    ofxTouchGUIBase::onUp(x, y);
+    return ofxTouchGUIBase::onUp(x, y);
 }
 
-void ofxTouchGUISlider::onMoved(float x, float y) {
+bool ofxTouchGUISlider::onMoved(float x, float y) {
  
+    if(!isInteractive || hidden) return false;
+    
      // when this or another item itemActive (eg. dropdown), ignore all touch/mouse events
      //if(ignoreExternalEvents && !itemActive) return;
      
@@ -111,14 +115,18 @@ void ofxTouchGUISlider::onMoved(float x, float y) {
                  *intVal = (perc * (max - min) ) + min; 
                  sendOSC(*intVal);
                  ofNotifyEvent(onChangedEvent,label,this);
+                 return true;
              }
              else { 
                  *val = (perc * (max - min) ) + min; 
                  sendOSC(*val);
                  ofNotifyEvent(onChangedEvent,label,this);
+                 return true;
              }
          //}
      }
+    
+    return false;
 }
 
 

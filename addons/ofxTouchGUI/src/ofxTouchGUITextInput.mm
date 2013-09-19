@@ -116,7 +116,7 @@ void ofxTouchGUITextInput::draw(){
         updateKeyboard();
     #endif
     /*
-    if(!isHidden) {
+    if(!hidden) {
         ofPushMatrix();
         ofTranslate(int(posX), int(posY));
         

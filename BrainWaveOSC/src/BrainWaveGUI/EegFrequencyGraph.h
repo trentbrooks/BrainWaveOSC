@@ -1,11 +1,11 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxTouchGUITimeGraph.h"
+#include "ofxTouchGUIDataGraph.h"
 
 
 
-class EegFrequencyGraph : public ofxTouchGUITimeGraph {
+class EegFrequencyGraph : public ofxTouchGUIDataGraph {
 	
 public:
     

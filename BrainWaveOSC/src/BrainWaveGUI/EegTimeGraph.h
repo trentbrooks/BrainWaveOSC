@@ -1,13 +1,13 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxTouchGUITimeGraph.h"
+#include "ofxTouchGUIDataGraph.h"
 
 
 // had to make this class to add the static vars- so all 8 bands worked off the same range
 // hit the 'RESET EEG GRAPH'S TO MAX VALUE' button to normalise the display of the 8 eeg graphs
 
-class EegTimeGraph : public ofxTouchGUITimeGraph {
+class EegTimeGraph : public ofxTouchGUIDataGraph {
 	
 public:
     

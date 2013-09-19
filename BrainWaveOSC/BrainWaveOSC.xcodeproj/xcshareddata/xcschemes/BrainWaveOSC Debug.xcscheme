@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
+   LastUpgradeVersion = "0460"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-               BuildableName = "BrainwaveOSC.app"
-               BlueprintName = "BrainwaveOSC"
-               ReferencedContainer = "container:BrainwaveOSC.xcodeproj">
+               BuildableName = "BrainWaveOSC.app"
+               BlueprintName = "BrainWaveOSC"
+               ReferencedContainer = "container:BrainWaveOSC.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "BrainwaveOSC.app"
-            BlueprintName = "BrainwaveOSC"
-            ReferencedContainer = "container:BrainwaveOSC.xcodeproj">
+            BuildableName = "BrainWaveOSC.app"
+            BlueprintName = "BrainWaveOSC"
+            ReferencedContainer = "container:BrainWaveOSC.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -44,15 +45,16 @@
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Debug"
+      ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "BrainwaveOSC.app"
-            BlueprintName = "BrainwaveOSC"
-            ReferencedContainer = "container:BrainwaveOSC.xcodeproj">
+            BuildableName = "BrainWaveOSC.app"
+            BlueprintName = "BrainWaveOSC"
+            ReferencedContainer = "container:BrainWaveOSC.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -68,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "BrainwaveOSC.app"
-            BlueprintName = "BrainwaveOSC"
-            ReferencedContainer = "container:BrainwaveOSC.xcodeproj">
+            BuildableName = "BrainWaveOSC.app"
+            BlueprintName = "BrainWaveOSC"
+            ReferencedContainer = "container:BrainWaveOSC.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

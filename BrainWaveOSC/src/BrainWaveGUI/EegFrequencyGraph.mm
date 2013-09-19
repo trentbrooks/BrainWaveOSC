@@ -16,7 +16,7 @@ EegFrequencyGraph::~EegFrequencyGraph(){
 //--------------------------------------------------------------
 void EegFrequencyGraph::draw(){
     
-    if(!isHidden) {
+    if(!isHidden()) {
         ofPushMatrix();
         ofTranslate(int(posX), int(posY));
         

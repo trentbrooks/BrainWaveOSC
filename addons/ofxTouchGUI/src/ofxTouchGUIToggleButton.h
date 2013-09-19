@@ -19,7 +19,7 @@ public:
     int crossOffset;
     
     // touch events
-    virtual void onUp(float x, float y);
+    virtual bool onUp(float x, float y);
     
     // toggle values
     bool *toggleVal; 

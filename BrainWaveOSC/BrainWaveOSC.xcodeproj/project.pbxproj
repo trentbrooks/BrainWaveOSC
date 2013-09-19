@@ -3,32 +3,33 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0546d1a38e13bd319cc9755b5ca7e1a0 /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9bf3aa0d4faa89d0f8a0e545403162be /* OscReceivedElements.cpp */; };
-		28090deb5109115003e8f1c540f04092 /* UdpSocketWin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5928aa323f5c2690b06c837d8d036f55 /* UdpSocketWin.cpp */; };
-		510cafe035e576a4e1502d52c11243bb /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = e6def695b88ba5faaceaa93785a12fd9 /* UdpSocket.cpp */; };
-		5864ad82e20f15536d054ea319473de3 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = df49d76c45d5db505a234880104e4dc7 /* ofxOscMessage.cpp */; };
-		5a4349e9754d6fa14c0f2a3a1abc30b6 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = fc5da1c87211d4f6377da7199d8c5a1e /* tinyxmlparser.cpp */; };
-		62545d179c94265ca1389d4ac8d694a5 /* OscOutboundPacketStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63a47ac60ffafc3bf093ec0f62a9a4d4 /* OscOutboundPacketStream.cpp */; };
-		62ec144fae83f382e06d27f0814927e4 /* ofxTouchGUISlider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 932298a338263ed48d846a67d60516cd /* ofxTouchGUISlider.mm */; };
-		63b57ac5bf4ef088491e0317dbb2ecaa /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50df87d612c5aae17aafa6c02c6bc570 /* ofxXmlSettings.cpp */; };
-		640279ee111671bd026cb0137d5b121e /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = c2fac65c491d4231379f3298ec59c6e9 /* ofxOscReceiver.cpp */; };
-		650ee517d30bddf8362dcd85bff5c305 /* ofxTouchGUITextInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = af5511cc2f09ecf487a0b3b4b648310b /* ofxTouchGUITextInput.mm */; };
-		65ebe19da026d582a2367d41e8a64737 /* ofxTouchGUIDropDown.mm in Sources */ = {isa = PBXBuildFile; fileRef = fa7574b3a6cd3d87cd0b558ea41ddc81 /* ofxTouchGUIDropDown.mm */; };
-		67fe4c7b15c2f0478c8126c28fa6aad0 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3b361208cd4107e479f04e7bce6d93aa /* NetworkingUtils.cpp */; };
-		72a929d3561b8232a182abfcbb325491 /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65eefa3da3526e9cdd9c21f90d9b5684 /* ofxOscBundle.cpp */; };
-		879a251454401bc0b6e4f238fc63135b /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = d9bffbbf4cc43dee890b3c3e8f7d792c /* OscTypes.cpp */; };
-		8af21a9eac14687abd229da08001ae38 /* ofxThinkgear.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4d5a91245869673c1dcf771d7760a038 /* ofxThinkgear.cpp */; };
-		8f5205aef8861ef234f0651aba6be2ee /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81967292bfc87a0144bd32c66f3adb20 /* ofxOscSender.cpp */; };
-		933a2227713c720ceff80fd967d0a8ee /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2b40eda85beb63e46785bc299a638898 /* tinyxml.cpp */; };
-		9d44dc88ef9e7991b4a09951e2e4769f /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 832bdc407620cdba568b713d2252c43c /* tinyxmlerror.cpp */; };
-		A7F74AC317D6B4EB008E847A /* BrainWaveGUI.mm in Sources */ = {isa = PBXBuildFile; fileRef = A7F74ABE17D6B4EB008E847A /* BrainWaveGUI.mm */; };
-		A7F74AC417D6B4EB008E847A /* EegFrequencyGraph.mm in Sources */ = {isa = PBXBuildFile; fileRef = A7F74AC017D6B4EB008E847A /* EegFrequencyGraph.mm */; };
-		A7F74AC517D6B4EB008E847A /* EegTimeGraph.mm in Sources */ = {isa = PBXBuildFile; fileRef = A7F74AC217D6B4EB008E847A /* EegTimeGraph.mm */; };
-		A7F74ACD17D6B878008E847A /* ThinkgearCommsDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A7F74ACB17D6B878008E847A /* ThinkgearCommsDriver.cpp */; };
+		0546d1a38e13bd319cc9755b /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9bf3aa0d4faa89d0f8a0e545 /* OscReceivedElements.cpp */; };
+		28090deb5109115003e8f1c5 /* UdpSocketWin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5928aa323f5c2690b06c837d /* UdpSocketWin.cpp */; };
+		3a98392afecbe1c18334bb84 /* ThinkgearCommsDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 418182f02abcde8c540746df /* ThinkgearCommsDriver.cpp */; };
+		4adb88e2fb52e76a471065de /* ofxOscParameterSync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0aed834ce4dec5260af302a2 /* ofxOscParameterSync.cpp */; };
+		510cafe035e576a4e1502d52 /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = e6def695b88ba5faaceaa937 /* UdpSocket.cpp */; };
+		5864ad82e20f15536d054ea3 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = df49d76c45d5db505a234880 /* ofxOscMessage.cpp */; };
+		5a4349e9754d6fa14c0f2a3a /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = fc5da1c87211d4f6377da719 /* tinyxmlparser.cpp */; };
+		62545d179c94265ca1389d4a /* OscOutboundPacketStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63a47ac60ffafc3bf093ec0f /* OscOutboundPacketStream.cpp */; };
+		62ec144fae83f382e06d27f0 /* ofxTouchGUISlider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 932298a338263ed48d846a67 /* ofxTouchGUISlider.mm */; };
+		63b57ac5bf4ef088491e0317 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50df87d612c5aae17aafa6c0 /* ofxXmlSettings.cpp */; };
+		640279ee111671bd026cb013 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = c2fac65c491d4231379f3298 /* ofxOscReceiver.cpp */; };
+		650ee517d30bddf8362dcd85 /* ofxTouchGUITextInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = af5511cc2f09ecf487a0b3b4 /* ofxTouchGUITextInput.mm */; };
+		65ebe19da026d582a2367d41 /* ofxTouchGUIDropDown.mm in Sources */ = {isa = PBXBuildFile; fileRef = fa7574b3a6cd3d87cd0b558e /* ofxTouchGUIDropDown.mm */; };
+		67fe4c7b15c2f0478c8126c2 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3b361208cd4107e479f04e7b /* NetworkingUtils.cpp */; };
+		72a929d3561b8232a182abfc /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65eefa3da3526e9cdd9c21f9 /* ofxOscBundle.cpp */; };
+		879a251454401bc0b6e4f238 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = d9bffbbf4cc43dee890b3c3e /* OscTypes.cpp */; };
+		8af21a9eac14687abd229da0 /* ofxThinkgear.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4d5a91245869673c1dcf771d /* ofxThinkgear.cpp */; };
+		8f5205aef8861ef234f0651a /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81967292bfc87a0144bd32c6 /* ofxOscSender.cpp */; };
+		933a2227713c720ceff80fd9 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2b40eda85beb63e46785bc29 /* tinyxml.cpp */; };
+		9d44dc88ef9e7991b4a09951 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 832bdc407620cdba568b713d /* tinyxmlerror.cpp */; };
+		A738D91D17D959F9006846BC /* BrainWaveGUI.mm in Sources */ = {isa = PBXBuildFile; fileRef = A738D91817D959F9006846BC /* BrainWaveGUI.mm */; };
+		A738D91E17D959F9006846BC /* EegFrequencyGraph.mm in Sources */ = {isa = PBXBuildFile; fileRef = A738D91A17D959F9006846BC /* EegFrequencyGraph.mm */; };
+		A738D91F17D959F9006846BC /* EegTimeGraph.mm in Sources */ = {isa = PBXBuildFile; fileRef = A738D91C17D959F9006846BC /* EegTimeGraph.mm */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -41,7 +42,7 @@
 		E45BE9830E8CC7DD009D7055 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9790E8CC7DD009D7055 /* OpenGL.framework */; };
 		E45BE9840E8CC7DD009D7055 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */; };
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
-		E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */; };
+		E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */; };
 		E4C2424710CC5A17004149E2 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424410CC5A17004149E2 /* AppKit.framework */; };
 		E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424510CC5A17004149E2 /* Cocoa.framework */; };
 		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
@@ -49,16 +50,16 @@
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
-		a242747dd88b71f543e82e3fe29bd700 /* ofxTouchGUIBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3af53bae8c2408288192be076178ef10 /* ofxTouchGUIBase.mm */; };
-		a29d8c96ae042eceaa1bd4f3cbbf0c9d /* NetworkingUtilsWin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2a5b1fad3f30c8065c396acbb72e5d95 /* NetworkingUtilsWin.cpp */; };
-		ade367465d2a8ebad4c7a8d92a3ef718 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = add194746185e2da11468377f4e88c2f /* IpEndpointName.cpp */; };
-		ba752666146fa19d705125a5e5f64248 /* ofxTouchGUIButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17ec432a99032deaaa0d58afe3c36f90 /* ofxTouchGUIButton.mm */; };
-		c4782ecc372420ace0615b749e1d0d6b /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = bc8881b3c8c0a1c45f042e7a9e7b92cc /* OscPrintReceivedElements.cpp */; };
-		d361c93cfdb48bcc4e57cc1910da7a34 /* ofxTouchGUI.mm in Sources */ = {isa = PBXBuildFile; fileRef = b0c6fde7ee419b1df95f6306887e2532 /* ofxTouchGUI.mm */; };
-		eb2bbf635497e52ca689e30e30ec0075 /* ofxTouchGUIToggleButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8c8f634d703e9db2c0d53f4f03e3e978 /* ofxTouchGUIToggleButton.mm */; };
-		f4e9b8d5fd22720e777ee899c662a959 /* ofxTouchGUIText.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31cac1a61423603c160cecc14f400a1f /* ofxTouchGUIText.mm */; };
-		f72bc5ec5d94f53774bdf50ecfbd9987 /* ThinkGearStreamParser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5c83d2692443cac6662da8d63cb1ce6d /* ThinkGearStreamParser.c */; };
-		fe68eb371e2e841792c70fe3955ee47d /* ofxTouchGUITimeGraph.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94ee4917f0a8ebc089a5b76f6eebceca /* ofxTouchGUITimeGraph.mm */; };
+		a242747dd88b71f543e82e3f /* ofxTouchGUIBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3af53bae8c2408288192be07 /* ofxTouchGUIBase.mm */; };
+		a29d8c96ae042eceaa1bd4f3 /* NetworkingUtilsWin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2a5b1fad3f30c8065c396acb /* NetworkingUtilsWin.cpp */; };
+		ade367465d2a8ebad4c7a8d9 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = add194746185e2da11468377 /* IpEndpointName.cpp */; };
+		ba752666146fa19d705125a5 /* ofxTouchGUIButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17ec432a99032deaaa0d58af /* ofxTouchGUIButton.mm */; };
+		c4782ecc372420ace0615b74 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = bc8881b3c8c0a1c45f042e7a /* OscPrintReceivedElements.cpp */; };
+		d361c93cfdb48bcc4e57cc19 /* ofxTouchGUI.mm in Sources */ = {isa = PBXBuildFile; fileRef = b0c6fde7ee419b1df95f6306 /* ofxTouchGUI.mm */; };
+		eb2bbf635497e52ca689e30e /* ofxTouchGUIToggleButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8c8f634d703e9db2c0d53f4f /* ofxTouchGUIToggleButton.mm */; };
+		f4e9b8d5fd22720e777ee899 /* ofxTouchGUIText.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31cac1a61423603c160cecc1 /* ofxTouchGUIText.mm */; };
+		f72bc5ec5d94f53774bdf50e /* ThinkGearStreamParser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5c83d2692443cac6662da8d6 /* ThinkGearStreamParser.c */; };
+		fe68eb371e2e841792c70fe3 /* ofxTouchGUIDataGraph.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94ee4917f0a8ebc089a5b76f /* ofxTouchGUIDataGraph.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,54 +93,55 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		00d6d32b84b099226431108cea775a33 /* ofxOsc.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOsc.h; path = ../../../addons/ofxOsc/src/ofxOsc.h; sourceTree = SOURCE_ROOT; };
-		013294119ea02dac94ee3e3a4bf02b3a /* ofxTouchGUITimeGraph.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUITimeGraph.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUITimeGraph.h; sourceTree = SOURCE_ROOT; };
-		01dcc0911400f9acf5b65578af4ec8f9 /* ofxXmlSettings.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxXmlSettings.h; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.h; sourceTree = SOURCE_ROOT; };
-		029684cf678f70f6d3537a29773654a6 /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscOutboundPacketStream.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h; sourceTree = SOURCE_ROOT; };
-		17ec432a99032deaaa0d58afe3c36f90 /* ofxTouchGUIButton.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUIButton.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIButton.mm; sourceTree = SOURCE_ROOT; };
-		20f35afadaf0068b067e713fa3152568 /* OscReceivedElements.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscReceivedElements.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.h; sourceTree = SOURCE_ROOT; };
-		23640f57df6c4bb6bfc5da4c2199c7dd /* PacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = PacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/PacketListener.h; sourceTree = SOURCE_ROOT; };
-		288174801b16787b8ee71388b9cce35a /* ofxTouchGUIToggleButton.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUIToggleButton.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIToggleButton.h; sourceTree = SOURCE_ROOT; };
-		2a5b1fad3f30c8065c396acbb72e5d95 /* NetworkingUtilsWin.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = NetworkingUtilsWin.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/win32/NetworkingUtilsWin.cpp; sourceTree = SOURCE_ROOT; };
-		2b40eda85beb63e46785bc299a638898 /* tinyxml.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxml.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxml.cpp; sourceTree = SOURCE_ROOT; };
-		2fd4b0329909d3527f0034948840df14 /* UdpSocket.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = UdpSocket.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/UdpSocket.h; sourceTree = SOURCE_ROOT; };
-		31cac1a61423603c160cecc14f400a1f /* ofxTouchGUIText.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUIText.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIText.mm; sourceTree = SOURCE_ROOT; };
-		325540fbf361c52a8b34f2b6e3fb1ce2 /* ofxTouchGUI.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUI.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUI.h; sourceTree = SOURCE_ROOT; };
-		3680833c472135f67a0800c35df938a5 /* ofxTouchGUIText.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUIText.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIText.h; sourceTree = SOURCE_ROOT; };
-		3af53bae8c2408288192be076178ef10 /* ofxTouchGUIBase.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUIBase.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIBase.mm; sourceTree = SOURCE_ROOT; };
-		3b361208cd4107e479f04e7bce6d93aa /* NetworkingUtils.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = NetworkingUtils.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/posix/NetworkingUtils.cpp; sourceTree = SOURCE_ROOT; };
-		444657a12e59d0ed86981498fccd5fcc /* TimerListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = TimerListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/TimerListener.h; sourceTree = SOURCE_ROOT; };
-		48974f980f51769171d0b2f5e519dd28 /* IpEndpointName.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = IpEndpointName.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.h; sourceTree = SOURCE_ROOT; };
-		4d5a91245869673c1dcf771d7760a038 /* ofxThinkgear.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxThinkgear.cpp; path = ../../../addons/ofxThinkgear/src/ofxThinkgear.cpp; sourceTree = SOURCE_ROOT; };
-		4e95fb446a9c9c6f0de12d752f6604b3 /* OscPrintReceivedElements.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscPrintReceivedElements.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPrintReceivedElements.h; sourceTree = SOURCE_ROOT; };
-		50df87d612c5aae17aafa6c02c6bc570 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxXmlSettings.cpp; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.cpp; sourceTree = SOURCE_ROOT; };
-		5928aa323f5c2690b06c837d8d036f55 /* UdpSocketWin.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = UdpSocketWin.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/win32/UdpSocketWin.cpp; sourceTree = SOURCE_ROOT; };
-		5956c238f1e07e36e1cc96fc7aa9cf14 /* ofxTouchGUIBase.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUIBase.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIBase.h; sourceTree = SOURCE_ROOT; };
-		5bbc713dfcf68eae820efdf7dbbba0cc /* ofxThinkgear.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxThinkgear.h; path = ../../../addons/ofxThinkgear/src/ofxThinkgear.h; sourceTree = SOURCE_ROOT; };
-		5c83d2692443cac6662da8d63cb1ce6d /* ThinkGearStreamParser.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = ThinkGearStreamParser.c; path = ../../../addons/ofxThinkgear/src/ThinkGearStreamParser.c; sourceTree = SOURCE_ROOT; };
-		63a47ac60ffafc3bf093ec0f62a9a4d4 /* OscOutboundPacketStream.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscOutboundPacketStream.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.cpp; sourceTree = SOURCE_ROOT; };
-		65eefa3da3526e9cdd9c21f90d9b5684 /* ofxOscBundle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscBundle.cpp; path = ../../../addons/ofxOsc/src/ofxOscBundle.cpp; sourceTree = SOURCE_ROOT; };
-		683bc495de1f076bb0a5df88f76ecc8a /* ofxTouchGUITextInput.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUITextInput.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUITextInput.h; sourceTree = SOURCE_ROOT; };
-		6b65e6930994cc4b2d2b8b33b10f6e99 /* OscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPacketListener.h; sourceTree = SOURCE_ROOT; };
-		7689f8a0f3d0b7635a8c310487cd0928 /* ofxOscArg.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscArg.h; path = ../../../addons/ofxOsc/src/ofxOscArg.h; sourceTree = SOURCE_ROOT; };
-		81967292bfc87a0144bd32c66f3adb20 /* ofxOscSender.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscSender.cpp; path = ../../../addons/ofxOsc/src/ofxOscSender.cpp; sourceTree = SOURCE_ROOT; };
-		832bdc407620cdba568b713d2252c43c /* tinyxmlerror.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxmlerror.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxmlerror.cpp; sourceTree = SOURCE_ROOT; };
-		8b30e93fd3d3475eed522a0e0b085e30 /* ofxOscBundle.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscBundle.h; path = ../../../addons/ofxOsc/src/ofxOscBundle.h; sourceTree = SOURCE_ROOT; };
-		8c75afc8774a62495dd5346429f6f666 /* ofxOscReceiver.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscReceiver.h; path = ../../../addons/ofxOsc/src/ofxOscReceiver.h; sourceTree = SOURCE_ROOT; };
-		8c8f634d703e9db2c0d53f4f03e3e978 /* ofxTouchGUIToggleButton.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUIToggleButton.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIToggleButton.mm; sourceTree = SOURCE_ROOT; };
-		932298a338263ed48d846a67d60516cd /* ofxTouchGUISlider.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUISlider.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUISlider.mm; sourceTree = SOURCE_ROOT; };
-		94ee4917f0a8ebc089a5b76f6eebceca /* ofxTouchGUITimeGraph.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUITimeGraph.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUITimeGraph.mm; sourceTree = SOURCE_ROOT; };
-		978689adeec8caa40f096dbd78da45f1 /* ofxTouchGUIButton.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUIButton.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIButton.h; sourceTree = SOURCE_ROOT; };
-		9bf3aa0d4faa89d0f8a0e545403162be /* OscReceivedElements.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscReceivedElements.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.cpp; sourceTree = SOURCE_ROOT; };
-		9f7986dc4eb05e75fce2c777500fdc01 /* ofxOscSender.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscSender.h; path = ../../../addons/ofxOsc/src/ofxOscSender.h; sourceTree = SOURCE_ROOT; };
-		A7F74ABD17D6B4EB008E847A /* BrainWaveGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrainWaveGUI.h; sourceTree = "<group>"; };
-		A7F74ABE17D6B4EB008E847A /* BrainWaveGUI.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BrainWaveGUI.mm; sourceTree = "<group>"; };
-		A7F74ABF17D6B4EB008E847A /* EegFrequencyGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EegFrequencyGraph.h; sourceTree = "<group>"; };
-		A7F74AC017D6B4EB008E847A /* EegFrequencyGraph.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EegFrequencyGraph.mm; sourceTree = "<group>"; };
-		A7F74AC117D6B4EB008E847A /* EegTimeGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EegTimeGraph.h; sourceTree = "<group>"; };
-		A7F74AC217D6B4EB008E847A /* EegTimeGraph.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EegTimeGraph.mm; sourceTree = "<group>"; };
-		A7F74ACB17D6B878008E847A /* ThinkgearCommsDriver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ThinkgearCommsDriver.cpp; path = ../../../addons/ofxThinkgear/src/ThinkgearCommsDriver.cpp; sourceTree = "<group>"; };
-		A7F74ACC17D6B878008E847A /* ThinkgearCommsDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThinkgearCommsDriver.h; path = ../../../addons/ofxThinkgear/src/ThinkgearCommsDriver.h; sourceTree = "<group>"; };
+		00d6d32b84b099226431108c /* ofxOsc.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOsc.h; path = ../../../addons/ofxOsc/src/ofxOsc.h; sourceTree = SOURCE_ROOT; };
+		013294119ea02dac94ee3e3a /* ofxTouchGUIDataGraph.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUIDataGraph.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIDataGraph.h; sourceTree = SOURCE_ROOT; };
+		01dcc0911400f9acf5b65578 /* ofxXmlSettings.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxXmlSettings.h; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.h; sourceTree = SOURCE_ROOT; };
+		029684cf678f70f6d3537a29 /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscOutboundPacketStream.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h; sourceTree = SOURCE_ROOT; };
+		0aed834ce4dec5260af302a2 /* ofxOscParameterSync.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscParameterSync.cpp; path = ../../../addons/ofxOsc/src/ofxOscParameterSync.cpp; sourceTree = SOURCE_ROOT; };
+		17ec432a99032deaaa0d58af /* ofxTouchGUIButton.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUIButton.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIButton.mm; sourceTree = SOURCE_ROOT; };
+		1f4bed3a5cf262ede57b4097 /* ThinkgearCommsDriver.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ThinkgearCommsDriver.h; path = ../../../addons/ofxThinkgear/src/ThinkgearCommsDriver.h; sourceTree = SOURCE_ROOT; };
+		20f35afadaf0068b067e713f /* OscReceivedElements.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscReceivedElements.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.h; sourceTree = SOURCE_ROOT; };
+		23640f57df6c4bb6bfc5da4c /* PacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = PacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/PacketListener.h; sourceTree = SOURCE_ROOT; };
+		288174801b16787b8ee71388 /* ofxTouchGUIToggleButton.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUIToggleButton.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIToggleButton.h; sourceTree = SOURCE_ROOT; };
+		2a5b1fad3f30c8065c396acb /* NetworkingUtilsWin.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = NetworkingUtilsWin.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/win32/NetworkingUtilsWin.cpp; sourceTree = SOURCE_ROOT; };
+		2b40eda85beb63e46785bc29 /* tinyxml.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxml.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxml.cpp; sourceTree = SOURCE_ROOT; };
+		2fd4b0329909d3527f003494 /* UdpSocket.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = UdpSocket.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/UdpSocket.h; sourceTree = SOURCE_ROOT; };
+		31cac1a61423603c160cecc1 /* ofxTouchGUIText.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUIText.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIText.mm; sourceTree = SOURCE_ROOT; };
+		325540fbf361c52a8b34f2b6 /* ofxTouchGUI.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUI.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUI.h; sourceTree = SOURCE_ROOT; };
+		3680833c472135f67a0800c3 /* ofxTouchGUIText.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUIText.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIText.h; sourceTree = SOURCE_ROOT; };
+		3af53bae8c2408288192be07 /* ofxTouchGUIBase.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUIBase.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIBase.mm; sourceTree = SOURCE_ROOT; };
+		3b361208cd4107e479f04e7b /* NetworkingUtils.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = NetworkingUtils.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/posix/NetworkingUtils.cpp; sourceTree = SOURCE_ROOT; };
+		418182f02abcde8c540746df /* ThinkgearCommsDriver.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ThinkgearCommsDriver.cpp; path = ../../../addons/ofxThinkgear/src/ThinkgearCommsDriver.cpp; sourceTree = SOURCE_ROOT; };
+		444657a12e59d0ed86981498 /* TimerListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = TimerListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/TimerListener.h; sourceTree = SOURCE_ROOT; };
+		48974f980f51769171d0b2f5 /* IpEndpointName.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = IpEndpointName.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.h; sourceTree = SOURCE_ROOT; };
+		4d5a91245869673c1dcf771d /* ofxThinkgear.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxThinkgear.cpp; path = ../../../addons/ofxThinkgear/src/ofxThinkgear.cpp; sourceTree = SOURCE_ROOT; };
+		4e95fb446a9c9c6f0de12d75 /* OscPrintReceivedElements.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscPrintReceivedElements.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPrintReceivedElements.h; sourceTree = SOURCE_ROOT; };
+		50df87d612c5aae17aafa6c0 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxXmlSettings.cpp; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.cpp; sourceTree = SOURCE_ROOT; };
+		5928aa323f5c2690b06c837d /* UdpSocketWin.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = UdpSocketWin.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/win32/UdpSocketWin.cpp; sourceTree = SOURCE_ROOT; };
+		5956c238f1e07e36e1cc96fc /* ofxTouchGUIBase.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUIBase.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIBase.h; sourceTree = SOURCE_ROOT; };
+		5bbc713dfcf68eae820efdf7 /* ofxThinkgear.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxThinkgear.h; path = ../../../addons/ofxThinkgear/src/ofxThinkgear.h; sourceTree = SOURCE_ROOT; };
+		5c83d2692443cac6662da8d6 /* ThinkGearStreamParser.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = ThinkGearStreamParser.c; path = ../../../addons/ofxThinkgear/src/ThinkGearStreamParser.c; sourceTree = SOURCE_ROOT; };
+		63a47ac60ffafc3bf093ec0f /* OscOutboundPacketStream.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscOutboundPacketStream.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.cpp; sourceTree = SOURCE_ROOT; };
+		65eefa3da3526e9cdd9c21f9 /* ofxOscBundle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscBundle.cpp; path = ../../../addons/ofxOsc/src/ofxOscBundle.cpp; sourceTree = SOURCE_ROOT; };
+		683bc495de1f076bb0a5df88 /* ofxTouchGUITextInput.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUITextInput.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUITextInput.h; sourceTree = SOURCE_ROOT; };
+		6b65e6930994cc4b2d2b8b33 /* OscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPacketListener.h; sourceTree = SOURCE_ROOT; };
+		7689f8a0f3d0b7635a8c3104 /* ofxOscArg.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscArg.h; path = ../../../addons/ofxOsc/src/ofxOscArg.h; sourceTree = SOURCE_ROOT; };
+		81967292bfc87a0144bd32c6 /* ofxOscSender.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscSender.cpp; path = ../../../addons/ofxOsc/src/ofxOscSender.cpp; sourceTree = SOURCE_ROOT; };
+		832bdc407620cdba568b713d /* tinyxmlerror.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxmlerror.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxmlerror.cpp; sourceTree = SOURCE_ROOT; };
+		8b30e93fd3d3475eed522a0e /* ofxOscBundle.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscBundle.h; path = ../../../addons/ofxOsc/src/ofxOscBundle.h; sourceTree = SOURCE_ROOT; };
+		8c75afc8774a62495dd53464 /* ofxOscReceiver.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscReceiver.h; path = ../../../addons/ofxOsc/src/ofxOscReceiver.h; sourceTree = SOURCE_ROOT; };
+		8c8f634d703e9db2c0d53f4f /* ofxTouchGUIToggleButton.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUIToggleButton.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIToggleButton.mm; sourceTree = SOURCE_ROOT; };
+		932298a338263ed48d846a67 /* ofxTouchGUISlider.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUISlider.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUISlider.mm; sourceTree = SOURCE_ROOT; };
+		94ee4917f0a8ebc089a5b76f /* ofxTouchGUIDataGraph.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUIDataGraph.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIDataGraph.mm; sourceTree = SOURCE_ROOT; };
+		978689adeec8caa40f096dbd /* ofxTouchGUIButton.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUIButton.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIButton.h; sourceTree = SOURCE_ROOT; };
+		9bf3aa0d4faa89d0f8a0e545 /* OscReceivedElements.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscReceivedElements.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.cpp; sourceTree = SOURCE_ROOT; };
+		9f7986dc4eb05e75fce2c777 /* ofxOscSender.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscSender.h; path = ../../../addons/ofxOsc/src/ofxOscSender.h; sourceTree = SOURCE_ROOT; };
+		A738D91717D959F9006846BC /* BrainWaveGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrainWaveGUI.h; sourceTree = "<group>"; };
+		A738D91817D959F9006846BC /* BrainWaveGUI.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BrainWaveGUI.mm; sourceTree = "<group>"; };
+		A738D91917D959F9006846BC /* EegFrequencyGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EegFrequencyGraph.h; sourceTree = "<group>"; };
+		A738D91A17D959F9006846BC /* EegFrequencyGraph.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EegFrequencyGraph.mm; sourceTree = "<group>"; };
+		A738D91B17D959F9006846BC /* EegTimeGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EegTimeGraph.h; sourceTree = "<group>"; };
+		A738D91C17D959F9006846BC /* EegTimeGraph.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EegTimeGraph.mm; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -151,10 +153,10 @@
 		E45BE9770E8CC7DD009D7055 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		E45BE9790E8CC7DD009D7055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
-		E4B69B5B0A3A1756003C02F2 /* BrainwaveOSCDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrainwaveOSCDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69B5B0A3A1756003C02F2 /* BrainWaveOSCDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrainWaveOSCDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
-		E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = testApp.cpp; path = src/testApp.cpp; sourceTree = SOURCE_ROOT; };
-		E4B69E1F0A3A1BDC003C02F2 /* testApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = testApp.h; path = src/testApp.h; sourceTree = SOURCE_ROOT; };
+		E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = SOURCE_ROOT; };
+		E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = SOURCE_ROOT; };
 		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
 		E4C2424410CC5A17004149E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		E4C2424510CC5A17004149E2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -164,26 +166,27 @@
 		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
-		a2aaa8ca403479e6fcdf920ebcd1682b /* OscHostEndianness.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscHostEndianness.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscHostEndianness.h; sourceTree = SOURCE_ROOT; };
-		add194746185e2da11468377f4e88c2f /* IpEndpointName.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = IpEndpointName.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.cpp; sourceTree = SOURCE_ROOT; };
-		ae335eb4709bfd4671eeac8460534507 /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = MessageMappingOscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/MessageMappingOscPacketListener.h; sourceTree = SOURCE_ROOT; };
-		af5511cc2f09ecf487a0b3b4b648310b /* ofxTouchGUITextInput.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUITextInput.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUITextInput.mm; sourceTree = SOURCE_ROOT; };
-		b0c6fde7ee419b1df95f6306887e2532 /* ofxTouchGUI.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUI.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUI.mm; sourceTree = SOURCE_ROOT; };
-		b21e7e5f548eea92f368040bb1aa2f69 /* tinyxml.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = tinyxml.h; path = ../../../addons/ofxXmlSettings/libs/tinyxml.h; sourceTree = SOURCE_ROOT; };
-		bc8881b3c8c0a1c45f042e7a9e7b92cc /* OscPrintReceivedElements.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscPrintReceivedElements.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPrintReceivedElements.cpp; sourceTree = SOURCE_ROOT; };
-		c2fac65c491d4231379f3298ec59c6e9 /* ofxOscReceiver.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscReceiver.cpp; path = ../../../addons/ofxOsc/src/ofxOscReceiver.cpp; sourceTree = SOURCE_ROOT; };
-		c58862c6d212c8e8a83810f4246811b1 /* ofxOscMessage.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscMessage.h; path = ../../../addons/ofxOsc/src/ofxOscMessage.h; sourceTree = SOURCE_ROOT; };
-		c6937888e126badc8777423bd27cc7c8 /* OscTypes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscTypes.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscTypes.h; sourceTree = SOURCE_ROOT; };
-		d9bffbbf4cc43dee890b3c3e8f7d792c /* OscTypes.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscTypes.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscTypes.cpp; sourceTree = SOURCE_ROOT; };
-		dcfed036d4d84494b19c34775781cfe5 /* ofxTouchGUIDropDown.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUIDropDown.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIDropDown.h; sourceTree = SOURCE_ROOT; };
-		df49d76c45d5db505a234880104e4dc7 /* ofxOscMessage.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscMessage.cpp; path = ../../../addons/ofxOsc/src/ofxOscMessage.cpp; sourceTree = SOURCE_ROOT; };
-		e6def695b88ba5faaceaa93785a12fd9 /* UdpSocket.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = UdpSocket.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/posix/UdpSocket.cpp; sourceTree = SOURCE_ROOT; };
-		f4f5b6b8ba2bd52c646ed9087d6ed9cf /* OscException.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscException.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscException.h; sourceTree = SOURCE_ROOT; };
-		f7fbc56859535e597b24bb914dbc8313 /* NetworkingUtils.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = NetworkingUtils.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/NetworkingUtils.h; sourceTree = SOURCE_ROOT; };
-		fa7574b3a6cd3d87cd0b558ea41ddc81 /* ofxTouchGUIDropDown.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUIDropDown.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIDropDown.mm; sourceTree = SOURCE_ROOT; };
-		fc5da1c87211d4f6377da7199d8c5a1e /* tinyxmlparser.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxmlparser.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxmlparser.cpp; sourceTree = SOURCE_ROOT; };
-		fdd2cf56db7f486f3f1bdeb5e9e5b53b /* ofxTouchGUISlider.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUISlider.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUISlider.h; sourceTree = SOURCE_ROOT; };
-		fdfde862dceb266ec0869fc54ad4c385 /* ThinkGearStreamParser.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ThinkGearStreamParser.h; path = ../../../addons/ofxThinkgear/src/ThinkGearStreamParser.h; sourceTree = SOURCE_ROOT; };
+		a2aaa8ca403479e6fcdf920e /* OscHostEndianness.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscHostEndianness.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscHostEndianness.h; sourceTree = SOURCE_ROOT; };
+		add194746185e2da11468377 /* IpEndpointName.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = IpEndpointName.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.cpp; sourceTree = SOURCE_ROOT; };
+		ae335eb4709bfd4671eeac84 /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = MessageMappingOscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/MessageMappingOscPacketListener.h; sourceTree = SOURCE_ROOT; };
+		af5511cc2f09ecf487a0b3b4 /* ofxTouchGUITextInput.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUITextInput.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUITextInput.mm; sourceTree = SOURCE_ROOT; };
+		b0c6fde7ee419b1df95f6306 /* ofxTouchGUI.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUI.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUI.mm; sourceTree = SOURCE_ROOT; };
+		b21e7e5f548eea92f368040b /* tinyxml.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = tinyxml.h; path = ../../../addons/ofxXmlSettings/libs/tinyxml.h; sourceTree = SOURCE_ROOT; };
+		b31c608870eceb2490a93736 /* ofxOscParameterSync.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscParameterSync.h; path = ../../../addons/ofxOsc/src/ofxOscParameterSync.h; sourceTree = SOURCE_ROOT; };
+		bc8881b3c8c0a1c45f042e7a /* OscPrintReceivedElements.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscPrintReceivedElements.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPrintReceivedElements.cpp; sourceTree = SOURCE_ROOT; };
+		c2fac65c491d4231379f3298 /* ofxOscReceiver.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscReceiver.cpp; path = ../../../addons/ofxOsc/src/ofxOscReceiver.cpp; sourceTree = SOURCE_ROOT; };
+		c58862c6d212c8e8a83810f4 /* ofxOscMessage.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscMessage.h; path = ../../../addons/ofxOsc/src/ofxOscMessage.h; sourceTree = SOURCE_ROOT; };
+		c6937888e126badc8777423b /* OscTypes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscTypes.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscTypes.h; sourceTree = SOURCE_ROOT; };
+		d9bffbbf4cc43dee890b3c3e /* OscTypes.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscTypes.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscTypes.cpp; sourceTree = SOURCE_ROOT; };
+		dcfed036d4d84494b19c3477 /* ofxTouchGUIDropDown.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUIDropDown.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIDropDown.h; sourceTree = SOURCE_ROOT; };
+		df49d76c45d5db505a234880 /* ofxOscMessage.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscMessage.cpp; path = ../../../addons/ofxOsc/src/ofxOscMessage.cpp; sourceTree = SOURCE_ROOT; };
+		e6def695b88ba5faaceaa937 /* UdpSocket.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = UdpSocket.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/posix/UdpSocket.cpp; sourceTree = SOURCE_ROOT; };
+		f4f5b6b8ba2bd52c646ed908 /* OscException.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscException.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscException.h; sourceTree = SOURCE_ROOT; };
+		f7fbc56859535e597b24bb91 /* NetworkingUtils.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = NetworkingUtils.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/NetworkingUtils.h; sourceTree = SOURCE_ROOT; };
+		fa7574b3a6cd3d87cd0b558e /* ofxTouchGUIDropDown.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ofxTouchGUIDropDown.mm; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUIDropDown.mm; sourceTree = SOURCE_ROOT; };
+		fc5da1c87211d4f6377da719 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxmlparser.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxmlparser.cpp; sourceTree = SOURCE_ROOT; };
+		fdd2cf56db7f486f3f1bdeb5 /* ofxTouchGUISlider.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTouchGUISlider.h; path = ../../../addons/ofxTouchGUI/src/ofxTouchGUISlider.h; sourceTree = SOURCE_ROOT; };
+		fdfde862dceb266ec0869fc5 /* ThinkGearStreamParser.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ThinkGearStreamParser.h; path = ../../../addons/ofxThinkgear/src/ThinkGearStreamParser.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,96 +217,96 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0339cab512bc9814266b1c38452e9f36 /* ofxTouchGUI */ = {
+		0339cab512bc9814266b1c38 /* ofxTouchGUI */ = {
 			isa = PBXGroup;
 			children = (
-				ee7aa33c5d64aa2a82df47654748e50c /* src */,
+				ee7aa33c5d64aa2a82df4765 /* src */,
 			);
 			name = ofxTouchGUI;
 			sourceTree = "<group>";
 		};
-		1f4fb5c423662b96adfdcc0badec1cb0 /* ofxXmlSettings */ = {
+		1f4fb5c423662b96adfdcc0b /* ofxXmlSettings */ = {
 			isa = PBXGroup;
 			children = (
-				6ecef0d76bc33727823eadffc320c44d /* src */,
-				6e54289412d2d94f45a051132369530c /* libs */,
+				6ecef0d76bc33727823eadff /* src */,
+				6e54289412d2d94f45a05113 /* libs */,
 			);
 			name = ofxXmlSettings;
 			sourceTree = "<group>";
 		};
-		30cb364908817057b430d52805394cbc /* osc */ = {
+		30cb364908817057b430d528 /* osc */ = {
 			isa = PBXGroup;
 			children = (
-				ae335eb4709bfd4671eeac8460534507 /* MessageMappingOscPacketListener.h */,
-				f4f5b6b8ba2bd52c646ed9087d6ed9cf /* OscException.h */,
-				a2aaa8ca403479e6fcdf920ebcd1682b /* OscHostEndianness.h */,
-				63a47ac60ffafc3bf093ec0f62a9a4d4 /* OscOutboundPacketStream.cpp */,
-				029684cf678f70f6d3537a29773654a6 /* OscOutboundPacketStream.h */,
-				6b65e6930994cc4b2d2b8b33b10f6e99 /* OscPacketListener.h */,
-				bc8881b3c8c0a1c45f042e7a9e7b92cc /* OscPrintReceivedElements.cpp */,
-				4e95fb446a9c9c6f0de12d752f6604b3 /* OscPrintReceivedElements.h */,
-				9bf3aa0d4faa89d0f8a0e545403162be /* OscReceivedElements.cpp */,
-				20f35afadaf0068b067e713fa3152568 /* OscReceivedElements.h */,
-				d9bffbbf4cc43dee890b3c3e8f7d792c /* OscTypes.cpp */,
-				c6937888e126badc8777423bd27cc7c8 /* OscTypes.h */,
+				ae335eb4709bfd4671eeac84 /* MessageMappingOscPacketListener.h */,
+				f4f5b6b8ba2bd52c646ed908 /* OscException.h */,
+				a2aaa8ca403479e6fcdf920e /* OscHostEndianness.h */,
+				63a47ac60ffafc3bf093ec0f /* OscOutboundPacketStream.cpp */,
+				029684cf678f70f6d3537a29 /* OscOutboundPacketStream.h */,
+				6b65e6930994cc4b2d2b8b33 /* OscPacketListener.h */,
+				bc8881b3c8c0a1c45f042e7a /* OscPrintReceivedElements.cpp */,
+				4e95fb446a9c9c6f0de12d75 /* OscPrintReceivedElements.h */,
+				9bf3aa0d4faa89d0f8a0e545 /* OscReceivedElements.cpp */,
+				20f35afadaf0068b067e713f /* OscReceivedElements.h */,
+				d9bffbbf4cc43dee890b3c3e /* OscTypes.cpp */,
+				c6937888e126badc8777423b /* OscTypes.h */,
 			);
 			name = osc;
 			sourceTree = "<group>";
 		};
-		38871a5825686ae018ec2bf0e450fdae /* libs */ = {
+		38871a5825686ae018ec2bf0 /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				86d2677079a3af4a5a88e29a7243e442 /* oscpack */,
+				86d2677079a3af4a5a88e29a /* oscpack */,
 			);
 			name = libs;
 			sourceTree = "<group>";
 		};
-		641362ca659fafee4e81001be7d8d43c /* posix */ = {
+		641362ca659fafee4e81001b /* posix */ = {
 			isa = PBXGroup;
 			children = (
-				3b361208cd4107e479f04e7bce6d93aa /* NetworkingUtils.cpp */,
-				e6def695b88ba5faaceaa93785a12fd9 /* UdpSocket.cpp */,
+				3b361208cd4107e479f04e7b /* NetworkingUtils.cpp */,
+				e6def695b88ba5faaceaa937 /* UdpSocket.cpp */,
 			);
 			name = posix;
 			sourceTree = "<group>";
 		};
-		6e54289412d2d94f45a051132369530c /* libs */ = {
+		6e54289412d2d94f45a05113 /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				2b40eda85beb63e46785bc299a638898 /* tinyxml.cpp */,
-				b21e7e5f548eea92f368040bb1aa2f69 /* tinyxml.h */,
-				832bdc407620cdba568b713d2252c43c /* tinyxmlerror.cpp */,
-				fc5da1c87211d4f6377da7199d8c5a1e /* tinyxmlparser.cpp */,
+				2b40eda85beb63e46785bc29 /* tinyxml.cpp */,
+				b21e7e5f548eea92f368040b /* tinyxml.h */,
+				832bdc407620cdba568b713d /* tinyxmlerror.cpp */,
+				fc5da1c87211d4f6377da719 /* tinyxmlparser.cpp */,
 			);
 			name = libs;
 			sourceTree = "<group>";
 		};
-		6ecef0d76bc33727823eadffc320c44d /* src */ = {
+		6ecef0d76bc33727823eadff /* src */ = {
 			isa = PBXGroup;
 			children = (
-				50df87d612c5aae17aafa6c02c6bc570 /* ofxXmlSettings.cpp */,
-				01dcc0911400f9acf5b65578af4ec8f9 /* ofxXmlSettings.h */,
+				50df87d612c5aae17aafa6c0 /* ofxXmlSettings.cpp */,
+				01dcc0911400f9acf5b65578 /* ofxXmlSettings.h */,
 			);
 			name = src;
 			sourceTree = "<group>";
 		};
-		86d2677079a3af4a5a88e29a7243e442 /* oscpack */ = {
+		86d2677079a3af4a5a88e29a /* oscpack */ = {
 			isa = PBXGroup;
 			children = (
-				d27b2221a225ca523c01967633d9bd60 /* src */,
+				d27b2221a225ca523c019676 /* src */,
 			);
 			name = oscpack;
 			sourceTree = "<group>";
 		};
-		A7F74ABC17D6B4EB008E847A /* BrainWaveGUI */ = {
+		A738D91617D959F9006846BC /* BrainWaveGUI */ = {
 			isa = PBXGroup;
 			children = (
-				A7F74ABD17D6B4EB008E847A /* BrainWaveGUI.h */,
-				A7F74ABE17D6B4EB008E847A /* BrainWaveGUI.mm */,
-				A7F74ABF17D6B4EB008E847A /* EegFrequencyGraph.h */,
-				A7F74AC017D6B4EB008E847A /* EegFrequencyGraph.mm */,
-				A7F74AC117D6B4EB008E847A /* EegTimeGraph.h */,
-				A7F74AC217D6B4EB008E847A /* EegTimeGraph.mm */,
+				A738D91717D959F9006846BC /* BrainWaveGUI.h */,
+				A738D91817D959F9006846BC /* BrainWaveGUI.mm */,
+				A738D91917D959F9006846BC /* EegFrequencyGraph.h */,
+				A738D91A17D959F9006846BC /* EegFrequencyGraph.mm */,
+				A738D91B17D959F9006846BC /* EegTimeGraph.h */,
+				A738D91C17D959F9006846BC /* EegTimeGraph.mm */,
 			);
 			path = BrainWaveGUI;
 			sourceTree = "<group>";
@@ -311,10 +314,10 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				e6053ab7fec63d5f83825b880ce53c41 /* ofxOsc */,
-				1f4fb5c423662b96adfdcc0badec1cb0 /* ofxXmlSettings */,
-				c9728060624075f0005749b25b886eda /* ofxThinkgear */,
-				0339cab512bc9814266b1c38452e9f36 /* ofxTouchGUI */,
+				e6053ab7fec63d5f83825b88 /* ofxOsc */,
+				c9728060624075f0005749b2 /* ofxThinkgear */,
+				0339cab512bc9814266b1c38 /* ofxTouchGUI */,
+				1f4fb5c423662b96adfdcc0b /* ofxXmlSettings */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -375,17 +378,17 @@
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
 				E45BE5980E8CC70C009D7055 /* frameworks */,
-				E4B69B5B0A3A1756003C02F2 /* BrainwaveOSCDebug.app */,
+				E4B69B5B0A3A1756003C02F2 /* BrainWaveOSCDebug.app */,
 			);
 			sourceTree = "<group>";
 		};
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				A7F74ABC17D6B4EB008E847A /* BrainWaveGUI */,
+				A738D91617D959F9006846BC /* BrainWaveGUI */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
-				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
-				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
+				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
+				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -399,107 +402,109 @@
 			name = openFrameworks;
 			sourceTree = "<group>";
 		};
-		ba6760ac87647dd61a92bd416dbd7a9c /* win32 */ = {
+		ba6760ac87647dd61a92bd41 /* win32 */ = {
 			isa = PBXGroup;
 			children = (
-				2a5b1fad3f30c8065c396acbb72e5d95 /* NetworkingUtilsWin.cpp */,
-				5928aa323f5c2690b06c837d8d036f55 /* UdpSocketWin.cpp */,
+				2a5b1fad3f30c8065c396acb /* NetworkingUtilsWin.cpp */,
+				5928aa323f5c2690b06c837d /* UdpSocketWin.cpp */,
 			);
 			name = win32;
 			sourceTree = "<group>";
 		};
-		bd2f1a9f8d0c05edb29122d00a67c2a2 /* src */ = {
+		bd2f1a9f8d0c05edb29122d0 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				00d6d32b84b099226431108cea775a33 /* ofxOsc.h */,
-				7689f8a0f3d0b7635a8c310487cd0928 /* ofxOscArg.h */,
-				65eefa3da3526e9cdd9c21f90d9b5684 /* ofxOscBundle.cpp */,
-				8b30e93fd3d3475eed522a0e0b085e30 /* ofxOscBundle.h */,
-				df49d76c45d5db505a234880104e4dc7 /* ofxOscMessage.cpp */,
-				c58862c6d212c8e8a83810f4246811b1 /* ofxOscMessage.h */,
-				c2fac65c491d4231379f3298ec59c6e9 /* ofxOscReceiver.cpp */,
-				8c75afc8774a62495dd5346429f6f666 /* ofxOscReceiver.h */,
-				81967292bfc87a0144bd32c66f3adb20 /* ofxOscSender.cpp */,
-				9f7986dc4eb05e75fce2c777500fdc01 /* ofxOscSender.h */,
+				00d6d32b84b099226431108c /* ofxOsc.h */,
+				7689f8a0f3d0b7635a8c3104 /* ofxOscArg.h */,
+				65eefa3da3526e9cdd9c21f9 /* ofxOscBundle.cpp */,
+				8b30e93fd3d3475eed522a0e /* ofxOscBundle.h */,
+				df49d76c45d5db505a234880 /* ofxOscMessage.cpp */,
+				c58862c6d212c8e8a83810f4 /* ofxOscMessage.h */,
+				0aed834ce4dec5260af302a2 /* ofxOscParameterSync.cpp */,
+				b31c608870eceb2490a93736 /* ofxOscParameterSync.h */,
+				c2fac65c491d4231379f3298 /* ofxOscReceiver.cpp */,
+				8c75afc8774a62495dd53464 /* ofxOscReceiver.h */,
+				81967292bfc87a0144bd32c6 /* ofxOscSender.cpp */,
+				9f7986dc4eb05e75fce2c777 /* ofxOscSender.h */,
 			);
 			name = src;
 			sourceTree = "<group>";
 		};
-		c9728060624075f0005749b25b886eda /* ofxThinkgear */ = {
+		c9728060624075f0005749b2 /* ofxThinkgear */ = {
 			isa = PBXGroup;
 			children = (
-				ded64a38065b57de2386965ec5567e94 /* src */,
+				ded64a38065b57de2386965e /* src */,
 			);
 			name = ofxThinkgear;
 			sourceTree = "<group>";
 		};
-		d27b2221a225ca523c01967633d9bd60 /* src */ = {
+		d27b2221a225ca523c019676 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				ff8cdf57858e9b94e3237115f4d7aa09 /* ip */,
-				30cb364908817057b430d52805394cbc /* osc */,
+				ff8cdf57858e9b94e3237115 /* ip */,
+				30cb364908817057b430d528 /* osc */,
 			);
 			name = src;
 			sourceTree = "<group>";
 		};
-		ded64a38065b57de2386965ec5567e94 /* src */ = {
+		ded64a38065b57de2386965e /* src */ = {
 			isa = PBXGroup;
 			children = (
-				4d5a91245869673c1dcf771d7760a038 /* ofxThinkgear.cpp */,
-				5bbc713dfcf68eae820efdf7dbbba0cc /* ofxThinkgear.h */,
-				A7F74ACB17D6B878008E847A /* ThinkgearCommsDriver.cpp */,
-				A7F74ACC17D6B878008E847A /* ThinkgearCommsDriver.h */,
-				5c83d2692443cac6662da8d63cb1ce6d /* ThinkGearStreamParser.c */,
-				fdfde862dceb266ec0869fc54ad4c385 /* ThinkGearStreamParser.h */,
+				4d5a91245869673c1dcf771d /* ofxThinkgear.cpp */,
+				5bbc713dfcf68eae820efdf7 /* ofxThinkgear.h */,
+				418182f02abcde8c540746df /* ThinkgearCommsDriver.cpp */,
+				1f4bed3a5cf262ede57b4097 /* ThinkgearCommsDriver.h */,
+				5c83d2692443cac6662da8d6 /* ThinkGearStreamParser.c */,
+				fdfde862dceb266ec0869fc5 /* ThinkGearStreamParser.h */,
 			);
 			name = src;
 			sourceTree = "<group>";
 		};
-		e6053ab7fec63d5f83825b880ce53c41 /* ofxOsc */ = {
+		e6053ab7fec63d5f83825b88 /* ofxOsc */ = {
 			isa = PBXGroup;
 			children = (
-				bd2f1a9f8d0c05edb29122d00a67c2a2 /* src */,
-				38871a5825686ae018ec2bf0e450fdae /* libs */,
+				bd2f1a9f8d0c05edb29122d0 /* src */,
+				38871a5825686ae018ec2bf0 /* libs */,
 			);
 			name = ofxOsc;
 			sourceTree = "<group>";
 		};
-		ee7aa33c5d64aa2a82df47654748e50c /* src */ = {
+		ee7aa33c5d64aa2a82df4765 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				325540fbf361c52a8b34f2b6e3fb1ce2 /* ofxTouchGUI.h */,
-				b0c6fde7ee419b1df95f6306887e2532 /* ofxTouchGUI.mm */,
-				5956c238f1e07e36e1cc96fc7aa9cf14 /* ofxTouchGUIBase.h */,
-				3af53bae8c2408288192be076178ef10 /* ofxTouchGUIBase.mm */,
-				978689adeec8caa40f096dbd78da45f1 /* ofxTouchGUIButton.h */,
-				17ec432a99032deaaa0d58afe3c36f90 /* ofxTouchGUIButton.mm */,
-				dcfed036d4d84494b19c34775781cfe5 /* ofxTouchGUIDropDown.h */,
-				fa7574b3a6cd3d87cd0b558ea41ddc81 /* ofxTouchGUIDropDown.mm */,
-				fdd2cf56db7f486f3f1bdeb5e9e5b53b /* ofxTouchGUISlider.h */,
-				932298a338263ed48d846a67d60516cd /* ofxTouchGUISlider.mm */,
-				3680833c472135f67a0800c35df938a5 /* ofxTouchGUIText.h */,
-				31cac1a61423603c160cecc14f400a1f /* ofxTouchGUIText.mm */,
-				683bc495de1f076bb0a5df88f76ecc8a /* ofxTouchGUITextInput.h */,
-				af5511cc2f09ecf487a0b3b4b648310b /* ofxTouchGUITextInput.mm */,
-				013294119ea02dac94ee3e3a4bf02b3a /* ofxTouchGUITimeGraph.h */,
-				94ee4917f0a8ebc089a5b76f6eebceca /* ofxTouchGUITimeGraph.mm */,
-				288174801b16787b8ee71388b9cce35a /* ofxTouchGUIToggleButton.h */,
-				8c8f634d703e9db2c0d53f4f03e3e978 /* ofxTouchGUIToggleButton.mm */,
+				325540fbf361c52a8b34f2b6 /* ofxTouchGUI.h */,
+				b0c6fde7ee419b1df95f6306 /* ofxTouchGUI.mm */,
+				5956c238f1e07e36e1cc96fc /* ofxTouchGUIBase.h */,
+				3af53bae8c2408288192be07 /* ofxTouchGUIBase.mm */,
+				978689adeec8caa40f096dbd /* ofxTouchGUIButton.h */,
+				17ec432a99032deaaa0d58af /* ofxTouchGUIButton.mm */,
+				dcfed036d4d84494b19c3477 /* ofxTouchGUIDropDown.h */,
+				fa7574b3a6cd3d87cd0b558e /* ofxTouchGUIDropDown.mm */,
+				fdd2cf56db7f486f3f1bdeb5 /* ofxTouchGUISlider.h */,
+				932298a338263ed48d846a67 /* ofxTouchGUISlider.mm */,
+				3680833c472135f67a0800c3 /* ofxTouchGUIText.h */,
+				31cac1a61423603c160cecc1 /* ofxTouchGUIText.mm */,
+				683bc495de1f076bb0a5df88 /* ofxTouchGUITextInput.h */,
+				af5511cc2f09ecf487a0b3b4 /* ofxTouchGUITextInput.mm */,
+				013294119ea02dac94ee3e3a /* ofxTouchGUIDataGraph.h */,
+				94ee4917f0a8ebc089a5b76f /* ofxTouchGUIDataGraph.mm */,
+				288174801b16787b8ee71388 /* ofxTouchGUIToggleButton.h */,
+				8c8f634d703e9db2c0d53f4f /* ofxTouchGUIToggleButton.mm */,
 			);
 			name = src;
 			sourceTree = "<group>";
 		};
-		ff8cdf57858e9b94e3237115f4d7aa09 /* ip */ = {
+		ff8cdf57858e9b94e3237115 /* ip */ = {
 			isa = PBXGroup;
 			children = (
-				add194746185e2da11468377f4e88c2f /* IpEndpointName.cpp */,
-				48974f980f51769171d0b2f5e519dd28 /* IpEndpointName.h */,
-				f7fbc56859535e597b24bb914dbc8313 /* NetworkingUtils.h */,
-				23640f57df6c4bb6bfc5da4c2199c7dd /* PacketListener.h */,
-				641362ca659fafee4e81001be7d8d43c /* posix */,
-				444657a12e59d0ed86981498fccd5fcc /* TimerListener.h */,
-				2fd4b0329909d3527f0034948840df14 /* UdpSocket.h */,
-				ba6760ac87647dd61a92bd416dbd7a9c /* win32 */,
+				add194746185e2da11468377 /* IpEndpointName.cpp */,
+				48974f980f51769171d0b2f5 /* IpEndpointName.h */,
+				f7fbc56859535e597b24bb91 /* NetworkingUtils.h */,
+				23640f57df6c4bb6bfc5da4c /* PacketListener.h */,
+				641362ca659fafee4e81001b /* posix */,
+				444657a12e59d0ed86981498 /* TimerListener.h */,
+				2fd4b0329909d3527f003494 /* UdpSocket.h */,
+				ba6760ac87647dd61a92bd41 /* win32 */,
 			);
 			name = ip;
 			sourceTree = "<group>";
@@ -507,9 +512,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E4B69B5A0A3A1756003C02F2 /* BrainwaveOSC */ = {
+		E4B69B5A0A3A1756003C02F2 /* BrainWaveOSC */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "BrainwaveOSC" */;
+			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "BrainWaveOSC" */;
 			buildPhases = (
 				E4B69B580A3A1756003C02F2 /* Sources */,
 				E4B69B590A3A1756003C02F2 /* Frameworks */,
@@ -521,9 +526,9 @@
 			dependencies = (
 				E4EEB9AC138B136A00A80321 /* PBXTargetDependency */,
 			);
-			name = BrainwaveOSC;
+			name = BrainWaveOSC;
 			productName = myOFApp;
-			productReference = E4B69B5B0A3A1756003C02F2 /* BrainwaveOSCDebug.app */;
+			productReference = E4B69B5B0A3A1756003C02F2 /* BrainWaveOSCDebug.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -531,8 +536,11 @@
 /* Begin PBXProject section */
 		E4B69B4C0A3A1720003C02F2 /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "BrainwaveOSC" */;
-			compatibilityVersion = "Xcode 2.4";
+			attributes = {
+				LastUpgradeCheck = 0460;
+			};
+			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "BrainWaveOSC" */;
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -552,7 +560,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				E4B69B5A0A3A1756003C02F2 /* BrainwaveOSC */,
+				E4B69B5A0A3A1756003C02F2 /* BrainWaveOSC */,
 			);
 		};
 /* End PBXProject section */
@@ -579,7 +587,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cp -f ../../../libs/fmodex/lib/osx/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/libfmodex.dylib\"; install_name_tool -change ./libfmodex.dylib @executable_path/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\";";
+			shellScript = "cp -f ../../../libs/fmodex/lib/osx/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/libfmodex.dylib\"; install_name_tool -change ./libfmodex.dylib @executable_path/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\";\nmkdir -p \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\ncp -f \"$ICON_FILE\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -589,39 +597,40 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
-				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,
-				72a929d3561b8232a182abfcbb325491 /* ofxOscBundle.cpp in Sources */,
-				5864ad82e20f15536d054ea319473de3 /* ofxOscMessage.cpp in Sources */,
-				640279ee111671bd026cb0137d5b121e /* ofxOscReceiver.cpp in Sources */,
-				8f5205aef8861ef234f0651aba6be2ee /* ofxOscSender.cpp in Sources */,
-				ade367465d2a8ebad4c7a8d92a3ef718 /* IpEndpointName.cpp in Sources */,
-				67fe4c7b15c2f0478c8126c28fa6aad0 /* NetworkingUtils.cpp in Sources */,
-				510cafe035e576a4e1502d52c11243bb /* UdpSocket.cpp in Sources */,
-				a29d8c96ae042eceaa1bd4f3cbbf0c9d /* NetworkingUtilsWin.cpp in Sources */,
-				28090deb5109115003e8f1c540f04092 /* UdpSocketWin.cpp in Sources */,
-				62545d179c94265ca1389d4ac8d694a5 /* OscOutboundPacketStream.cpp in Sources */,
-				c4782ecc372420ace0615b749e1d0d6b /* OscPrintReceivedElements.cpp in Sources */,
-				0546d1a38e13bd319cc9755b5ca7e1a0 /* OscReceivedElements.cpp in Sources */,
-				879a251454401bc0b6e4f238fc63135b /* OscTypes.cpp in Sources */,
-				63b57ac5bf4ef088491e0317dbb2ecaa /* ofxXmlSettings.cpp in Sources */,
-				933a2227713c720ceff80fd967d0a8ee /* tinyxml.cpp in Sources */,
-				9d44dc88ef9e7991b4a09951e2e4769f /* tinyxmlerror.cpp in Sources */,
-				5a4349e9754d6fa14c0f2a3a1abc30b6 /* tinyxmlparser.cpp in Sources */,
-				8af21a9eac14687abd229da08001ae38 /* ofxThinkgear.cpp in Sources */,
-				f72bc5ec5d94f53774bdf50ecfbd9987 /* ThinkGearStreamParser.c in Sources */,
-				d361c93cfdb48bcc4e57cc1910da7a34 /* ofxTouchGUI.mm in Sources */,
-				a242747dd88b71f543e82e3fe29bd700 /* ofxTouchGUIBase.mm in Sources */,
-				ba752666146fa19d705125a5e5f64248 /* ofxTouchGUIButton.mm in Sources */,
-				65ebe19da026d582a2367d41e8a64737 /* ofxTouchGUIDropDown.mm in Sources */,
-				62ec144fae83f382e06d27f0814927e4 /* ofxTouchGUISlider.mm in Sources */,
-				f4e9b8d5fd22720e777ee899c662a959 /* ofxTouchGUIText.mm in Sources */,
-				650ee517d30bddf8362dcd85bff5c305 /* ofxTouchGUITextInput.mm in Sources */,
-				fe68eb371e2e841792c70fe3955ee47d /* ofxTouchGUITimeGraph.mm in Sources */,
-				eb2bbf635497e52ca689e30e30ec0075 /* ofxTouchGUIToggleButton.mm in Sources */,
-				A7F74AC317D6B4EB008E847A /* BrainWaveGUI.mm in Sources */,
-				A7F74AC417D6B4EB008E847A /* EegFrequencyGraph.mm in Sources */,
-				A7F74AC517D6B4EB008E847A /* EegTimeGraph.mm in Sources */,
-				A7F74ACD17D6B878008E847A /* ThinkgearCommsDriver.cpp in Sources */,
+				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
+				72a929d3561b8232a182abfc /* ofxOscBundle.cpp in Sources */,
+				5864ad82e20f15536d054ea3 /* ofxOscMessage.cpp in Sources */,
+				4adb88e2fb52e76a471065de /* ofxOscParameterSync.cpp in Sources */,
+				640279ee111671bd026cb013 /* ofxOscReceiver.cpp in Sources */,
+				8f5205aef8861ef234f0651a /* ofxOscSender.cpp in Sources */,
+				ade367465d2a8ebad4c7a8d9 /* IpEndpointName.cpp in Sources */,
+				67fe4c7b15c2f0478c8126c2 /* NetworkingUtils.cpp in Sources */,
+				510cafe035e576a4e1502d52 /* UdpSocket.cpp in Sources */,
+				a29d8c96ae042eceaa1bd4f3 /* NetworkingUtilsWin.cpp in Sources */,
+				28090deb5109115003e8f1c5 /* UdpSocketWin.cpp in Sources */,
+				62545d179c94265ca1389d4a /* OscOutboundPacketStream.cpp in Sources */,
+				c4782ecc372420ace0615b74 /* OscPrintReceivedElements.cpp in Sources */,
+				0546d1a38e13bd319cc9755b /* OscReceivedElements.cpp in Sources */,
+				879a251454401bc0b6e4f238 /* OscTypes.cpp in Sources */,
+				8af21a9eac14687abd229da0 /* ofxThinkgear.cpp in Sources */,
+				3a98392afecbe1c18334bb84 /* ThinkgearCommsDriver.cpp in Sources */,
+				f72bc5ec5d94f53774bdf50e /* ThinkGearStreamParser.c in Sources */,
+				d361c93cfdb48bcc4e57cc19 /* ofxTouchGUI.mm in Sources */,
+				a242747dd88b71f543e82e3f /* ofxTouchGUIBase.mm in Sources */,
+				ba752666146fa19d705125a5 /* ofxTouchGUIButton.mm in Sources */,
+				65ebe19da026d582a2367d41 /* ofxTouchGUIDropDown.mm in Sources */,
+				62ec144fae83f382e06d27f0 /* ofxTouchGUISlider.mm in Sources */,
+				f4e9b8d5fd22720e777ee899 /* ofxTouchGUIText.mm in Sources */,
+				650ee517d30bddf8362dcd85 /* ofxTouchGUITextInput.mm in Sources */,
+				fe68eb371e2e841792c70fe3 /* ofxTouchGUIDataGraph.mm in Sources */,
+				eb2bbf635497e52ca689e30e /* ofxTouchGUIToggleButton.mm in Sources */,
+				63b57ac5bf4ef088491e0317 /* ofxXmlSettings.cpp in Sources */,
+				933a2227713c720ceff80fd9 /* tinyxml.cpp in Sources */,
+				9d44dc88ef9e7991b4a09951 /* tinyxmlerror.cpp in Sources */,
+				5a4349e9754d6fa14c0f2a3a /* tinyxmlparser.cpp in Sources */,
+				A738D91D17D959F9006846BC /* BrainWaveGUI.mm in Sources */,
+				A738D91E17D959F9006846BC /* EegFrequencyGraph.mm in Sources */,
+				A738D91F17D959F9006846BC /* EegTimeGraph.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -666,12 +675,16 @@
 					../../../addons/ofxOsc/libs/oscpack/src/ip/win32,
 					../../../addons/ofxOsc/libs/oscpack/src/osc,
 					../../../addons/ofxOsc/src,
-					../../../addons/ofxXmlSettings/libs,
-					../../../addons/ofxXmlSettings/src,
+					../../../addons/ofxThinkgear/libs,
 					../../../addons/ofxThinkgear/src,
 					../../../addons/ofxTouchGUI/libs,
 					../../../addons/ofxTouchGUI/src,
+					../../../addons/ofxUtils/libs,
+					../../../addons/ofxUtils/src,
+					../../../addons/ofxXmlSettings/libs,
+					../../../addons/ofxXmlSettings/src,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
 					"-lpthread",
@@ -712,12 +725,16 @@
 					../../../addons/ofxOsc/libs/oscpack/src/ip/win32,
 					../../../addons/ofxOsc/libs/oscpack/src/osc,
 					../../../addons/ofxOsc/src,
-					../../../addons/ofxXmlSettings/libs,
-					../../../addons/ofxXmlSettings/src,
+					../../../addons/ofxThinkgear/libs,
 					../../../addons/ofxThinkgear/src,
 					../../../addons/ofxTouchGUI/libs,
 					../../../addons/ofxTouchGUI/src,
+					../../../addons/ofxUtils/libs,
+					../../../addons/ofxUtils/src,
+					../../../addons/ofxXmlSettings/libs,
+					../../../addons/ofxXmlSettings/src,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
 					"-lpthread",
@@ -730,6 +747,7 @@
 		E4B69B600A3A1757003C02F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -737,11 +755,10 @@
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = NONE;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				ICON = "$(ICON_NAME_DEBUG)";
+				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
@@ -808,7 +825,6 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)Debug";
 				WRAPPER_EXTENSION = app;
 			};
@@ -817,17 +833,17 @@
 		E4B69B610A3A1757003C02F2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = NONE;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				ICON = "$(ICON_NAME_RELEASE)";
+				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
@@ -894,7 +910,6 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -903,7 +918,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "BrainwaveOSC" */ = {
+		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "BrainWaveOSC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B4E0A3A1720003C02F2 /* Debug */,
@@ -912,7 +927,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "BrainwaveOSC" */ = {
+		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "BrainWaveOSC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B600A3A1757003C02F2 /* Debug */,

@@ -6,8 +6,11 @@
 void tgHandleStreamDataValueFunc( unsigned char extendedCodeLevel, unsigned char code, unsigned char valueLength, const unsigned char *value, void *customData){
     ofxThinkgear& tg = *reinterpret_cast<ofxThinkgear*>(customData);
     if (extendedCodeLevel == 0){
+        //if(code != PARSER_CODE_RAW_SIGNAL) printf("%#x\n",code);//, code, code, code);
+        //ofLog() << extendedCodeLevel;
         switch (code) {
             case PARSER_CODE_BATTERY:
+                
                 tg.values.battery = value[0] & 0xff;
                 ofNotifyEvent(tg.onBattery, tg.values);
                 break;
@@ -110,6 +113,10 @@ void ofxThinkgear::tgHandleCommsDriverDataValueFunc(int code, float value) {
             values.meditation = value;
             ofNotifyEvent(onMeditation, values);
             break;
+        case TG_DATA_BLINK_STRENGTH:
+            values.blinkStrength = value;
+            ofNotifyEvent(onBlinkStrength, values);
+            break;
         case TG_DATA_RAW:
             values.raw = value;
             ofNotifyEvent(onRaw, values);
@@ -173,6 +180,8 @@ void ofxThinkgear::setup(string deviceName, int baudRate, ThinkGearImplementatio
     if(connectionType == TG_COMMS_DRIVER) {
         driver.setup(deviceName, baudRate,this,&ofxThinkgear::tgHandleCommsDriverDataValueFunc);
         if(driver.isReady) isReady = true;
+    } else {
+        ofLogVerbose() << "Blinks cannot be activated in TG_STREAM_PARSER mode.";
     }
 }
 
