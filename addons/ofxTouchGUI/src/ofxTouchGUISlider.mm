@@ -91,42 +91,54 @@ void ofxTouchGUISlider::draw(){
 //--------------------------------------------------------------
 bool ofxTouchGUISlider::onUp(float x, float y){
     
-    if(!isInteractive || hidden) return false;
+    if(ofxTouchGUIBase::onUp(x, y)) {
+        // want to trigger value changes on touch up as well as move.
+        onMoved(x,y);
+        return true;
+    }
     
-    // want to trigger value changes on touch up as well as move
-    onMoved(x,y);
-    
-    return ofxTouchGUIBase::onUp(x, y);
+    return false;
 }
 
 bool ofxTouchGUISlider::onMoved(float x, float y) {
  
     if(!isInteractive || hidden) return false;
-    
-     // when this or another item itemActive (eg. dropdown), ignore all touch/mouse events
-     //if(ignoreExternalEvents && !itemActive) return;
      
      if(isPressed) {
          
-         //if(hitTest(x,y)) {
+         // must be touching inside the slider to move.
+         if(hitTest(x,y)) {
             float clampedX = ofClamp(x, posX, posX + width);
              float perc = ( clampedX - posX ) / width;
              if(useInteger) {
-                 *intVal = (perc * (max - min) ) + min; 
-                 sendOSC(*intVal);
-                 ofNotifyEvent(onChangedEvent,label,this);
+                 int sliderIntVal = (perc * (max - min) ) + min;
+                 doSliderIntAction(sliderIntVal);
                  return true;
              }
              else { 
-                 *val = (perc * (max - min) ) + min; 
-                 sendOSC(*val);
-                 ofNotifyEvent(onChangedEvent,label,this);
+                 float sliderFloatVal = (perc * (max - min) ) + min;
+                 doSliderFloatAction(sliderFloatVal);
                  return true;
              }
-         //}
+         }
      }
     
     return false;
+}
+
+void ofxTouchGUISlider::doSliderFloatAction(float sliderVal, bool doOSC) {
+    
+    *val = sliderVal;
+    ofNotifyEvent(onChangedEvent,label,this);
+    if(doOSC) sendOSC(*val);
+}
+
+
+void ofxTouchGUISlider::doSliderIntAction(int sliderVal, bool doOSC) {
+    
+    *intVal = sliderVal;
+    ofNotifyEvent(onChangedEvent,label,this);
+    if(doOSC) sendOSC(*intVal);
 }
 
 

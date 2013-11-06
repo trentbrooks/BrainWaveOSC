@@ -73,26 +73,12 @@ void ofxTouchGUIButton::draw(){
 
 bool ofxTouchGUIButton::onUp(float x, float y){
     
-    if(!isInteractive || hidden) return false;
-    
-    // when this or another item itemActive (eg. dropdown), ignore all touch/mouse events
-    //if(ignoreExternalEvents && !itemActive) return;
-    
-    if(isPressed) {
-        
-        // reset press same as normal button
-        isPressed = false;
-        
-        if(hitTest(x,y)) {
-            doButtonAction();
-            //ofNotifyEvent(onChangedEvent,label,this);
-            //sendOSC(1);
-            return true;
-        }
+    if(ofxTouchGUIBase::onUp(x,y)) {
+        doButtonAction();
+        return true;
     }
     
-    return false;
-    
+    return false;    
 }
 
 // doOSC must = false when called from the osc receiver, otherwise it gets stuck in an infinite loop

@@ -147,6 +147,10 @@ void ThinkgearCommsDriver::update() {
             float delta = TG_GetValue(connectionID, TG_DATA_DELTA);
             callback(TG_DATA_DELTA,delta);
         }
+        if(TG_GetValueStatus(connectionID, TG_DATA_THETA) != 0) {
+            float theta = TG_GetValue(connectionID, TG_DATA_THETA);
+            callback(TG_DATA_THETA,theta);
+        }
         if(TG_GetValueStatus(connectionID, TG_DATA_ALPHA1) != 0) {
             float alpha1 = TG_GetValue(connectionID, TG_DATA_ALPHA1);
             callback(TG_DATA_ALPHA1,alpha1);

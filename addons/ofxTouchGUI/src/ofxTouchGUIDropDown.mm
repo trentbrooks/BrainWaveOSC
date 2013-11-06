@@ -228,23 +228,30 @@ void ofxTouchGUIDropDown::drawOverlay() {
 
 
 // need to override the down + up functions for dropdowns
+// same onDown as ofxTouchGUIBase, but added || toggleShowList
 bool ofxTouchGUIDropDown::onDown(float x, float y){
-    
-    if(!isInteractive || hidden) return false;
         
-    // when the dropdown area is touched, or the menu is already opened
-    if(hitTest(x,y) || toggleShowList) {
+    if(!isInteractive || hidden) return false;
+    if(isPressed) return false;
+    
+    // when the dropdown area is touched, or the menu is already opened // || toggleShowList
+    if(hitTest(x,y)) {
         isPressed = true;
-        return true;
-    } 
-
+        return true;        
+    } else if(toggleShowList) {
+        if(hitTest(x, y, width, height + listHeight)) {
+            isPressed = true;
+            return true;
+        }
+    }
+    
     return false;
 }
 
+// same onUp as ofxTouchGUIBase, except 'else if(toggleShowList)...' stuff
 bool ofxTouchGUIDropDown::onUp(float x, float y){
     
-    if(!isInteractive || hidden) return false;
-    
+    if(!isInteractive || hidden) return false;    
 
     if(isPressed) {
         
@@ -255,14 +262,12 @@ bool ofxTouchGUIDropDown::onUp(float x, float y){
         if(hitTest(x,y)) {            
             // switch the toggle value
             toggleShowList = !toggleShowList;
-            //ignoreExternalEvents = itemActive = toggleShowList; // static property (ignoreEvents)
             return true;
         }
         // check if selected a dropdown item
         else if(toggleShowList) {
             
             // reset everything
-            //toggleShowList = itemActive = ignoreExternalEvents = false;
             toggleShowList = false;
             
             // when clicked in list
@@ -270,9 +275,6 @@ bool ofxTouchGUIDropDown::onUp(float x, float y){
                 
                 int selected = ( (y - posY) / listHeight) * numListItems - 1;
                 doSelectAction(selected);
-                //*selectId = ( (y - posY) / listHeight) * numListItems - 1;
-                //ofNotifyEvent(onChangedEvent,label,this);
-                //sendOSC(*selectId);
                 return true;
             }             
         }

@@ -30,7 +30,8 @@ public:
     virtual bool onMoved(float x, float y);
     virtual bool onUp(float x, float y);
     //virtual bool overRect(float x, float y);
-
+    void doSliderFloatAction(float sliderVal, bool doOSC = true);
+    void doSliderIntAction(int sliderVal, bool doOSC = true);
     
     float getValue();
     

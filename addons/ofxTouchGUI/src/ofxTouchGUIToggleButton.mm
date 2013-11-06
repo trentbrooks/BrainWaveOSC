@@ -79,27 +79,24 @@ void ofxTouchGUIToggleButton::draw(){
 
 bool ofxTouchGUIToggleButton::onUp(float x, float y){
     
-    if(!isInteractive || hidden) return false;
-    
-    // when this or another item itemActive (eg. dropdown), ignore all touch/mouse events
-    //if(ignoreExternalEvents && !itemActive) return;
-    
-    if(isPressed) {
-        
-        // reset press same as normal button
-        isPressed = false;
-        
-        if(hitTest(x,y)) {
-            // switch the toggle value
-            *toggleVal = !*toggleVal;
-            sendOSC(*toggleVal);
-            ofNotifyEvent(onChangedEvent,label,this);
+    if(ofxTouchGUIBase::onUp(x, y)) {
+        if(hitTest(x,y)) {            
+            doToggleAction(!*toggleVal);
             return true;
         }
     }
     
     return false;
  
+}
+
+// doOSC must = false when called from the osc receiver, otherwise it gets stuck in an infinite loop
+void ofxTouchGUIToggleButton::doToggleAction(bool toggleSelect, bool doOSC) {
+    
+    // switch the toggle value
+    *toggleVal = toggleSelect;
+    ofNotifyEvent(onChangedEvent,label,this);
+    if(doOSC) sendOSC(*toggleVal);    
 }
 
 

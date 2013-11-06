@@ -70,7 +70,7 @@ void ofxTouchGUIBase::resetDefaultValue() {
 
 // ENABLE/DISABLE FOR TOUCH OR MOUSE
 //--------------------------------------------------------------
-void ofxTouchGUIBase::enable(bool useMouse) {
+/*void ofxTouchGUIBase::enable(bool useMouse) {
     
     (useMouse) ? enableMouse() : enableTouch();
 }
@@ -79,7 +79,7 @@ void ofxTouchGUIBase::disable() {
     
     if(isMouseEnabled) disableMouse();
     if(isTouchEnabled) disableTouch();
-}
+}*/
 
 // showing allows drawing + events
 void ofxTouchGUIBase::show(bool activateSingleItem){
@@ -98,7 +98,7 @@ bool ofxTouchGUIBase::isHidden() {
 
 // fix this: disableMouse
 //--------------------------------------------------------------
-void ofxTouchGUIBase::enableTouch(){
+/*void ofxTouchGUIBase::enableTouch(){
     
     if(isMouseEnabled) disableMouse();
     isTouchEnabled = true;
@@ -136,7 +136,7 @@ void ofxTouchGUIBase::disableMouse(){
     
     isMouseEnabled = false;
     ofUnregisterMouseEvents(this);
-}
+}*/
 
 
 
@@ -257,7 +257,7 @@ void ofxTouchGUIBase::drawGLRect(float *&vtxArray, float *&clrArray) {
 
 // TOUCH
 //--------------------------------------------------------------
-void ofxTouchGUIBase::touchDown(ofTouchEventArgs &touch){
+/*void ofxTouchGUIBase::touchDown(ofTouchEventArgs &touch){
     
      onDown(touch.x, touch.y);
 }
@@ -306,7 +306,7 @@ void ofxTouchGUIBase::mousePressed(ofMouseEventArgs& args){
 void ofxTouchGUIBase::mouseReleased(ofMouseEventArgs& args){
     
     onUp(args.x, args.y);
-}
+}*/
 
 
 
@@ -314,6 +314,7 @@ void ofxTouchGUIBase::mouseReleased(ofMouseEventArgs& args){
 //--------------------------------------------------------------
 bool ofxTouchGUIBase::onMoved(float x, float y){
    
+    // onMoved not used for most gui items - always returns false here. see slider for working implementation. 
     if(!isInteractive || hidden) return false;
     return false;
 }
@@ -321,6 +322,7 @@ bool ofxTouchGUIBase::onMoved(float x, float y){
 bool ofxTouchGUIBase::onDown(float x, float y){
     
     if(!isInteractive || hidden) return false;
+    if(isPressed) return false;
     
     if(hitTest(x,y)) {
         isPressed = true;
@@ -345,6 +347,9 @@ bool ofxTouchGUIBase::getIsPressed() {
     return isPressed;
 }
 
+void ofxTouchGUIBase::setInteractive(bool interactive) {
+    isInteractive = interactive;
+}
 
 bool ofxTouchGUIBase::hitTest(float x, float y) {
 

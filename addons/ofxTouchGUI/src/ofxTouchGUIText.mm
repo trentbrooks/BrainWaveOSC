@@ -11,6 +11,13 @@ ofxTouchGUIText::ofxTouchGUIText(){
     stringVal = 0;
     boolVal = 0;
     textType = TEXT_STRING_VAL;//-1;//TEXT_STRING;
+    baseLineOffset = 0;
+    
+    // bg background is dark by default (same as foreground colours)
+    bgClrTL = ofColor(40,40,40,255); //rgba
+    bgClrTR = ofColor(40,40,40,255); //rgba
+    bgClrBL = ofColor(40,40,40,255); //rgba
+    bgClrBR = ofColor(40,40,40,255); //rgba
 }
 
 ofxTouchGUIText::~ofxTouchGUIText(){
@@ -62,7 +69,7 @@ void ofxTouchGUIText::setValue(string *val) {
 	this->stringVal = val;
     defaultStringVal = *val; // default value copied for resetting
     textType = TEXT_STRING;
-    textOffsetX = 0;
+    //textOffsetX = 0;
 }
 
 //--------------------------------------------------------------
@@ -76,7 +83,7 @@ void ofxTouchGUIText::draw(){
     if(!hidden) {
         ofPushMatrix();
         ofTranslate(int(posX), int(posY));
-        if(drawTextBg) drawGLRect(vertexArrActive, colorsArrActive);
+        if(drawTextBg) drawGLRect(vertexArr,colorsArr);//vertexArrActive, colorsArrActive);
         
         // draw text
         ofPushStyle();
@@ -94,19 +101,20 @@ void ofxTouchGUIText::draw(){
         
         // draw text
         //drawText(label, 0);
+        int yOffset = baseLineOffset + ceil(height * 0.5) + textOffsetY;
         if(textType == TEXT_STRING)
-            drawText(label + " : " + ofToString(*stringVal), 0, textOffsetY + (height * 0.5));
+            drawText(label + " : " + ofToString(*stringVal), textOffsetX, yOffset);
         else if(textType == TEXT_FLOAT)
-            drawText(label + " : " + ofToString(*floatVal), 0, textOffsetY+ (height * 0.5));
+            drawText(label + " : " + ofToString(*floatVal), textOffsetX, yOffset);
         else if(textType == TEXT_INT)
-            drawText(label + " : " + ofToString(*intVal), 0, textOffsetY+ (height * 0.5));
+            drawText(label + " : " + ofToString(*intVal), textOffsetX, yOffset);
         else if(textType == TEXT_BOOL)
-            drawText(label + " : " + ofToString(*boolVal), 0, textOffsetY+ (height * 0.5));
+            drawText(label + " : " + ofToString(*boolVal), textOffsetX, yOffset);
         else if(textType == TEXT_STRING_VAL) {
             if(isTextTitle)
-                drawLargeText(label, 0, textOffsetY);//textOffsetY * 2);//textOffsetY); 
+                drawLargeText(label, textOffsetX, baseLineOffset + textOffsetY);//textOffsetY * 2);//textOffsetY);
             else
-                drawText(label, 0, textOffsetY);//textOffsetY * 2);//textOffsetY);
+                drawText(label, textOffsetX, baseLineOffset + textOffsetY);//textOffsetY * 2);//textOffsetY);
         }
         ofPopStyle();
         
@@ -136,16 +144,16 @@ void ofxTouchGUIText::formatText(bool isTextTitle) {
     if(isTextTitle) {
         // automatically offset the text based on the font size
         if(hasFont) {
-            textOffsetX = fontSizeLarge;
-            textOffsetY = guiFontLarge->getLineHeight();
-            height = guiFontLarge->stringHeight(label) + textOffsetY;
+            //textOffsetX = fontSizeLarge;
+            baseLineOffset = guiFontLarge->getSize()+1 + ceil(guiFontLarge->getLineHeight()/2); ///2;//guiFontLarge->getSize() + (guiFontLarge->getSize()/2);
+            height = ceil(guiFontLarge->stringHeight(label)) + baseLineOffset + textOffsetY;
         }        
         
     } else {
         //guiFont->isLoaded())
         if(hasFont) {
-            textOffsetY = guiFont->getLineHeight();
-            height = guiFont->stringHeight(label) + textOffsetY;            
+            baseLineOffset = guiFont->getSize()+1 + ceil(guiFont->getLineHeight()/2); ///2;//guiFont->getSize() + (guiFont->getSize()/2);
+            height = ceil(guiFont->stringHeight(label)) + baseLineOffset + textOffsetY;
         }
     }
     

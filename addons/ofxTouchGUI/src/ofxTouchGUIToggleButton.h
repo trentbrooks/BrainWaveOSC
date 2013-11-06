@@ -21,6 +21,8 @@ public:
     // touch events
     virtual bool onUp(float x, float y);
     
+    void doToggleAction(bool toggleSelect, bool doOSC = true);
+    
     // toggle values
     bool *toggleVal; 
     bool defaultToggleVal; 

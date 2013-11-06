@@ -36,6 +36,8 @@ public:
     
 protected:
     
+    float baseLineOffset;
+    
     bool isTextTitle;
     bool drawTextBg;
     

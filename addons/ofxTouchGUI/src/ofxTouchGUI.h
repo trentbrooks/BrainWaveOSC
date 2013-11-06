@@ -15,11 +15,13 @@
 
 
 /*
- 
+ Usage:
+ // .h
  ofxTouchGUI settings;
  void onGuiChanged(const void* sender, string &buttonLabel);
  
- settings.loadSettings("settings.xml", true, true); // savefile, default font, use mouse
+ //.cpp
+ settings.loadSettings("settings.xml", true, true); // savefile, default font, use mouse (true for mouse, false for multitouch/ios).
  settings.addTitleText("ofxTouchGUI");
  settings.addSlider("SLIDER X", &sliderValX, 0.0f, 1.0f);
  settings.addDropDown("DROPDOWN LIST B", 4, &selectListIndex, ddOptions);
@@ -28,30 +30,38 @@
  settings.addButton("SAVE");
  settings.addEventListenerAllItems(this);
  
- // Optional settings: different fonts, background image/colour, auto draw, osc sending
- settings.loadFonts("stan0755.ttf", "VAGRoundedStd-Light.otf", 6, 14, true);
+ // Optional settings: different fonts, background image/colour, auto draw, osc sending.
+ settings.setIgnoreXMLValues(true); // ignore previously saved xml values.
+ settings.loadFonts("stan0755.ttf", "VAGRoundedStd-Light.otf", 6, 14);
+ settings.setLineHeights(12,24); // font line heights
  settings.loadBackgroundImage("guiBg.png");
  settings.setBackgroundColor(ofColor(255,0,255));
  settings.setAutoDraw();
- settings.setupSendOSC("127.0.0.1", 4444);
+ settings.setupSendOSC("127.0.0.1", 5555);
+ settings.setupReceiveOSC(5556);
+ settings.setWindowPosition(ofGetWidth()- 250, 0); 
+ settings.setScrollable(true); // good for ios, new columns will not be auto created, all items add to single column.
+ settings.nextColumn(); // subsequent items added to next column
+ settings.newPanel(); // makes a new panel for all subsequent items
+ settings.showPanel(0); // display the first panel only
  
  // individual item options
  settings.setVariable("host", &hostVar);
- settings.setConstant("port", &portConst);
+ settings.setConstant("port", &portConst); // once set, can only be changed via xml.
  ofxTouchGUIButton* resetBtn = settings.addButton("RESET");
  resetBtn->setTextClr(ofColor(255,255,0));
  resetBtn->setBackgroundClrs(ofColor tl, ofColor tr, ofColor bl, ofColor br);
  resetBtn->setActiveClrs(ofColor tl, ofColor tr, ofColor bl, ofColor br);
  resetBtn->loadImageStates("up.png", "down.png");
- ofAddListener(resetBtn->onChangedEvent, this, &ofApp::onGuiChanged);
+ ofAddListener(resetBtn->onChangedEvent, this, &ofApp::onGuiChanged); // not required if settings.addEventListenerAllItems(this) called.
  ofxTouchGUIDataGraph *graph= settings.addTimeGraph("Graph", 500);
  graph->setCustomRange(0, ofGetWidth());
- graph->insertValue(mouseX); // add values manually
+ graph->insertValue(mouseX); // add values manually eg. onMouseMoved()
  */
 
 
 // ofxTouchGUI versioning
-#define OFXTOUCHGUI_VERSION 0.21
+#define OFXTOUCHGUI_VERSION 0.23
 
 // gui item types
 #define SLIDER_TYPE "slider"
@@ -68,27 +78,21 @@
 enum { _INT, _FLOAT, _BOOL, _STRING };
 
 // for adding variables
-struct NameValuePair {
+struct TGNameValuePair {
     string name;
     void* value;
     int type;
     
     template <typename T>
     void setValue(T *valuePtr) {
-
-        if(typeid(T) == typeid(int&))
-            type = _INT;
-        else if(typeid(T) == typeid(string&))
-            type = _STRING;
-        else if(typeid(T) == typeid(float&))
-            type = _FLOAT;
-        else if(typeid(T) == typeid(bool&))
-            type = _BOOL;
-        else
-            cout << "* NameValuePair error: template type is unknown *" << endl;
-        
+        type = (typeid(T) == typeid(int&)) ? _INT : (typeid(T) == typeid(string&)) ? _STRING : (typeid(T) == typeid(float&)) ? _FLOAT : (typeid(T) == typeid(bool&)) ? _BOOL : -1;
         value = valuePtr;
     }; 
+};
+
+// panel/column with gui items
+struct TGPanel {    
+    vector <ofxTouchGUIBase*> panelGuiItems;
 };
 
 
@@ -101,7 +105,8 @@ public:
 	~ofxTouchGUI();
     
     // setup
-    void loadSettings(string saveToFile = "settings.xml", bool loadDefaultFont = false, bool useMouse = false);
+    void loadSettings(string saveToFile = "settings.xml", bool loadDefaultFont = true, bool useMouse = true);
+    void setIgnoreXMLValues(bool ignoreXML); // ignore previously saved values in xml. all initial values set by app.
     
     // background    
 	void loadBackgroundImage(string imgPath);
@@ -110,10 +115,13 @@ public:
     // fonts
     void loadFont(string fontPath, int fontSize, int fontSizeLarge, bool antialiased = true);
     void loadFonts(string fontPathSmall, string fontPathLarge, int fontSizeSmall, int fontSizeLarge, bool antialisedSmall = true, bool antialisedLarge = true);
+    void setLineHeights(float smallLineHeight, float largeLineHeight);
+    ofTrueTypeFont& getFont() { return guiFont; }
+    ofTrueTypeFont& getLargeFont() { return guiFontLarge; }
     
     // window positioning (affects touch/mouse positions of all gui items)
     void setWindowPosition(int posX, int posY);
-    
+    ofVec2f getWindowPosition();
     
     // default positioning/sizing for individual items
     void moveTo(int posX, int posY); // all subsequently added items will be added from this position
@@ -125,23 +133,27 @@ public:
     ofVec2f getItemPosition(); // gets last items position
     int getItemWidth();
     int getItemHeight();
-    //int getItemPosY();
-    /*int defaultItemPosX;
-    int defaultItemPosY;
-    int defaultColumn;
-    int defaultColumnSpacer;
-    int defaultItemWidth;
-    int defaultItemHeight;
-    int defaultSpacer;
-    void checkItemPosSize(int& posX, int& posY, int& width, int& height);
-    int lastItemPosX;
-    int lastItemPosY;
-    int lastItemWidth;
-    int lastItemHeight;*/
+    
     
     // when auto positioning you can call this to change columns before adding another item
     void nextColumn();
+    void setAutoColumnMaxY(int maxY); // when to wrap to next column (default ofGetHeight())
     //void previousColumn(); // not implemented
+    
+    // panels (by default there is only 1 panel)
+    int newPanel(); // creates a new panel, all subsequent items added to new panel
+    int activePanel;
+    void hideAllPanels();
+    void showPanel(int panelIndex);
+    void showNextPanel();
+    void showPreviousPanel();
+    vector<TGPanel*> panels;
+    
+    // Y scrolling only - no limits
+    // when scrolling is enabled, adding items with auto positioning will not create new columns
+    // ignore scrollwidth and scrollheight for auto width + height
+    void setScrollable(bool scrollable, int scrollWidth=-1, int scrollHeight=-1);
+    
     
     // drawing/update
     void update();
@@ -197,7 +209,7 @@ public:
     // variable (not for display)
     template <typename T>
     void setVariable(string varName, T *regVar);
-    vector <NameValuePair*>varItems;
+    vector <TGNameValuePair*>varItems;
     
     
     // add/remove listeners to all gui items - using addEventListener requires onGuiChanged(const void* sender, string &buttonLabel) method in testApp
@@ -222,7 +234,7 @@ public:
     bool saveControl(string currentType, string currentLabel, T* currentValue, bool overwriteXMLValue = false);    
     
     // all controls
-    NameValuePair* getVarByLabel(string textLabel);
+    TGNameValuePair* getVarByLabel(string textLabel);
     ofxTouchGUIBase* getItemByLabelAndType(string textLabel, string itemType);
     ofxTouchGUIBase* getItemById(string itemId);
     ofxTouchGUIBase* getItemByOSCAddress(string oscAddress);
@@ -235,11 +247,16 @@ public:
     void disableSendOSC();
     void sendOSC(string address, float val); // send any generic message- must pass address + value
     void sendOSC(string address, int val);
-    
+    string getHostOSC() {
+        return oscSendHostAddress;
+    };
+    int getPortOSC() {
+        return oscSendPort;
+    };
     // osc receive
     void setupReceiveOSC(int port);
     void disableReceiveOSC();
-    
+
     
     // mouse/touch events
     void enableTouch();
@@ -280,8 +297,17 @@ protected:
     bool hasFont;
     
     // window positioning
-    int windowPositionX;
-    int windowPositionY;
+    ofVec2f windowPosition;
+
+    // scrolling
+    bool scrollEnabled;
+    bool isScrolling;
+    float startScrollY;
+    int scrollWidth, scrollHeight;
+    ofVec2f getFurthestItemPosition();
+    bool isFirstUpdate;
+    ofVec2f furthestItem;
+    bool hitTest(float x, float y);
     
     // default positioning/sizing for individual items
     int defaultItemPosX;
@@ -296,6 +322,7 @@ protected:
     int lastItemPosY;
     int lastItemWidth;
     int lastItemHeight;
+    int maxColumnY;
     
     // drawing
     bool hidden;
@@ -311,6 +338,7 @@ protected:
     string saveToFile;
     string defaultSaveToFile;
     ofxXmlSettings XML;
+    bool ignoreXMLValues;
     bool settingsLoaded;
     
     // controls
@@ -318,6 +346,8 @@ protected:
     
     // osc
     ofxOscSender* oscSender;
+    string oscSendHostAddress;
+    int oscSendPort;
     ofxOscReceiver* oscReceiver;
     ofxOscMessage msg;
     bool oscSendEnabled;
@@ -325,6 +355,7 @@ protected:
     void checkOSCReceiver();
     
 };
+
 
 
 
