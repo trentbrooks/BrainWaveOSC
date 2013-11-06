@@ -16,7 +16,7 @@ EegTimeGraph* BrainWaveGUI::addCustomTimeGraph(string graphLabel, int maxValues,
     tgtg->type = DATAGRAPH_TYPE;
     checkItemPosSize(posX, posY, width, height);
     tgtg->setDisplay(graphLabel, posX, posY, width, height);    
-    tgtg->disable(); // disable mouse, touch
+    tgtg->setInteractive(false); // disable mouse, touch
     if(hasFont) tgtg->assignFonts(&guiFont,fontSize, &guiFontLarge,fontSizeLarge);
     tgtg->setMaximumValues(maxValues);
 
@@ -34,7 +34,7 @@ EegFrequencyGraph* BrainWaveGUI::addCustomTimeFrequencyGraph(string graphLabel, 
     tgtg->type = DATAGRAPH_TYPE;
     checkItemPosSize(posX, posY, width, height);
     tgtg->setDisplay(graphLabel, posX, posY, width, height);
-    tgtg->disable(); // disable mouse, touch
+    tgtg->setInteractive(false); // disable mouse, touch
     if(hasFont) tgtg->assignFonts(&guiFont,fontSize, &guiFontLarge,fontSizeLarge);
     tgtg->setMaximumValues(maxValues);
     

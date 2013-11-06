@@ -38,4 +38,28 @@
     <label>USE GLOBAL EEG RANGES</label>
     <value>1</value>
 </control>
-
+<control>
+    <type>variable</type>
+    <label>Poor Signal 0-200</label>
+    <value>200.000000000</value>
+</control>
+<control>
+    <type>toggle</type>
+    <label>PLAYBACK MODE (test.csv)</label>
+    <value>0</value>
+</control>
+<control>
+    <type>toggle</type>
+    <label>PAUSE PLAYBACK</label>
+    <value>0</value>
+</control>
+<control>
+    <type>slider</type>
+    <label>PLAYBACK TIMELINE</label>
+    <value>0</value>
+</control>
+<control>
+    <type>toggle</type>
+    <label>RECORD TO CSV</label>
+    <value>0</value>
+</control>

@@ -1,0 +1,65 @@
+<control>
+    <type>constant</type>
+    <label>device</label>
+    <value>/dev/tty.BrainBand-DevB</value>
+</control>
+<control>
+    <type>constant</type>
+    <label>baud</label>
+    <value>57600</value>
+</control>
+<control>
+    <type>constant</type>
+    <label>host</label>
+    <value>127.0.0.1</value>
+</control>
+<control>
+    <type>constant</type>
+    <label>port</label>
+    <value>7771</value>
+</control>
+<control>
+    <type>constant</type>
+    <label>launch with small window</label>
+    <value>0</value>
+</control>
+<control>
+    <type>toggle</type>
+    <label>SEND RAW DATA WITH OSC</label>
+    <value>0</value>
+</control>
+<control>
+    <type>toggle</type>
+    <label>SEND OSC EVERY FRAME</label>
+    <value>1</value>
+</control>
+<control>
+    <type>toggle</type>
+    <label>USE GLOBAL EEG RANGES</label>
+    <value>1</value>
+</control>
+<control>
+    <type>variable</type>
+    <label>Poor Signal 0-200</label>
+    <value>200.000000000</value>
+</control>
+<control>
+    <type>toggle</type>
+    <label>PLAYBACK MODE (test.csv)</label>
+    <value>0</value>
+</control>
+<control>
+    <type>toggle</type>
+    <label>PAUSE PLAYBACK</label>
+    <value>0</value>
+</control>
+<control>
+    <type>slider</type>
+    <label>PLAYBACK TIMELINE</label>
+    <value>0</value>
+</control>
+<control>
+    <type>toggle</type>
+    <label>RECORD TO CSV</label>
+    <value>0</value>
+</control>

@@ -118,7 +118,7 @@ void ofApp::setupGui() {
 
     // add items
     settings.setItemSize(bigWidth, bigHeight);
-    settings.addTitleText("BRAINWAVE OSC 0.9", 18, 18);
+    settings.addTitleText("BRAINWAVE OSC 0.91", 18, 18);
     settings.addText("Device - " + deviceName + ". BaudRate - " + ofToString(deviceBaudRate), 20, 55);
     settings.addText("OSC - " + host + ":" + ofToString(port), 20, 70);
     settings.addText("----------------------------------------------------------------------------------------------", 20, 85);
@@ -600,7 +600,10 @@ void ofApp::update(){
             // in playback mode - need to send the raw data osc seperately
             for(int i = 0; i < dataEntries[playhead].rawDataBufferValues.size(); i++) {
                 rawDataGraph->insertValue(dataEntries[playhead].rawDataBufferValues[i]);
-                if(tg.allowRawDataEvents) rawDataGraph->sendOSC(dataEntries[playhead].rawDataBufferValues[i]);
+                if(tg.allowRawDataEvents) {
+                    //ofLog() << "send raw: " << dataEntries[playhead].rawDataBufferValues[i];
+                    rawDataGraph->sendOSC(dataEntries[playhead].rawDataBufferValues[i]);
+                }
             }
             
             playhead++;
@@ -625,7 +628,7 @@ void ofApp::update(){
         
     if(isRecording) {
         
-        // save shit
+        // save shit every frame
         output << (timeElapsed-startTime) << "," << allData.signal << "," << attentionGraph->currentValue << "," << meditationGraph->currentValue << "," << eegDeltaGraph->currentValue << "," << eegThetaGraph->currentValue << "," << eegLowAlphaGraph->currentValue << "," << eegHighAlphaGraph->currentValue << "," << eegLowBetaGraph->currentValue << "," << eegHighBetaGraph->currentValue << "," << eegLowGammaGraph->currentValue << "," << eegHighGammaGraph->currentValue << "," << rawDataBuffer << "," << blinkStrength << "\n";
         
         // clear rawDataBuffer every frame
