@@ -76,7 +76,13 @@ void ofxTouchGUIText::setValue(string *val) {
 void ofxTouchGUIText::setBackgroundVisible(bool vis) {
     drawTextBg = vis;
 }
+
+// overriden
+void ofxTouchGUIText::copyStyle(ofxTouchGUIText* source) {
     
+    ofxTouchGUIBase::copyStyle(source);
+    drawTextBg = source->drawTextBg;
+}
 //--------------------------------------------------------------
 void ofxTouchGUIText::draw(){
     
@@ -91,6 +97,8 @@ void ofxTouchGUIText::draw(){
         //ofSetColor(textColourLight);
         ofSetColor(textColour);
         
+        //ofNoFill();
+        //drawGLRect(vertexArr, colorsArr);
         /*if(isTextTitle) {
             drawLargeText(label, 0, textOffsetY);//textOffsetY * 2);//textOffsetY); 
             //drawLargeText(label);
@@ -139,23 +147,25 @@ void ofxTouchGUIText::formatText(bool isTextTitle) {
     
     this->isTextTitle = isTextTitle;
     
-    label = wrapString(label, width);
+    label = wrapString(label, width - textOffsetX);
     
-    if(isTextTitle) {
-        // automatically offset the text based on the font size
-        if(hasFont) {
+    if(hasFont) {
+    
+        if(isTextTitle) {
+            // automatically offset the text based on the font size
             //textOffsetX = fontSizeLarge;
             baseLineOffset = guiFontLarge->getSize()+1 + ceil(guiFontLarge->getLineHeight()/2); ///2;//guiFontLarge->getSize() + (guiFontLarge->getSize()/2);
-            height = ceil(guiFontLarge->stringHeight(label)) + baseLineOffset + textOffsetY;
-        }        
-        
-    } else {
-        //guiFont->isLoaded())
-        if(hasFont) {
+            int textHeight = ceil(guiFontLarge->stringHeight(label)) + baseLineOffset + textOffsetY;
+            if(textHeight > height) height = textHeight;
+            
+            
+        } else {
             baseLineOffset = guiFont->getSize()+1 + ceil(guiFont->getLineHeight()/2); ///2;//guiFont->getSize() + (guiFont->getSize()/2);
-            height = ceil(guiFont->stringHeight(label)) + baseLineOffset + textOffsetY;
+            int textHeight = ceil(guiFont->stringHeight(label)) + baseLineOffset + textOffsetY;
+            if(textHeight > height) height = textHeight;
         }
     }
+    
     
     updateGLArrays();
 }

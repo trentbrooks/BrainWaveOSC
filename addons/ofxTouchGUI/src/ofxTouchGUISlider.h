@@ -35,6 +35,9 @@ public:
     
     float getValue();
     
+    void loadImageStates(string bgImagePath, string fgImagePath, bool useWidthHeightFromImage = true);
+    void setImageStates(ofTexture& bgImage, ofTexture& fgImage, bool useWidthHeightFromImage = true);
+    
 protected:
     
     float min;
@@ -42,6 +45,8 @@ protected:
     int defaultIntVal;
     float defaultVal;
     
-    
+    ofTexture bgImage;
+    ofTexture fgImage;
+    bool hasImages;
 };
 

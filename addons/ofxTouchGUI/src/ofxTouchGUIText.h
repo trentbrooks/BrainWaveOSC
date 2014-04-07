@@ -33,6 +33,8 @@ public:
     void setValue(bool *val);
     void setValue(string *val);
 
+    // overriden to include 'background visible'
+    void copyStyle(ofxTouchGUIText* source);
     
 protected:
     

@@ -11,6 +11,7 @@ ofxTouchGUISlider::ofxTouchGUISlider(){
     max = 1;
     useInteger = false;
     isInteractive = true;
+    hasImages = false;
 }
 
 ofxTouchGUISlider::~ofxTouchGUISlider(){
@@ -25,6 +26,27 @@ void ofxTouchGUISlider::resetDefaultValue(){
     else { *val = defaultVal; }
 }
 
+void ofxTouchGUISlider::loadImageStates(string bgImagePath, string fgImagePath, bool useWidthHeightFromImage) {
+    
+    hasImages = true;
+    ofLoadImage(bgImage, bgImagePath);
+    ofLoadImage(fgImage, fgImagePath);
+    if(useWidthHeightFromImage) {
+        this->width = bgImage.getWidth();
+        this->height = bgImage.getHeight();
+    }
+}
+
+void ofxTouchGUISlider::setImageStates(ofTexture& bgImage, ofTexture& fgImage, bool useWidthHeightFromImage) {
+    
+    hasImages = true;
+    this->bgImage = bgImage;
+    this->fgImage = fgImage;
+    if(useWidthHeightFromImage) {
+        this->width = bgImage.getWidth();
+        this->height = bgImage.getHeight();
+    }
+}
 
 //--------------------------------------------------------------
 void ofxTouchGUISlider::setRange(float min, float max) {
@@ -59,27 +81,40 @@ void ofxTouchGUISlider::draw(){
         ofPushMatrix();
         ofTranslate(int(posX), int(posY));
         
-        // get value + percentage    
+        // get value + percentage
         float formattedValue = (useInteger) ? *intVal : *val;
-        float valPerc = (formattedValue - min) / (max-min);    
+        float valPerc = (formattedValue - min) / (max-min);
         float destValX = width * valPerc;
         
-        // draw the background rectangle- move the left side of the percentage bar. modify vertex values directly
-        vertexArr[0] = destValX; // TL x
-        vertexArr[4] = destValX; // BL x
-        drawGLRect(vertexArr, colorsArr);
+        if(hasImages) {
+            
+            ofPushStyle();
+            ofSetColor(255);
+            bgImage.draw(0, 0);
+            fgImage.draw(-fgImage.getWidth()*.5+ destValX, -fgImage.getHeight()*.5 + getItemHeight() * .5);
+            ofPopStyle();
+            
+        } else {            
+            
+            // draw the background rectangle- move the left side of the percentage bar. modify vertex values directly
+            vertexArr[0] = destValX; // TL x
+            vertexArr[4] = destValX; // BL x
+            drawGLRect(vertexArr, colorsArr);
+            
+            // draw the foreground/active rectangle- move the right side of the percentage bar. modify vertex values directly
+            vertexArrActive[2] = destValX; // TL2 x
+            vertexArrActive[6] = destValX; // BL2 x
+            drawGLRect(vertexArrActive, colorsArrActive);
+            
+            // draw text
+            ofPushStyle();
+            ofSetColor(textColour);
+            drawText(label, 2);
+            drawText(ofToString(formattedValue), 0);
+            ofPopStyle();
+        }
         
-        // draw the foreground/active rectangle- move the right side of the percentage bar. modify vertex values directly
-        vertexArrActive[2] = destValX; // TL2 x
-        vertexArrActive[6] = destValX; // BL2 x
-        drawGLRect(vertexArrActive, colorsArrActive);
         
-        // draw text
-        ofPushStyle();
-        ofSetColor(textColour);
-        drawText(label, 2);
-        drawText(ofToString(formattedValue), 0);
-        ofPopStyle();
         
         ofPopMatrix();
     }
@@ -129,7 +164,9 @@ bool ofxTouchGUISlider::onMoved(float x, float y) {
 void ofxTouchGUISlider::doSliderFloatAction(float sliderVal, bool doOSC) {
     
     *val = sliderVal;
-    ofNotifyEvent(onChangedEvent,label,this);
+    //ofNotifyEvent(onChangedEvent,label,this);
+    ofxTouchGUIEventArgs args(this);
+    ofNotifyEvent(onChangedEvent, args);
     if(doOSC) sendOSC(*val);
 }
 
@@ -137,7 +174,9 @@ void ofxTouchGUISlider::doSliderFloatAction(float sliderVal, bool doOSC) {
 void ofxTouchGUISlider::doSliderIntAction(int sliderVal, bool doOSC) {
     
     *intVal = sliderVal;
-    ofNotifyEvent(onChangedEvent,label,this);
+    //ofNotifyEvent(onChangedEvent,label,this);
+    ofxTouchGUIEventArgs args(this);
+    ofNotifyEvent(onChangedEvent, args);
     if(doOSC) sendOSC(*intVal);
 }
 

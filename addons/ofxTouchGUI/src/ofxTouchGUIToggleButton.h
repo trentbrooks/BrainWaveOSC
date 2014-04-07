@@ -29,5 +29,14 @@ public:
     void setValues(bool *toggleVal);
     
     bool getValue();
+    
+    void loadImageStates(string onImagePath, string offImagePath, bool useWidthHeightFromImage = true);
+    void setImageStates(ofImage& onImage, ofImage& offImage, bool useWidthHeightFromImage = true);
+    
+protected:
+    
+    ofImage onImage;
+    ofImage offImage;
+    bool hasImages;
 };
 

@@ -363,6 +363,14 @@ bool ofxTouchGUIBase::hitTest(float x, float y, float w, float h) {
 }
 
 //--------------------------------------------------------------
+// STYLE COPYING (background clrs, active clrs, text clr)
+void ofxTouchGUIBase::copyStyle(ofxTouchGUIBase* source) {
+    
+    setBackgroundClrs(source->bgClrTL, source->bgClrTR, source->bgClrBL, source->bgClrBR);
+    setActiveClrs(source->activeClrTL, source->activeClrTR, source->activeClrBL, source->activeClrBR);
+    setTextClr(source->textColour);
+}
+
 // CUSTOM COLORS
 void ofxTouchGUIBase::setTextClr(ofColor clr) {
     textColour = clr;

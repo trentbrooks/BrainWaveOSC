@@ -20,6 +20,7 @@ public:
     void doButtonAction(bool doOSC = true);
     
     void loadImageStates(string upImagePath, string downImagePath, bool useWidthHeightFromImage = true);
+    void setImageStates(ofImage& upImage, ofImage& downImage, bool useWidthHeightFromImage = true);
     
     bool getValue();
     

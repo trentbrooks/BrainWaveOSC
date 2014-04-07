@@ -161,7 +161,7 @@ void ofxTouchGUIDropDown::draw(){
         
         // draw text
         ofPushStyle();
-        ofSetColor(textColourLight);
+        ofSetColor(textColour);
         //drawText((toggleShowList) ? label : listValues[selectId], 0);
         drawText((*selectId < 0) ? label : listValues[*selectId], 0);
         ofPopStyle();
@@ -286,7 +286,9 @@ bool ofxTouchGUIDropDown::onUp(float x, float y){
 void ofxTouchGUIDropDown::doSelectAction(int select, bool doOSC) {
     
     *selectId = select;
-    ofNotifyEvent(onChangedEvent,label,this);
+    //ofNotifyEvent(onChangedEvent,label,this);
+    ofxTouchGUIEventArgs args(this);
+    ofNotifyEvent(onChangedEvent, args);
     if(doOSC) sendOSC(*selectId);
 }
 

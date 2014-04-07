@@ -58,7 +58,7 @@ public:
     // gui
     void setupGui();
     BrainWaveGUI settings;
-    void onGuiChanged(const void* sender, string &buttonLabel);
+    void onGUIChanged(ofxTouchGUIEventArgs& args);
     bool smallWindow;
     
     

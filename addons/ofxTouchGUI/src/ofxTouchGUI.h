@@ -11,7 +11,7 @@
 #include "ofxTouchGUIDataGraph.h"
 #include "ofxXmlSettings.h"
 #include "ofxOsc.h"
-
+#include "ofxTouchGUIEventArgs.h"
 
 
 /*
@@ -39,7 +39,7 @@
  settings.setAutoDraw();
  settings.setupSendOSC("127.0.0.1", 5555);
  settings.setupReceiveOSC(5556);
- settings.setWindowPosition(ofGetWidth()- 250, 0); 
+ settings.setWindowPosition(ofGetWidth()- 250, 0);
  settings.setScrollable(true); // good for ios, new columns will not be auto created, all items add to single column.
  settings.nextColumn(); // subsequent items added to next column
  settings.newPanel(); // makes a new panel for all subsequent items
@@ -61,7 +61,7 @@
 
 
 // ofxTouchGUI versioning
-#define OFXTOUCHGUI_VERSION 0.23
+#define OFXTOUCHGUI_VERSION 0.241
 
 // gui item types
 #define SLIDER_TYPE "slider"
@@ -73,6 +73,9 @@
 #define DATAGRAPH_TYPE "datagraph"
 #define CONST_TYPE "constant"
 #define VAR_TYPE "variable"
+
+
+
 
 // gui item value types
 enum { _INT, _FLOAT, _BOOL, _STRING };
@@ -87,18 +90,18 @@ struct TGNameValuePair {
     void setValue(T *valuePtr) {
         type = (typeid(T) == typeid(int&)) ? _INT : (typeid(T) == typeid(string&)) ? _STRING : (typeid(T) == typeid(float&)) ? _FLOAT : (typeid(T) == typeid(bool&)) ? _BOOL : -1;
         value = valuePtr;
-    }; 
+    };
 };
 
 // panel/column with gui items
-struct TGPanel {    
+struct TGPanel {
     vector <ofxTouchGUIBase*> panelGuiItems;
 };
 
 
 
 class ofxTouchGUI {
-
+    
 public:
     
     ofxTouchGUI();
@@ -108,9 +111,9 @@ public:
     void loadSettings(string saveToFile = "settings.xml", bool loadDefaultFont = true, bool useMouse = true);
     void setIgnoreXMLValues(bool ignoreXML); // ignore previously saved values in xml. all initial values set by app.
     
-    // background    
+    // background
 	void loadBackgroundImage(string imgPath);
-    void setBackgroundColor(ofColor bg,int bgX=-1, int bgY=-1, int bgWidth=-1, int bgHeight=-1);    
+    void setBackgroundColor(ofColor bg,int bgX=-1, int bgY=-1, int bgWidth=-1, int bgHeight=-1);
     
     // fonts
     void loadFont(string fontPath, int fontSize, int fontSizeLarge, bool antialiased = true);
@@ -121,7 +124,7 @@ public:
     
     // window positioning (affects touch/mouse positions of all gui items)
     void setWindowPosition(int posX, int posY);
-    ofVec2f getWindowPosition();
+    ofVec2f& getWindowPosition();
     
     // default positioning/sizing for individual items
     void moveTo(int posX, int posY); // all subsequently added items will be added from this position
@@ -156,20 +159,20 @@ public:
     
     
     // drawing/update
-    void update();
     void draw();
     void drawText(string text, int posX, int posY); // draw any generic string
+    void drawTitleText(string text, int posX, int posY) ;
     void show();
     void hide();
     void toggleDisplay();
-    bool isHidden(); 
-    void setAutoDraw(bool allowAutoDraw = true, bool allowAutoUpdate = true); // automatically calls draw()
-
-        
+    bool isHidden();
+    void setAutoDraw(bool allowAutoDraw = true); // automatically calls draw()
+    
+    
     // slider
     ofxTouchGUISlider* addSlider(string sliderLabel, float *val, float min, float max, int posX=-1, int posY=-1, int width=-1, int height=-1);
     ofxTouchGUISlider* addSlider(string sliderLabel, int *val, int min, int max, int posX=-1, int posY=-1, int width=-1, int height=-1);
-
+    
     // variable display
     ofxTouchGUIText* addVarText(string textLabel, string *val, int posX=-1, int posY=-1, int width=-1, int height=-1);
     ofxTouchGUIText* addVarText(string textLabel, int *val, int posX=-1, int posY=-1, int width=-1, int height=-1);
@@ -204,7 +207,7 @@ public:
     template <typename T>
     void setConstant(string constName,T *fixedConst); //pointer
     template <typename T>
-    void setConstant(string constName,T fixedConst); // non-pointer    
+    void setConstant(string constName,T fixedConst); // non-pointer
     
     // variable (not for display)
     template <typename T>
@@ -231,7 +234,7 @@ public:
     
     // using a template to pass in parameter of any type
     template <typename T>
-    bool saveControl(string currentType, string currentLabel, T* currentValue, bool overwriteXMLValue = false);    
+    bool saveControl(string currentType, string currentLabel, T* currentValue, bool overwriteXMLValue = false);
     
     // all controls
     TGNameValuePair* getVarByLabel(string textLabel);
@@ -256,7 +259,7 @@ public:
     // osc receive
     void setupReceiveOSC(int port);
     void disableReceiveOSC();
-
+    
     
     // mouse/touch events
     void enableTouch();
@@ -298,7 +301,7 @@ protected:
     
     // window positioning
     ofVec2f windowPosition;
-
+    
     // scrolling
     bool scrollEnabled;
     bool isScrolling;
@@ -327,8 +330,7 @@ protected:
     // drawing
     bool hidden;
     void aDraw(ofEventArgs &e);
-    void aUpdate(ofEventArgs &e);
-    bool isAutoDrawing, isAutoUpdating;
+    bool isAutoDrawing;
     
     // vars/consts
     int constantCount;
@@ -355,6 +357,9 @@ protected:
     void checkOSCReceiver();
     
 };
+
+
+
 
 
 

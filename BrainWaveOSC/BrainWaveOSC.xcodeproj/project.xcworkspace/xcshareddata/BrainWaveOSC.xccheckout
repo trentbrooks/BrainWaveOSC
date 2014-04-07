@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>82FBE482-ED9E-4EFA-820C-F767389BF0A7</string>
+	<key>IDESourceControlProjectName</key>
+	<string>BrainWaveOSC</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>97CA4108-7035-438A-A182-E4A92DEA1CA0</key>
+		<string>https://github.com/trentbrooks/openFrameworks.git</string>
+		<key>F1D29F14-D865-4E71-B684-D87D7387F258</key>
+		<string>ssh://github.com/trentbrooks/ofxTouchGUI.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>apps/trentbrooks/BrainWaveOSC/BrainWaveOSC.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>97CA4108-7035-438A-A182-E4A92DEA1CA0</key>
+		<string>../../../../..</string>
+		<key>F1D29F14-D865-4E71-B684-D87D7387F258</key>
+		<string>../../../../../addons/ofxTouchGUI</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/trentbrooks/openFrameworks.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>97CA4108-7035-438A-A182-E4A92DEA1CA0</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>97CA4108-7035-438A-A182-E4A92DEA1CA0</string>
+			<key>IDESourceControlWCCName</key>
+			<string>OF_080</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F1D29F14-D865-4E71-B684-D87D7387F258</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxTouchGUI</string>
+		</dict>
+	</array>
+</dict>
+</plist>

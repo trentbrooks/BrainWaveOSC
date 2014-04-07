@@ -118,10 +118,10 @@ void ofApp::setupGui() {
 
     // add items
     settings.setItemSize(bigWidth, bigHeight);
-    settings.addTitleText("BRAINWAVE OSC 0.91", 18, 18);
+    settings.addTitleText("BRAINWAVE OSC 0.92", 18, 18);
     settings.addText("Device - " + deviceName + ". BaudRate - " + ofToString(deviceBaudRate), 20, 55);
     settings.addText("OSC - " + host + ":" + ofToString(port), 20, 70);
-    settings.addText("----------------------------------------------------------------------------------------------", 20, 85);
+    settings.addText("---------------------------------------------------------------------------------------------", 20, 85);
     
     // poor signal, attention, meditation
     int graphWidth = 470;
@@ -170,11 +170,11 @@ void ofApp::setupGui() {
     
     // reset graph max
     settings.setItemSize(bigWidth, smallHeight);
-    settings.addText("----------------------------------------------------------------------------------------------");
+    settings.addText("---------------------------------------------------------------------------------------------");
     settings.moveTo(20,455);
     settings.setItemSize(smallWidth, bigHeight);
     ofxTouchGUIButton* resetMaxBtn = settings.addButton("RESET EEG GRAPH'S TO MAX VALUE");
-    ofAddListener(resetMaxBtn->onChangedEvent, this, &ofApp::onGuiChanged);
+    ofAddListener(resetMaxBtn->onChangedEvent, this, &ofApp::onGUIChanged);
     lastPos = settings.getItemPosition();
     //settings.addVarText("Max eeg graph value", &EegTimeGraph::dynamicEegMax, lastX + settings.defaultItemWidth + 20, lastY);
     settings.addToggleButton("USE GLOBAL EEG RANGES", &EegTimeGraph::useGlobalRanges, lastPos.x + settings.getItemWidth() + 20, lastPos.y);
@@ -183,11 +183,11 @@ void ofApp::setupGui() {
 
     
     // playback mode
-    settings.addText("----------------------------------------------------------------------------------------------");
+    settings.addText("---------------------------------------------------------------------------------------------");
     
     settings.setItemSize(smallWidth, bigHeight);
     ofxTouchGUIToggleButton* playbackBn = settings.addToggleButton("PLAYBACK MODE (test.csv)", &playbackMode);
-    ofAddListener(playbackBn->onChangedEvent, this, &ofApp::onGuiChanged);
+    ofAddListener(playbackBn->onChangedEvent, this, &ofApp::onGUIChanged);
     lastPos = settings.getItemPosition();
     //settings.addVarText("Playback frame", &playhead, lastX + settings.defaultItemWidth + 20, lastY);
     settings.addToggleButton("PAUSE PLAYBACK", &isPaused, lastPos.x + settings.getItemWidth() + 20, lastPos.y);
@@ -197,17 +197,17 @@ void ofApp::setupGui() {
     settings.setItemSize(bigWidth, smallHeight);
     
     // recording
-    settings.addText("----------------------------------------------------------------------------------------------");
+    settings.addText("---------------------------------------------------------------------------------------------");
     settings.setItemSize(bigWidth, bigHeight);
     settings.addText("Recording info:\nToggle ON to start recording data, toggle OFF to save .csv file to 'data/exports' folder. Filename will be the current date & time. Drag/drop file on app or rename to test.csv to view in playback mode.");//, lastX + settings.defaultItemWidth + 20, lastY);
     settings.setItemSize(smallWidth, bigHeight);
     ofxTouchGUIToggleButton* recordBn = settings.addToggleButton("RECORD TO CSV", &isRecording);
-    ofAddListener(recordBn->onChangedEvent, this, &ofApp::onGuiChanged);
+    ofAddListener(recordBn->onChangedEvent, this, &ofApp::onGUIChanged);
     settings.setItemSize(bigWidth, smallHeight);
 
     
     // last notes
-    settings.addText("----------------------------------------------------------------------------------------------");
+    settings.addText("---------------------------------------------------------------------------------------------");
     settings.setItemSize(bigWidth, bigHeight);
     settings.addText("Press 'spacebar' to minimise window (performance mode).");//, lastX + settings.defaultItemWidth + 20, lastY);
     
@@ -285,10 +285,11 @@ void ofApp::setupGui() {
 
 }
 
-void ofApp::onGuiChanged(const void* sender, string &buttonLabel) {
-    // could use the pointer to button that was pressed? eg.
-    ofxTouchGUIButton * button = (ofxTouchGUIButton*)sender;
-    cout << buttonLabel << " - " << button->getValue() << endl;
+void ofApp::onGUIChanged(ofxTouchGUIEventArgs& args) {
+    
+    ofxTouchGUIBase* target = args.target;
+    string buttonLabel = target->getLabel();
+
     
     // or just use the label as the identifier
     if(buttonLabel == "SAVE") {
@@ -796,7 +797,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
         tg.removeEventListener(this);
         tg.isReady = false;
         
-        loadPlaybackFile("export/test.csv");
+        loadPlaybackFile(filename);//"export/test.csv");
     }
     
 }

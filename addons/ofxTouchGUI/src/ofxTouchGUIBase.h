@@ -4,6 +4,8 @@
 #include "ofMain.h"
 #include "ofEvents.h"
 #include "ofxOsc.h"
+#include "ofxTouchGUIEventArgs.h"
+
 //static bool ignoreExternalEvents = false;
 
 
@@ -38,25 +40,6 @@ public:
     void setTextOffsets(int textOffsetX, int textOffsetY);
     
     
-    // touch events
-    /*void enable(bool useMouse=false); // defaults to false = touch events instead of mouse events
-    void disable();
-    void enableTouch();
-    void disableTouch();
-    void touchDown(ofTouchEventArgs &touch);
-	void touchMoved(ofTouchEventArgs &touch);
-	void touchUp(ofTouchEventArgs &touch);
-	void touchDoubleTap(ofTouchEventArgs &touch);
-	void touchCancelled(ofTouchEventArgs &touch);
-    
-    // mouse events    
-    void enableMouse();
-    void disableMouse();
-    void mouseMoved(ofMouseEventArgs& args );
-    void mouseDragged(ofMouseEventArgs& args);
-    void mousePressed(ofMouseEventArgs& args);
-    void mouseReleased(ofMouseEventArgs& args);*/
-    
     // touch/mouse binded
     virtual bool onMoved(float x, float y);
     virtual bool onDown(float x, float y);
@@ -65,15 +48,16 @@ public:
     void setInteractive(bool interactive);
     
     // events / listeners - using addEventListener requires onGuiChanged(const void* sender, string &buttonLabel) method
-    ofEvent<string> onChangedEvent;
+    //ofEvent<string> onChangedEvent;
+    ofEvent<ofxTouchGUIEventArgs> onChangedEvent;
     template <class ListenerClass>
 	void addEventListener(ListenerClass * listener){
         //void testApp::onGuiChanged(const void* sender, string &buttonLabel) {};
-        ofAddListener(onChangedEvent,listener,&ListenerClass::onGuiChanged);        
+        ofAddListener(onChangedEvent,listener,&ListenerClass::onGUIChanged);
     };
     template <class ListenerClass>
     void removeEventListener(ListenerClass * listener){
-        ofRemoveListener(onChangedEvent,listener,&ListenerClass::onGuiChanged);
+        ofRemoveListener(onChangedEvent,listener,&ListenerClass::onGUIChanged);
     };
     
     // interaction    
@@ -91,6 +75,9 @@ public:
     void setBackgroundClrs(ofColor tl, ofColor tr, ofColor bl, ofColor br);
     void setActiveClrs(ofColor singleClr);
     void setActiveClrs(ofColor tl, ofColor tr, ofColor bl, ofColor br);
+    
+    // generic style copying- background clrs, active clrs, text clr
+    void copyStyle(ofxTouchGUIBase* source);
         
     
     // OSC

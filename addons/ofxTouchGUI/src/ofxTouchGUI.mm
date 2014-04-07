@@ -10,7 +10,7 @@ ofxTouchGUI::ofxTouchGUI(){
     hasBackgroundColor = false;
     useMouse = false;
     settingsLoaded = false;
-    isAutoDrawing = isAutoUpdating = false;
+    isAutoDrawing = false; //isAutoUpdating
     hidden = false;
     oscSendEnabled = oscReceiveEnabled = false;
     oscSendHostAddress = "";
@@ -80,8 +80,10 @@ void ofxTouchGUI::loadSettings(string saveToFile, bool loadDefaultFont, bool use
     
     this->saveToFile = saveToFile;
     
-    #ifdef TARGET_OF_IPHONE
+    
+    #ifdef TARGET_OF_IPHONE        
         this->saveToFile = ofxiPhoneGetDocumentsDirectory() + saveToFile;
+        ofLog() << "IOS detected- save to path: " << this->saveToFile;
     #endif
     // load xml from public itunes directory
     if( XML.loadFile(this->saveToFile) ){
@@ -167,7 +169,7 @@ void ofxTouchGUI::setWindowPosition(int posX, int posY) {
     windowPosition.y = posY;
 }
 
-ofVec2f ofxTouchGUI::getWindowPosition() {
+ofVec2f& ofxTouchGUI::getWindowPosition() {
     return windowPosition;
 }
 
@@ -346,7 +348,7 @@ ofVec2f ofxTouchGUI::getFurthestItemPosition() {
 
 // UPDATE
 //--------------------------------------------------------------
-void ofxTouchGUI::update(){
+/*void ofxTouchGUI::update(){
     
     if(isFirstUpdate) {
         furthestItem = getFurthestItemPosition(); // used for scroller or background color
@@ -369,12 +371,36 @@ void ofxTouchGUI::update(){
     
     // osc receiver
     if(oscReceiveEnabled) checkOSCReceiver();
-}
+}*/
 
 // DRAW
 //--------------------------------------------------------------
 void ofxTouchGUI::draw(){
 
+    // initial setup/update stuff
+    if(isFirstUpdate) {
+        furthestItem = getFurthestItemPosition(); // used for scroller or background color
+        // if we have a scroller with auto width/height (-1,-1) resize to width + height of window
+        if(scrollEnabled) {
+            if(scrollWidth == -1 && scrollHeight == -1) {
+                scrollWidth = furthestItem.x;
+                scrollHeight = furthestItem.y;
+            }
+        }
+        // if we have a background colour with auto width/height (-1,-1) resize to width + height of window
+        if(hasBackgroundColor) {
+            if(bgWidth == -1 && bgHeight == -1) {
+                bgWidth = furthestItem.x;
+                bgHeight = furthestItem.y;
+            }
+        }
+        isFirstUpdate = false;
+    }
+    
+    // osc receiver
+    if(oscReceiveEnabled) checkOSCReceiver();
+    
+    // normal drawing
     if(!hidden) {
         
         ofPushMatrix();
@@ -411,7 +437,12 @@ void ofxTouchGUI::drawText(string text, int posX, int posY) {
     guiFont.drawString(text, posX, posY);
 }
 
-void ofxTouchGUI::setAutoDraw(bool allowAutoDraw, bool allowAutoUpdate){
+void ofxTouchGUI::drawTitleText(string text, int posX, int posY) {
+    
+    guiFontLarge.drawString(text, posX, posY);
+}
+
+void ofxTouchGUI::setAutoDraw(bool allowAutoDraw){
     
     if(!isAutoDrawing && allowAutoDraw) {
         ofAddListener(ofEvents().draw, this, &ofxTouchGUI::aDraw);
@@ -419,13 +450,6 @@ void ofxTouchGUI::setAutoDraw(bool allowAutoDraw, bool allowAutoUpdate){
     } else if(isAutoDrawing) {
         ofRemoveListener(ofEvents().draw, this, &ofxTouchGUI::aDraw);
     }
-    
-    if(!isAutoUpdating && allowAutoUpdate) {
-        ofAddListener(ofEvents().update, this, &ofxTouchGUI::aUpdate);
-        isAutoUpdating = true;
-    } else if(isAutoUpdating) {
-        ofRemoveListener(ofEvents().update, this, &ofxTouchGUI::aUpdate);
-    }    
 }
 
 // auto draw requires events args
@@ -433,10 +457,7 @@ void ofxTouchGUI::aDraw(ofEventArgs &e){
     draw();
 }
 
-// auto update requires events args
-void ofxTouchGUI::aUpdate(ofEventArgs &e){
-    update();
-}
+
 
 // shows only the last activated panel
 void ofxTouchGUI::show(){
@@ -523,7 +544,7 @@ ofxTouchGUIText* ofxTouchGUI::addTitleText(string textLabel, int posX, int posY,
     tgt->type = TEXT_TYPE;
     //tgt->itemId = TEXT_TYPE + ofToString(numGuiItems);
     checkItemPosSize(posX, posY, width, height);
-    tgt->setDisplay(textLabel, posX, posY, width);
+    tgt->setDisplay(textLabel, posX, posY, width, height);
     //tgt->enable(useMouse);
     if(hasFont) tgt->assignFonts(&guiFont,fontSize, &guiFontLarge,fontSizeLarge);    
     tgt->formatText(true); // true = use title text

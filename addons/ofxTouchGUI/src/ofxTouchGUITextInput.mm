@@ -63,6 +63,13 @@ void ofxTouchGUITextInput::setInput(string *placeHolderText) {
     
 }
 
+void ofxTouchGUITextInput::setPlaceHolderText(string text) {
+    
+    #ifdef TARGET_OF_IPHONE
+    keyboard->setText(text);
+    #endif
+}
+
 string ofxTouchGUITextInput::getInput() {
     return *input;
 }
@@ -89,7 +96,9 @@ void ofxTouchGUITextInput::onKeyboardInput()
 {    
     //input = keyboard->getLabelText(); 
     cout << "input: " << *input << endl;
-    ofNotifyEvent(onChangedEvent,*input,this);
+    //ofNotifyEvent(onChangedEvent,*input,this);
+    ofxTouchGUIEventArgs args(this);
+    ofNotifyEvent(onChangedEvent, args);
     sendOSC(*input);
 }
 

@@ -30,6 +30,7 @@ public:
     string getInput();
     string *input;
     string defaultInput;
+    void setPlaceHolderText(string text);
     
     
     
