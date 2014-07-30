@@ -1,7 +1,7 @@
 <control>
     <type>constant</type>
     <label>device</label>
-    <value>COM5</value>
+    <value>COM6</value>
 </control>
 <control>
     <type>constant</type>
