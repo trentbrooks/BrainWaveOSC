@@ -84,7 +84,7 @@ void ofApp::setup(){
     // setup thinkgear hardware using serial streamer or comms driver (osx only tested).
     // TG_STREAM_PARSER is default
     // blinks only work in TG_COMMS_DRIVER mode
-    tg.setup(deviceName, deviceBaudRate, TG_STREAM_PARSER); //TG_STREAM_PARSER, TG_COMMS_DRIVER
+    tg.setup(deviceName, deviceBaudRate, TG_COMMS_DRIVER); //TG_STREAM_PARSER, TG_COMMS_DRIVER
     tg.addEventListener(this);
     
     // change in settings.xml to launch minimised window with no logging

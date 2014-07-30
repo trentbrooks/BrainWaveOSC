@@ -1,4 +1,4 @@
 ofxOsc
-ofxXmlSettings
 ofxThinkgear
 ofxTouchGUI
+ofxXmlSettings

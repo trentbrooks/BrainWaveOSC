@@ -16,7 +16,6 @@ ofxTouchGUIToggleButton::ofxTouchGUIToggleButton(){
     
     crossX = ofColor(255,255,255,180); //rgba
     crossOffset = 5;
-    crossLineWidth = 1;
     
     isInteractive = true;
     hasImages = false;
@@ -46,14 +45,6 @@ void ofxTouchGUIToggleButton::setImageStates(ofImage& onImage, ofImage& offImage
         this->width = onImage.width;
         this->height = onImage.height;
     }
-}
-
-// overriden
-void ofxTouchGUIToggleButton::copyStyle(ofxTouchGUIToggleButton* source) {
-    
-    ofxTouchGUIBase::copyStyle(source);
-    crossX = source->crossX;
-    crossLineWidth = source->crossLineWidth;
 }
 
 void ofxTouchGUIToggleButton::resetDefaultValue(){
@@ -105,17 +96,15 @@ void ofxTouchGUIToggleButton::draw(){
             drawGLRect(vertexArrActive, colorsArrActive);
             
             // draw the 'X' if on
-            ofPushStyle();
             if(*toggleVal) {
                 ofSetColor(crossX);
-                ofSetLineWidth(crossLineWidth);
                 ofLine(destValX + crossOffset, crossOffset, width - crossOffset, height - crossOffset);
                 ofLine(width - crossOffset, crossOffset, destValX + crossOffset, height - crossOffset);
             }
             
             
             // draw text
-            
+            ofPushStyle();
             ofSetColor(textColour);
             drawText(label, 0);
             ofPopStyle();

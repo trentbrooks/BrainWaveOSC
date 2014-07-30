@@ -178,10 +178,8 @@ void ofxThinkgear::setup(string deviceName, int baudRate, ThinkGearImplementatio
     this->connectionType = connectionType;
     
     if(connectionType == TG_COMMS_DRIVER) {
-		#ifdef TARGET_OSX
         driver.setup(deviceName, baudRate,this,&ofxThinkgear::tgHandleCommsDriverDataValueFunc);
         if(driver.isReady) isReady = true;
-		#endif
     } else {
         ofLogVerbose() << "Blinks cannot be activated in TG_STREAM_PARSER mode.";
     }
@@ -222,7 +220,7 @@ void ofxThinkgear::idle() {
 void ofxThinkgear::update(){
     
     if(connectionType == TG_COMMS_DRIVER) {
-        #ifdef TARGET_OSX
+        
         driver.update();
         isReady = driver.isReady;
         if(!isReady && ofGetFrameNum() % noConnectionRestartCount == 0) {
@@ -233,7 +231,6 @@ void ofxThinkgear::update(){
                 attempts = 0;
             }
         }
-		#endif
         
     } else if(connectionType == TG_STREAM_PARSER) {
         
