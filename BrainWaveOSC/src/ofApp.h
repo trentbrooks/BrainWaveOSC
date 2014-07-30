@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxThinkgear.h"
-#include "BrainWaveGUI.h"
+#include "BrainWaveGUI/BrainWaveGUI.h"
 
 // osascript -e 'tell application "System Events"' -e 'shut down' -e 'end tell'
 // sudo halt

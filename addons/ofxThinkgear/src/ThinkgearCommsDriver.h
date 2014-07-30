@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
+
+
 #ifdef _WIN32
 #include <functional> // tr1 deprecated in VS
 #else
@@ -11,6 +13,7 @@
 /*
  ThinkgearCommsDriver.
  - Uses the downloadable libraries from ThinkGear.
+ - osx only at the moment
  */
 
 /**
@@ -61,6 +64,7 @@ struct TGData {
     float value;
 };
 
+#ifdef TARGET_OSX
 class ThinkgearCommsDriver {
 public:
     
@@ -91,7 +95,7 @@ public:
 protected:
     CFURLRef bundleURL; // path reference to bundle
     CFBundleRef thinkGearBundle; // bundle reference
-    int connectionID = -1; // ThinkGear connection handle
+    int connectionID;// = -1; // ThinkGear connection handle
 
     // function pointers;
     int (*TG_GetDriverVersion)();
@@ -105,4 +109,4 @@ protected:
     int (*TG_EnableBlinkDetection)(int, int);
     
 };
-
+#endif

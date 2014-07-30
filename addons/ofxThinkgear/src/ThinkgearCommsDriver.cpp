@@ -1,6 +1,6 @@
 #include "ThinkgearCommsDriver.h"
 
-
+#ifdef TARGET_OSX
 ThinkgearCommsDriver::ThinkgearCommsDriver() {
 
     isReady = false;
@@ -14,6 +14,7 @@ ThinkgearCommsDriver::ThinkgearCommsDriver() {
     TG_FreeConnection = NULL;
     TG_EnableBlinkDetection = NULL;
     connectionID = -1;
+
     
     unavailableCount = 0;
     noConnectionRestartCount = 250;
@@ -204,3 +205,4 @@ void ThinkgearCommsDriver::update() {
         unavailableCount = 0;
     }
 }
+#endif

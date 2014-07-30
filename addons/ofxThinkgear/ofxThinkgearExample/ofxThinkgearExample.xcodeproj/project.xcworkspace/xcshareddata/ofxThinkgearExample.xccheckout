@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>AB035758-D18F-498B-ADF8-AD5AFD61DA6A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ofxThinkgearExample</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>0EC3F1B7-6679-4760-88AC-1B76CF18F405</key>
+		<string>https://github.com/trentbrooks/ofxThinkgear.git</string>
+		<key>3329A88D-9A8F-44C6-B61F-CEFF1152AA37</key>
+		<string>https://github.com/trentbrooks/openFrameworks.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>apps/myApps/ofxThinkgearExample/ofxThinkgearExample.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>0EC3F1B7-6679-4760-88AC-1B76CF18F405</key>
+		<string>../../../../../addons/ofxThinkgear</string>
+		<key>3329A88D-9A8F-44C6-B61F-CEFF1152AA37</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/trentbrooks/openFrameworks.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>3329A88D-9A8F-44C6-B61F-CEFF1152AA37</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0EC3F1B7-6679-4760-88AC-1B76CF18F405</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxThinkgear</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3329A88D-9A8F-44C6-B61F-CEFF1152AA37</string>
+			<key>IDESourceControlWCCName</key>
+			<string>openFrameworks</string>
+		</dict>
+	</array>
+</dict>
+</plist>
