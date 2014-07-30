@@ -118,7 +118,7 @@ void ofApp::setupGui() {
 
     // add items
     settings.setItemSize(bigWidth, bigHeight);
-    settings.addTitleText("BRAINWAVE OSC 0.92", 18, 18);
+    settings.addTitleText("BRAINWAVE OSC " + ofToString(_VER), 18, 18);
     settings.addText("Device - " + deviceName + ". BaudRate - " + ofToString(deviceBaudRate), 20, 55);
     settings.addText("OSC - " + host + ":" + ofToString(port), 20, 70);
     settings.addText("---------------------------------------------------------------------------------------------", 20, 85);
