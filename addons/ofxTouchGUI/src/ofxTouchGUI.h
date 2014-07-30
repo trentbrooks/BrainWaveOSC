@@ -13,7 +13,7 @@
 #include "ofxOsc.h"
 #include "ofxTouchGUIEventArgs.h"
 
-
+    
 /*
  Usage:
  // .h
@@ -61,7 +61,7 @@
 
 
 // ofxTouchGUI versioning
-#define OFXTOUCHGUI_VERSION 0.241
+#define OFXTOUCHGUI_VERSION 0.242
 
 // gui item types
 #define SLIDER_TYPE "slider"

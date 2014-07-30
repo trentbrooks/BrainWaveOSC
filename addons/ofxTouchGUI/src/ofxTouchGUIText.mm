@@ -14,10 +14,16 @@ ofxTouchGUIText::ofxTouchGUIText(){
     baseLineOffset = 0;
     
     // bg background is dark by default (same as foreground colours)
-    bgClrTL = ofColor(40,40,40,255); //rgba
-    bgClrTR = ofColor(40,40,40,255); //rgba
-    bgClrBL = ofColor(40,40,40,255); //rgba
-    bgClrBR = ofColor(40,40,40,255); //rgba
+    //bgClrTL = ofColor(40,40,40,255); //rgba
+    //bgClrTR = ofColor(40,40,40,255); //rgba
+    //bgClrBL = ofColor(40,40,40,255); //rgba
+    //bgClrBR = ofColor(40,40,40,255); //rgba
+    
+    // bg background is PINK! by default, but it's also off by default
+    bgClrTL = ofColor(215,40,127); //pink
+    bgClrTR = ofColor(215,40,127); //pink
+    bgClrBL = ofColor(215,40,127); //pink
+    bgClrBR = ofColor(215,40,127); //pink
 }
 
 ofxTouchGUIText::~ofxTouchGUIText(){

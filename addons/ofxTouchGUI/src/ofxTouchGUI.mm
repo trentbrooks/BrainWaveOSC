@@ -1103,6 +1103,7 @@ void ofxTouchGUI::sendOSC(string address, float val) {
         msg.clear();
         msg.setAddress(address);//oscAddress + "/" + type + "/" + label); // eg. "/tg/slider/mythingy"
         msg.addFloatArg(val);
+        //ofLog() << "FICK - sending: " << address << " : " << val;
         oscSender->sendMessage( msg );
     }    
 }
@@ -1113,6 +1114,7 @@ void ofxTouchGUI::sendOSC(string address, int val) {
         msg.clear();
         msg.setAddress(address);//oscAddress + "/" + type + "/" + label); // eg. "/tg/slider/mythingy"
         msg.addIntArg(val);
+        //ofLog() << "FICK - sending: " << address << " : " << val;
         oscSender->sendMessage( msg );
     }
 }

@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\ofApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscBundle.cpp">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscMessage.cpp">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscParameterSync.cpp">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscReceiver.cpp">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscSender.cpp">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.cpp">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix\NetworkingUtils.cpp">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip\posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix\UdpSocket.cpp">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip\posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\NetworkingUtilsWin.cpp">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\UdpSocketWin.cpp">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.cpp">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.cpp">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.cpp">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.cpp">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp">
+      <Filter>addons\ofxXmlSettings\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.cpp">
+      <Filter>addons\ofxXmlSettings\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp">
+      <Filter>addons\ofxXmlSettings\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp">
+      <Filter>addons\ofxXmlSettings\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxThinkgear\src\ofxThinkgear.cpp">
+      <Filter>addons\ofxThinkgear\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxThinkgear\src\ThinkgearCommsDriver.cpp">
+      <Filter>addons\ofxThinkgear\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxThinkgear\src\ThinkGearStreamParser.c">
+      <Filter>addons\ofxThinkgear\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUI.mm">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUIBase.mm">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUIButton.mm">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUIDataGraph.mm">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUIDropDown.mm">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUISlider.mm">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUIText.mm">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUITextInput.mm">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUIToggleButton.mm">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BrainWaveGUI\BrainWaveGUI.mm">
+      <Filter>src\BrainWaveGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BrainWaveGUI\EegFrequencyGraph.mm">
+      <Filter>src\BrainWaveGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BrainWaveGUI\EegTimeGraph.mm">
+      <Filter>src\BrainWaveGUI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons">
+      <UniqueIdentifier>{71834F65-F3A9-211E-73B8-DC85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc">
+      <UniqueIdentifier>{D91DCA33-6E5D-4481-2AEC-9FBB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc\src">
+      <UniqueIdentifier>{B9DD339A-D93D-92A1-0A2F-4B41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc\libs">
+      <UniqueIdentifier>{99ECA1D9-873F-4622-8FC0-FC7B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc\libs\oscpack">
+      <UniqueIdentifier>{D3A98534-1602-4FEF-57A6-6593}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc\libs\oscpack\src">
+      <UniqueIdentifier>{BFB5BB47-98C8-BBCB-3066-1046}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc\libs\oscpack\src\ip">
+      <UniqueIdentifier>{5A029128-EB41-95C5-CBC0-CDED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc\libs\oscpack\src\ip\posix">
+      <UniqueIdentifier>{354C95CF-A234-0360-C6BC-AF41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc\libs\oscpack\src\ip\win32">
+      <UniqueIdentifier>{79DFDFE2-400B-8654-3675-01A3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOsc\libs\oscpack\src\osc">
+      <UniqueIdentifier>{EDACB89C-9768-9551-4D41-B590}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxXmlSettings">
+      <UniqueIdentifier>{877F005D-13E6-0592-1D97-F2E3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxXmlSettings\src">
+      <UniqueIdentifier>{CCB2AC63-49D2-977C-CFE8-AEAD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxXmlSettings\libs">
+      <UniqueIdentifier>{687714A8-1662-FA1C-261F-50F0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxThinkgear">
+      <UniqueIdentifier>{22D718C7-296A-A0A8-45C4-53B7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxThinkgear\src">
+      <UniqueIdentifier>{ADDA31F1-1AAB-1A8C-E11B-B40C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxTouchGUI">
+      <UniqueIdentifier>{7BEBFDEC-13BF-7A36-982B-3655}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxTouchGUI\src">
+      <UniqueIdentifier>{4DF49842-9B16-E75D-A168-5804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\BrainWaveGUI">
+      <UniqueIdentifier>{a218727b-b32a-48d2-827f-76c0bff6f6f9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ofApp.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOsc.h">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscArg.h">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscBundle.h">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscMessage.h">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscParameterSync.h">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscReceiver.h">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscSender.h">
+      <Filter>addons\ofxOsc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\NetworkingUtils.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\PacketListener.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\TimerListener.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\UdpSocket.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\MessageMappingOscPacketListener.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscException.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscHostEndianness.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPacketListener.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.h">
+      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h">
+      <Filter>addons\ofxXmlSettings\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h">
+      <Filter>addons\ofxXmlSettings\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxThinkgear\src\ofxThinkgear.h">
+      <Filter>addons\ofxThinkgear\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxThinkgear\src\ThinkgearCommsDriver.h">
+      <Filter>addons\ofxThinkgear\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxThinkgear\src\ThinkGearStreamParser.h">
+      <Filter>addons\ofxThinkgear\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUI.h">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUIBase.h">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUIButton.h">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUIDataGraph.h">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUIDropDown.h">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUIEventArgs.h">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUISlider.h">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUIText.h">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUITextInput.h">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxTouchGUI\src\ofxTouchGUIToggleButton.h">
+      <Filter>addons\ofxTouchGUI\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BrainWaveGUI\BrainWaveGUI.h">
+      <Filter>src\BrainWaveGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BrainWaveGUI\EegFrequencyGraph.h">
+      <Filter>src\BrainWaveGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BrainWaveGUI\EegTimeGraph.h">
+      <Filter>src\BrainWaveGUI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
+</Project>

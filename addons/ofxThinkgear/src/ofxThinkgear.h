@@ -121,7 +121,9 @@ public:
 	}
 
 private:
+	#ifdef TARGET_OSX
     ThinkgearCommsDriver driver;
+	#endif
     ThinkGearStreamParser parser;
     unsigned char buffer[512];
 };

@@ -17,6 +17,7 @@ public:
     virtual void draw();
     ofColor crossX;
     int crossOffset;
+    float crossLineWidth;
     
     // touch events
     virtual bool onUp(float x, float y);
@@ -32,6 +33,9 @@ public:
     
     void loadImageStates(string onImagePath, string offImagePath, bool useWidthHeightFromImage = true);
     void setImageStates(ofImage& onImage, ofImage& offImage, bool useWidthHeightFromImage = true);
+    
+    // overriden to copy cross properties
+    void copyStyle(ofxTouchGUIToggleButton* source);
     
 protected:
     

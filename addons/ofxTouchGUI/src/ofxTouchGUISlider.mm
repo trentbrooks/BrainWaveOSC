@@ -94,6 +94,13 @@ void ofxTouchGUISlider::draw(){
             fgImage.draw(-fgImage.getWidth()*.5+ destValX, -fgImage.getHeight()*.5 + getItemHeight() * .5);
             ofPopStyle();
             
+            // draw text
+            ofPushStyle();
+            ofSetColor(textColour);
+            drawText(label, 2);
+            drawText(ofToString(formattedValue), 0);
+            ofPopStyle();
+            
         } else {            
             
             // draw the background rectangle- move the left side of the percentage bar. modify vertex values directly
@@ -124,11 +131,24 @@ void ofxTouchGUISlider::draw(){
 
 // TOUCH
 //--------------------------------------------------------------
+bool ofxTouchGUISlider::onDown(float x, float y){
+    
+    if(ofxTouchGUIBase::onDown(x, y)) {
+        
+        clampInputToSliderVal(x);
+        return true;
+    }
+    
+    return false;
+}
+
 bool ofxTouchGUISlider::onUp(float x, float y){
     
     if(ofxTouchGUIBase::onUp(x, y)) {
-        // want to trigger value changes on touch up as well as move.
-        onMoved(x,y);
+        
+        // want to trigger value changes on touch up as well as move
+        // TODO: check this on ios - prob not required since on down also triggers
+        //clampInputToSliderVal(x);
         return true;
     }
     
@@ -143,22 +163,26 @@ bool ofxTouchGUISlider::onMoved(float x, float y) {
          
          // must be touching inside the slider to move.
          if(hitTest(x,y)) {
-            float clampedX = ofClamp(x, posX, posX + width);
-             float perc = ( clampedX - posX ) / width;
-             if(useInteger) {
-                 int sliderIntVal = (perc * (max - min) ) + min;
-                 doSliderIntAction(sliderIntVal);
-                 return true;
-             }
-             else { 
-                 float sliderFloatVal = (perc * (max - min) ) + min;
-                 doSliderFloatAction(sliderFloatVal);
-                 return true;
-             }
+             clampInputToSliderVal(x);
+             return true;
          }
      }
     
     return false;
+}
+
+void ofxTouchGUISlider::clampInputToSliderVal(float x) {
+    
+    float clampedX = ofClamp(x, posX, posX + width);
+    float perc = ( clampedX - posX ) / width;
+    if(useInteger) {
+        int sliderIntVal = (perc * (max - min) ) + min;
+        doSliderIntAction(sliderIntVal);
+    }
+    else {
+        float sliderFloatVal = (perc * (max - min) ) + min;
+        doSliderFloatAction(sliderFloatVal);
+    }
 }
 
 void ofxTouchGUISlider::doSliderFloatAction(float sliderVal, bool doOSC) {
