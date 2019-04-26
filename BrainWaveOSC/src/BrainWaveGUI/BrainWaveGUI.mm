@@ -23,7 +23,7 @@ EegTimeGraph* BrainWaveGUI::addCustomTimeGraph(string graphLabel, int maxValues,
     guiItems.push_back(tgtg);
     numGuiItems = guiItems.size();
     
-    if(oscSendEnabled) tgtg->enableSendOSC(oscSender);
+    if(oscSendEnabled) tgtg->enableSendOSC(oscSender,false);
    
     return tgtg; 
 }
@@ -41,7 +41,7 @@ EegFrequencyGraph* BrainWaveGUI::addCustomTimeFrequencyGraph(string graphLabel, 
     guiItems.push_back(tgtg);
     numGuiItems = guiItems.size();
     
-    if(oscSendEnabled) tgtg->enableSendOSC(oscSender);
+    if(oscSendEnabled) tgtg->enableSendOSC(oscSender,false);
     
     return tgtg;
 }

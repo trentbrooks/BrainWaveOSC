@@ -1,3 +1,4 @@
+<settings>
 <control>
     <type>constant</type>
     <label>device</label>
@@ -63,3 +64,4 @@
     <label>RECORD TO CSV</label>
     <value>0</value>
 </control>
+</settings>
