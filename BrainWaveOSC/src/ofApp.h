@@ -99,6 +99,9 @@ public:
     int port;
     bool sendOscEveryFrame;
     
+    // optional - added for wataru
+    int receivePort;
+    
     // mindplay brainband bluetooth device
     ofxThinkgear tg;
     ofxThinkgearEventArgs data;

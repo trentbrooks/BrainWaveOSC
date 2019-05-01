@@ -72,12 +72,13 @@ void ofApp::setup(){
     normaliseMaxToCurrentSet = false;    
     
     // default device settings
-    deviceName = "/dev/tty.BrainBand-DevB";
+    deviceName = "/dev/tty.BrainBand-DevB"; // osx address, windows is com6 or something
     deviceBaudRate = 57600;
     
     // osc settings
     host = "127.0.0.1"; // change via xml
     port = 7771; // change via xml
+    receivePort=7772; // change via xml
     
     setupGui();      
     
@@ -106,10 +107,13 @@ void ofApp::setupGui() {
     settings.setConstant("baud", &deviceBaudRate);
     settings.setConstant("host", &host);
     settings.setConstant("port", &port);
+    settings.setConstant("receive port", &receivePort);
     settings.setConstant("launch with small window", &smallWindow);
     
     settings.setupSendOSC(host, port);
     
+    // optional receiver for syncing gui - eg. "/recordtocsv" 1 will enable recording
+    settings.setupReceiveOSC(receivePort);
     
     int smallHeight = 20;
     int bigHeight = 35;

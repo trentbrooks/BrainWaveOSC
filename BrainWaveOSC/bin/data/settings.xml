@@ -21,6 +21,11 @@
 </control>
 <control>
     <type>constant</type>
+    <label>receive port</label>
+    <value>7772</value>
+</control>
+<control>
+    <type>constant</type>
     <label>launch with small window</label>
     <value>0</value>
 </control>
