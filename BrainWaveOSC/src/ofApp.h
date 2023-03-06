@@ -60,6 +60,8 @@ public:
     void setupGui();
     BrainWaveGUI settings;
     void onGUIChanged(ofxTouchGUIEventArgs& args);
+    void setSmallWindow();
+    void setNormalWindow();
     bool smallWindow;
     
     

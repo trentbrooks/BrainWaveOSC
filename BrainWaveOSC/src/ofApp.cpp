@@ -91,9 +91,21 @@ void ofApp::setup(){
     // change in settings.xml to launch minimised window with no logging
     if(smallWindow) {
         ofSetLogLevel(OF_LOG_SILENT);
-        ofSetWindowShape(250, 75);
+        setSmallWindow();
         settings.hide();
+    } else {
+        setNormalWindow();
     }
+}
+
+void ofApp::setSmallWindow() {
+    ofSetWindowShape(250, 75);
+    smallWindow = true;
+}
+
+void ofApp::setNormalWindow() {
+    ofSetWindowShape(1280, 850);
+    smallWindow = false;
 }
 
 void ofApp::setupGui() {
