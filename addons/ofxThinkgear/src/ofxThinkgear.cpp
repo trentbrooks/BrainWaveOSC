@@ -32,7 +32,7 @@ void tgHandleStreamDataValueFunc( unsigned char extendedCodeLevel, unsigned char
             case( 0xd4 ):
                 // printf("Standby... autoconnecting\n");
                 if(tg.allowRawDataEvents) ofNotifyEvent(tg.onConnecting, tg.values);
-                tg.device->writeByte(0xc2); // what is this?
+                tg.device->writeByte((unsigned char) 0xc2); // what is this?
                 break;
             case( 0xd0 ):
                 ofNotifyEvent(tg.onReady, tg.values);
