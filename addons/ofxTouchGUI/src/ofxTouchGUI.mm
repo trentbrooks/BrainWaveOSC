@@ -1225,9 +1225,24 @@ void ofxTouchGUI::mousePressed(ofMouseEventArgs& args){
 }
 
 //--------------------------------------------------------------
+void ofxTouchGUI::mouseEntered(ofMouseEventArgs& args){
+
+}
+
+//--------------------------------------------------------------
+void ofxTouchGUI::mouseExited(ofMouseEventArgs& args){
+
+}
+
+//--------------------------------------------------------------
 void ofxTouchGUI::mouseReleased(ofMouseEventArgs& args){
     // offset all through touches by windowPosition
     onUp(args.x , args.y );
+}
+
+//--------------------------------------------------------------
+void ofxTouchGUI::mouseScrolled(ofMouseEventArgs& args){
+
 }
 
 // TOUCH

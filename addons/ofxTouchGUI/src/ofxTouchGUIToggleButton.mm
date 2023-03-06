@@ -32,8 +32,8 @@ void ofxTouchGUIToggleButton::loadImageStates(string onImagePath, string offImag
     onImage.loadImage(onImagePath);
     offImage.loadImage(offImagePath);
     if(useWidthHeightFromImage) {
-        this->width = onImage.width;
-        this->height = onImage.height;
+        this->width = onImage.getWidth();
+        this->height = onImage.getHeight();
     }
 }
 
@@ -43,8 +43,8 @@ void ofxTouchGUIToggleButton::setImageStates(ofImage& onImage, ofImage& offImage
     this->onImage = onImage;
     this->offImage = offImage;
     if(useWidthHeightFromImage) {
-        this->width = onImage.width;
-        this->height = onImage.height;
+        this->width = onImage.getWidth();
+        this->height = onImage.getHeight();
     }
 }
 

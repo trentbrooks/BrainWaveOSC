@@ -268,8 +268,11 @@ public:
     void disableMouse();
     void mouseMoved(ofMouseEventArgs& args );
     void mouseDragged(ofMouseEventArgs& args);
+    void mouseEntered(ofMouseEventArgs& args);
+    void mouseExited(ofMouseEventArgs& args);
     void mousePressed(ofMouseEventArgs& args);
     void mouseReleased(ofMouseEventArgs& args);
+    void mouseScrolled(ofMouseEventArgs& args);
     void touchDown(ofTouchEventArgs &touch);
 	void touchMoved(ofTouchEventArgs &touch);
 	void touchUp(ofTouchEventArgs &touch);
