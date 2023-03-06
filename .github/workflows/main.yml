@@ -1,0 +1,349 @@
+# NOTE: Build jobs for MINGW64 are tomporarly disactivated because of issues with openGL
+# To install for windows use msbuild (MSVC) instead
+
+name: BrainwaveOSC
+
+on:
+  pull_request:
+    branches: [ ]
+  push:
+    branches: [ ]
+  create:
+    tags: ['v*'] # Push events to matching v*, i.e. v1.0, v20.15.10
+
+env:
+  pkgname: BrainwaveOSC
+  IDENTITY_NAME: ${{ secrets.IDENTITY_NAME }}
+jobs:
+  build:
+    strategy:
+      matrix:
+       include:
+        #- { name: 'windows-mingw', os: windows-latest, flags: "", shell: 'msys2 {0}', of-sys: 'msys2' }
+        - { name: 'windows-msvc', os: windows-latest, flags: "", shell: 'msys2 {0}', of-sys: 'vs' }
+        - { name: 'linux', os: ubuntu-latest, shell: 'bash', of-sys: 'linux' }
+        - { name: 'macos-universal', os: macos-latest, shell: 'bash', of-sys: 'osx' }
+        - { name: 'macos-legacy', os: macos-latest, shell: 'bash', of-sys: 'osx' }
+    runs-on: ${{matrix.os}}
+    defaults:
+      run:
+        shell: ${{matrix.shell}}
+
+    steps:
+    - name: Install the Apple certificate and provisioning profile
+      if: ${{runner.os == 'macOS'}}
+      env:
+          P12_CERTIFICATE_BASE64: ${{ secrets.P12_CERTIFICATE_BASE64 }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+      run: |
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          #echo "IDENTITY_NAME=${IDENTITY_NAME}" >> $GITHUB_ENV
+          echo -n "$P12_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+          echo "::notice:: decode certificate succeed"
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security default-keychain -s $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH -T /usr/bin/codesign -T /usr/bin/productsign || echo "::warning:: Import certificate failed"
+          security list-keychain -d user -s $KEYCHAIN_PATH || echo "::warning:: List keychain failed"
+          security set-key-partition-list -S apple-tool:,apple: -s -k $KEYCHAIN_PASSWORD $KEYCHAIN_PATH
+          security find-identity || echo "::warning:: List keychain failed"
+
+    - if: ${{runner.os == 'Windows'}}
+      name: Install MinGW
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: MINGW64
+        update: true
+        install: base base-devel p7zip zip unzip git
+    
+    - name: Install Linux Dependencies
+      if: ${{runner.os == 'Linux'}}
+      run: |
+           sudo apt-get update
+           sudo apt-get install -y gobjc++
+
+    - name: Install MinGW Dependencies
+      if: ${{matrix.of-sys == 'msys'}}
+      run: |
+           echo "::notice:: MINGW_PACKAGE_PREFIX=${MINGW_PACKAGE_PREFIX}"
+           pacman -S --noconfirm \
+               ${MINGW_PACKAGE_PREFIX}-toolchain \
+               ${MINGW_PACKAGE_PREFIX}-gcc-objc \
+               ${MINGW_PACKAGE_PREFIX}-glew
+
+    - name: Configure environment
+      run: |
+           if [ ${{ runner.os }} == 'Windows' ]; then
+               echo WORKSPACE=$(cygpath -u "${{github.workspace}}") >> $GITHUB_ENV
+           else
+               echo WORKSPACE=${{github.workspace}} >> $GITHUB_ENV
+           fi
+        
+    - name: download and install openFrameworks
+      run: |
+           
+           git clone https://github.com/openframeworks/openFrameworks
+           export OF_ROOT="${{env.WORKSPACE}}/openFrameworks"
+           echo "OF_ROOT=${OF_ROOT}" >> $GITHUB_ENV
+           cd ${OF_ROOT}
+           if [ ${{ matrix.of-sys }} != 'vs' ] && [ ${{ runner.os }} == 'Windows' ] ; then
+               echo "::notice:: Mingw Package prefix: ${MINGW_PACKAGE_PREFIX}"
+               bash ./scripts/${{ matrix.of-sys }}/install_dependencies.sh --noconfirm
+           elif [ ${{ runner.os }} == 'Linux' ]; then
+               sudo apt-get install -y libunwind-dev
+               sudo bash ./scripts/${{ matrix.of-sys }}/ubuntu/install_dependencies.sh
+           fi
+           bash ./scripts/${{ matrix.of-sys }}/download_libs.sh
+           if [ ${{runner.os }} != 'macOS' ] && [ {{ matrix.of-sys }} != 'vs' ]; then
+               bash ./scripts/${{ matrix.of-sys }}/compileOF.sh    
+           fi
+
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+      with:
+           path: openFrameworks/apps/BrainwaveOSC
+
+    - name: Configure
+      run: |
+           PROJECT_DIR=${{ env.OF_ROOT }}/apps/BrainwaveOSC
+           BUILD_DIR=${PROJECT_DIR}/BrainWaveOSC/
+           echo PROJECT_DIR=${PROJECT_DIR} >> $GITHUB_ENV
+           echo BUILD_DIR=${BUILD_DIR} >> $GITHUB_ENV
+           echo NJOBS=$(nproc) >> $GITHUB_ENV
+           if [ ${{ matrix.of-sys }} == 'vs' ]; then
+               export BUILD_DIR_WIN=$(cygpath -w "${BUILD_DIR}")
+               echo "BUILD_DIR_WIN=${BUILD_DIR_WIN}" >> $GITHUB_ENV
+           fi
+           cd $PROJECT_DIR
+           echo "::notice:: ${PWD}"
+           cp -R addons/* ${{ env.OF_ROOT }}/addons/
+
+    - name: Setup MSBuild
+      if: ${{ matrix.of-sys == 'vs' }}
+      uses: microsoft/setup-msbuild@v1.1
+      with:
+          msbuild-architecture: x64
+
+    - name: Prepare version (release)
+      if: startsWith(github.ref, 'refs/tags/v')
+      run: |
+          cd $BUILD_DIR
+          echo "::notice:: ${{ github.ref_name }}"
+
+    - name: Prepare version (snapshot)
+      if: (! startsWith(github.ref, 'refs/tags/v'))
+      run: |
+          cd $BUILD_DIR
+          export PKG_VER="$(git log -1 --pretty=%h)"
+          if [ ! -z "$PKG_VER" ]; then
+              echo "VER_CFLAG=\"-D_VER=\"${PKG_VER}\"\"" >> $GITHUB_ENV
+          fi
+          echo "::notice:: ${PKG_VER}"
+          echo "::notice:: ${VER_CFLAG}"
+
+    - name: Build (UNIX/Msys)
+      if: ${{ matrix.of-sys != 'vs' }}
+      run: |
+          cd ${{ env.BUILD_DIR }}
+          if [ ${{ matrix.name }} == 'macos-universal' ]; then
+              make -j${NJOBS} \
+                  PLATFORM_OPTIMIZATION_CFLAGS_RELEASE=" -target x86_64-apple-macos -target arm64-apple-macos " \
+                  PLATFORM_LDFLAGS=" -arch x86_64 -arch arm64 " \
+                  MAC_OS_MIN_VERSION=11 
+          else
+              make -j${NJOBS}
+          fi
+
+    - name: Build (MSVC)
+      if: ${{ matrix.of-sys == 'vs' }}
+      shell: pwsh
+      run: msbuild $env:BUILD_DIR_WIN /p:configuration=release /p:platform=x64 /p:PlatformToolset=v142 /m:$env:NJOBS
+
+    - name: Prepare Packages names
+      run: |
+          PACKAGE_NAME=${{env.pkgname}}-${{matrix.name}}
+          echo "PACKAGE_NAME=$PACKAGE_NAME" >> ${GITHUB_ENV}
+
+    - name: Prepare Artifacts directory
+      run: |
+          DESTDIR=${{ env.WORKSPACE }}/${{ env.PACKAGE_NAME }}
+          echo "DESTDIR=$DESTDIR" >> $GITHUB_ENV
+          mkdir $DESTDIR || echo "::warning:: $DESTDIR already exists"
+
+    - name: Prepare binaries to upload (windows)
+      if: ${{runner.os == 'Windows'}}
+      run: |
+          cd ${BUILD_DIR}/bin
+          cp -Rv ${PROJECT_DIR}/examples ${BUILD_DIR}/bin
+          cd ${BUILD_DIR}/
+          mv bin ${{env.pkgname}}
+          7z a -r ${DESTDIR}/${PACKAGE_NAME}.7z ${{env.pkgname}}
+
+    - name: Prepare binaries to upload (Linux)
+      if: ${{runner.os == 'Linux'}}
+      run: |
+          cd ${BUILD_DIR}/
+          cp -Rv ${PROJECT_DIR}/examples bin/
+          mv bin ${PACKAGE_NAME}
+          tar -vczf $DESTDIR/${PACKAGE_NAME} ${PACKAGE_NAME}
+
+    - name: Prepare binaries to upload (MacOS)
+      if: ${{runner.os == 'macOS'}}
+      run: |
+          hdiutil create -size 700m -fs HFS+ -volname "${PACKAGE_NAME}" temp.dmg
+          hdiutil attach temp.dmg
+          TEMPDMG=${PWD}/temp.dmg
+          cd ${BUILD_DIR}/bin
+          cp -Rv ${PROJECT_DIR}/examples ${PACKAGE_NAME}.app/Contents/Resources/
+          codesign --verbose --strict --continue --timestamp --force --deep -s ${IDENTITY_NAME} *.app
+          cp -av * /Volumes/${PACKAGE_NAME}
+          ln -s /Applications/ /Volumes/${PACKAGE_NAME}/Applications
+          hdiutil detach /Volumes/${PACKAGE_NAME}
+          mkdir ${DESTDIR} || echo "::warning:: ${DESTDIR} already exists"
+          hdiutil convert ${TEMPDMG} -format UDBZ \
+                    -o ${DESTDIR}/${PACKAGE_NAME}.dmg
+          shasum -a 256 ${DESTDIR}/${PACKAGE_NAME}.dmg
+
+    - name: Upload All Binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ env.PACKAGE_NAME }}
+        path: ${{ github.workspace }}/${{ env.PACKAGE_NAME }}
+
+
+  publish:
+    needs: build
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v'))
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Build Tag
+        id: get_tag
+        run: echo ::set-output name=BUILD_TAG::build-$(date +'%Y%m%d%H%M')
+
+      - name: Get macOS Binary (universal)
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{env.pkgname}}-macos-universal
+          path: ${{github.workspace}}/${{env.pkgname}}-macos-universal
+      
+      - name: Get macOS Binary (legacy)
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{env.pkgname}}-macos-legacy
+          path: ${{github.workspace}}/${{env.pkgname}}-macos-legacy
+
+      - name: Get Linux Binary
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{env.pkgname}}-linux
+          path: ${{github.workspace}}/${{env.pkgname}}-linux
+          
+#      - name: Get Windows Binary (mingw)
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: ${{env.pkgname}}-windows-mingw
+#          path: ${{github.workspace}}/${{env.pkgname}}-windows-mingw
+          
+      - name: Get Windows Binary (msvc)
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{env.pkgname}}-windows-msvc
+          path: ${{github.workspace}}/${{env.pkgname}}-windows-msvc
+
+      - if: github.event_name == 'push' # this is a snapshot build. create a release and upload binaries
+        name: Create Snapshot Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ${{ steps.get_tag.outputs.BUILD_TAG }}
+          tag_name: ${{ steps.get_tag.outputs.BUILD_TAG }}
+          generate_release_notes: true
+          prerelease: true
+          files: |
+            ${{github.workspace}}/${{env.pkgname}}-windows-msvc/*
+            ${{github.workspace}}/${{env.pkgname}}-linux/*
+            ${{github.workspace}}/${{env.pkgname}}-macos-universal/*
+            ${{github.workspace}}/${{env.pkgname}}-macos-legacy/*
+#            ${{github.workspace}}/${{env.pkgname}}-mingw/*            
+
+      - if: github.event_name == 'create' && startsWith(github.ref, 'refs/tags/v') # this is a versioned build. check if release already exists
+        name: Find Existing Release
+        id: find_release
+        uses: cardinalby/git-get-release-action@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          doNotFailIfNotFound: true
+          tag: ${{ github.ref_name }}
+
+      - if: github.event_name == 'create' && startsWith(github.ref, 'refs/tags/v') && steps.find_release.outputs.id != 0 # release exists - upload macOS binary
+        name: Update Tagged Release (macOS)
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.find_release.outputs.upload_url }}
+          asset_path: ${{github.workspace}}/${{env.pkgname}}-macos-universal
+          asset_name: ${{env.pkgname}}-macos-universal
+          asset_content_type: application/octet-stream
+          
+      - if: github.event_name == 'create' && startsWith(github.ref, 'refs/tags/v') && steps.find_release.outputs.id != 0 # release exists - upload macOS binary
+        name: Update Tagged Release (macOS legacy)
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.find_release.outputs.upload_url }}
+          asset_path: ${{github.workspace}}/${{env.pkgname}}-macos-legacy
+          asset_name: ${{env.pkgname}}-macos-legacy
+          asset_content_type: application/octet-stream
+
+      - if: github.event_name == 'create' && startsWith(github.ref, 'refs/tags/v') && steps.find_release.outputs.id != 0 # release exists - upload Linux binary
+        name: Update Tagged Release (Linux)
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.find_release.outputs.upload_url }}
+          asset_path: ${{github.workspace}}/${{env.pkgname}}-linux
+          asset_name: ${{env.pkgname}}-linux-x86_64
+          asset_content_type: application/octet-stream
+
+      - if: github.event_name == 'create' && startsWith(github.ref, 'refs/tags/v') && steps.find_release.outputs.id != 0 # release exists - upload Windows binary
+        name: Update Tagged Release (Windows msvc)
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.find_release.outputs.upload_url }}
+          asset_path: ${{github.workspace}}/${{env.pkgname}}-windows-msvc
+          asset_name: ${{env.pkgname}}-win-msvc-x86_64
+          asset_content_type: application/octet-stream
+      
+#      - if: github.event_name == 'create' && startsWith(github.ref, 'refs/tags/v') && steps.find_release.outputs.id != 0 # release exists - upload Windows binary
+#        name: Update Tagged Release (Windows mingw)
+#        uses: actions/upload-release-asset@v1.0.2
+#        env:
+#          GITHUB_TOKEN: ${{ github.token }}
+#        with:
+#          upload_url: ${{ steps.find_release.outputs.upload_url }}
+#          asset_path: ${{github.workspace}}/${{env.pkgname}}-windows-mingw
+#          asset_name: ${{env.pkgname}}-win-mingw-x86_64
+#          asset_content_type: application/octet-stream
+
+      - if: github.event_name == 'create' && startsWith(github.ref, 'refs/tags/v') && steps.find_release.outputs.id == 0 # otherwise release does not exist, create one and upload binaries
+        name: Create Tagged Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          generate_release_notes: true
+          prerelease: false
+          files: |
+            ${{github.workspace}}/${{env.pkgname}}-macos-universal*
+            ${{github.workspace}}/${{env.pkgname}}-macos-legacy*
+            ${{github.workspace}}/${{env.pkgname}}-windows-msvc*
+            ${{github.workspace}}/${{env.pkgname}}-linux*
+#            ${{github.workspace}}/${{env.pkgname}}-windows-mingw*
