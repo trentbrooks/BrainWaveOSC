@@ -68,19 +68,34 @@ void ofApp::setup(){
 	allData.eegTheta = 0;
 	allData.elapsed = 0;
     allData.blinkStrength = 0;
-    
-    normaliseMaxToCurrentSet = false;    
-    
-    // default device settings
-    deviceName = "/dev/tty.BrainBand-DevB"; // osx address, windows is com6 or something
+    normaliseMaxToCurrentSet = false;
+
+    setupGui();
+    refreshDevices();
+    updateDeviceInfo();
+    // default device settings  // TODO automatize setup
+    if (devicesList.empty()) {
+        #if defined(TARGET_OSX)
+        deviceName = "/dev/tty.BrainBand-DevB";
+        #elif defined(TARGET_LINUX)
+        deviceName = "/dev/rfcomm0";
+        #elif defined(TARGET_WIN32)
+        deviceName = "COM6";
+        #endif
+    } else {
+        deviceName = devicesList[0];
+    }
     deviceBaudRate = 57600;
+
+    ofLog() << "Initial values: \n"
+            << "Device name: " << deviceName << "\n"
+            << "Baudrate: " << deviceBaudRate << "\n";
     
     // osc settings
     host = "127.0.0.1"; // change via xml
     port = 7771; // change via xml
     receivePort=7772; // change via xml
     
-    setupGui();      
     
     // setup thinkgear hardware using serial streamer or comms driver (osx only tested).
     // TG_STREAM_PARSER is default
